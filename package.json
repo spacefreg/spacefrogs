@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "express": "^4.17.1",
+    "jquery": "^3.6.0",
+    "jsdom": "^16.6.0",
+    "mongodb": "^3.6.9",
+    "socket.io": "^4.1.2"
+  }
+}
