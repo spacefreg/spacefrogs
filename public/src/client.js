@@ -16,4 +16,4 @@ $('#entrance-form').submit(function(e){
 
 socket.on('s-greetings', (message) => {
     console.log(message);
- });
+});
