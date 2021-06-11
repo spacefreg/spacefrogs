@@ -8,9 +8,10 @@ $('#entrance-form').submit(function(e){
     let username = $('#name-textbox').val();
     console.log(username);
     if (username != '') {
-        socket.emit('user-enter', username);
+        socket.emit('c-user-enter', username);
         console.log('emitting user-enter with username: ' + username);
         $('#name-textbox').val('');
         return false;
     }
 });
+
