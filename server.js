@@ -42,7 +42,7 @@ io.on('connection', socket => {
         if (DEBUG) {
             clientIP = '';
         } else {
-            clientIP = socket.handshake.address;
+            clientIP = socket.handshake.address.address;
         }
 
 
