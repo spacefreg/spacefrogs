@@ -29,6 +29,7 @@ request('http://ip-api.com/json', function(err, res){
     }
 });
 
+
 io.on('connection', socket => {
     socket.on('user-enter', username => {
         console.log(socket.id + " connected using name " + username);
