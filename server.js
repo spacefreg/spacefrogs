@@ -26,14 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 server.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
-http.get('http://ip-api.com/json', (res) => {
-    console.log('ip-api GET status: ' + res.statusCode);
-
-    res.on('data', (data) => {
-        const IPdata = JSON.parse(data);
-        //console.log(IPdata);
-    });
-});
 
 
 io.on('connection', socket => {
@@ -42,11 +34,11 @@ io.on('connection', socket => {
         if (DEBUG) {
             clientIP = '';
         } else {
-            clientIP = socket.handshake.address.address;
+            clientIP = socket.handshake.address;
         }
 
 
-        console.log(`user connected with  name ${username} and IP: ${socket.handshake.address}`);
+        console.log(`user connected with  name ${username}`);
 
         http.get(`http://ip-api.com/json/${clientIP}`, (res) => {
             res.on('data', (data) => {

@@ -1,8 +1,5 @@
 let socket = io();
 
-
-console.log("Spacefrogs!");
-
 $('#entrance-form').submit(function(e){
     e.preventDefault(); 
     let username = $('#name-textbox').val();
