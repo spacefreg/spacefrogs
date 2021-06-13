@@ -1,6 +1,68 @@
-#greetings {
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+#chatroom {
     position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
+    top: 80%; left: 50%;
     width: 300px;
+    background-color:seagreen;
 }
+
+#chat-textbox { 
+    outline:none;
+    position: absolute;
+    width: 300%;
+    top: 50%; left: 50%;
+    padding: 12px 20px;
+    border: 2px solid rgb(96, 195, 252);
+    border-radius: 10px;
+    transform: translate(-50%, 150%);
+    font-size: 2rem;
+    font-family: monospace;
+    text-align: center;
+}
+
+#chatroom > .messages {
+    font-family: monospace;
+    font-size: 2rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 10;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+#activity-bar {
+    grid-column: 1;
+    grid-row: 1/10;
+    background-color: rgb(18, 31, 53);
+    text-align: center;
+}
+
+#activity-bar > img {
+    text-align: center;
+}
+
+#activity-bar > h1 {
+    grid-column: 1/5;
+    grid-row: 2;
+    color: rgb(255, 255, 238);
+    font-family: monospace;
+    font-size: 3rem;
+}
+
+
+#main-screen {
+    background-color: rgb(255, 255, 238);
+    grid-column: 2/6;
+    grid-row: 1/10;
+}
+
+

@@ -1,7 +1,3 @@
-//need to figure out a better way to do this
-const DEBUG = false;
-
-
 const path = require('path');
 const http = require('http');
 const express = require('express');
@@ -29,24 +25,8 @@ server.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
 io.on('connection', socket => {
-    socket.on('c-user-enter', username => {
-        let clientIP;
-        if (DEBUG) {
-            clientIP = '';
-        } else {
-            clientIP = socket.handshake.address;
-        }
-
-
-        console.log(`user connected with  name ${username}`);
-
-        http.get(`http://ip-api.com/json/${clientIP}`, (res) => {
-            res.on('data', (data) => {
-                const IPdata = JSON.parse(data);
-                const IPstring = JSON.stringify(IPdata);
-                console.log('anonymous user from ' + IPstring + ' connected');
-                io.to(socket.id).emit('s-greetings', 'Anonymous user from ' + IPstring);
-            });
-        });
+    socket.on('c-message', msg => {
+        console.log(`anonymous user sent: ${msg}`);
+        io.sockets.emit('s-message', msg);
     });
 });

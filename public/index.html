@@ -7,15 +7,24 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <div id="greetings">
-            <form id="entrance-form">
-                <input id="name-textbox" autocomplete="off" placeholder="Your Name"><button>ENTER</button>
-            </form>
+        <div class="grid">
+            <div id="activity-bar">
+                <img src="res/spacefrog.png">
+                <h1>space frogs</h1>
+            </div>
+            <div id="main-screen"></div>
         </div>
 
-        <script src="src/client.js"></script>
+        <div id="chatroom">
+            <ul class="messages"></ul>
+            <input id="chat-textbox" autocomplete="off" placeholder="">
+        </div>
+       
+       
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+
+        <script defer src="src/client.js"></script>
 
     </body>
 </html>
