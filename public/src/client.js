@@ -17,7 +17,7 @@ input.addEventListener('keyup', (e) => {
 
 socket.on('s-message', (message) => {
     const p = document.createElement('p');
-    const node = document.createTextNode(message);
+    const node = document.createTextNode('Anonymous said: ' + message);
     p.appendChild(node);
     messages.appendChild(p);
 });
