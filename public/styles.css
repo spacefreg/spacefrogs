@@ -69,7 +69,7 @@
 }
 
 #chat-textbox { 
-    position: absolute;
+    position: fixed;
     outline:none;
     display: block;
     padding: 12px 20px;
@@ -78,9 +78,9 @@
     border-radius: 10px;
     font-size: 2rem;
     font-family: monospace;
-    top: 900px;
-    margin-right: auto;
-    margin-left: auto;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 
