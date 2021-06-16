@@ -1,12 +1,16 @@
 *{
     box-sizing: border-box;
+
+  }
+
+  body {
     padding: 0;
     margin: 0;
   }
 
 
 
-.grid {
+/* .grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: 10;
@@ -20,6 +24,8 @@
     grid-row: 1/10;
     background-color: rgb(18, 31, 53);
     text-align: center;
+    height: 100vh;
+    position: fixed;
 }
 
 #activity-bar > img {
@@ -32,18 +38,38 @@
     color: rgb(255, 255, 238);
     font-family: monospace;
     font-size: 3rem;
+} */
+
+.navbar {
+    width: 160px;
+    height: 100%;
+    position: fixed;
+    background-color: slategray;
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
 }
+
+.navbar a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+  }
+
+  .navbar a:hover {
+    background-color: #ccc;
+  }
 
 
 #main-screen {
-    position: relative;
+    margin-left: 160px;
     background-color: rgb(255, 255, 238);
-    grid-column: 2/6;
-    grid-row: 1/10;
 }
 
 #chat-textbox { 
-    position: relative;
+    position: absolute;
     outline:none;
     display: block;
     padding: 12px 20px;
