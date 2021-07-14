@@ -1,4 +1,4 @@
-let socket = io();
+const socket = io();
 
 const input = document.getElementById('chat-textbox');
 const messages = document.querySelector('.messages');
