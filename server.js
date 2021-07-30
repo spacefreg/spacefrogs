@@ -1,7 +1,7 @@
 const path = require('path');
 const http = require('http');
 const express = require('express');
-//const socketIO = require('socket.io');
+const socketIO = require('socket.io');
 const mongoose = require('mongoose');
 
 //jquery
@@ -13,8 +13,29 @@ const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 29070;
 
-//const io = socketIO(server);
+const io = socketIO(server);
 const uri = "mongodb+srv://freg:test123@nrol-39.2degb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+let users = new Array();
+class ConnectedUser {
+    constructor(name, socketid) {
+        this.name = name;
+        this.socketid = socketid;
+    }
+}
+
+function getPlayerIndexFromSocket(socket) {
+    let returnVal = -1;
+
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].socketid == socket.id) {
+            returnVal = i;
+        }
+    }
+    return returnVal;
+}
+
+
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -36,22 +57,40 @@ const testSchema = mongoose.Schema({
 
 const Anon = mongoose.model('Anon', testSchema);
 
-Anon.insertMany([
-    { name: 'Freg', age: 24 },
-    { name: 'Bozay', age: 25} ,
-    { name: 'cowboy', age: 1337 }
-])
-    .then(data => {
-        console.log('insertMany successful');
-        console.log(data);
-    });
 
 
-//mothballing socket.io until some kind of multiplayer is added (7/25/21)
-
-// io.on('connection', socket => {
-//     socket.on('c-message', msg => {
-//         console.log(`anonymous user sent: ${msg}`);
-//         io.sockets.emit('s-message', msg);
+// Anon.insertMany([
+//     { name: 'Freg', age: 24 },
+//     { name: 'Bozay', age: 25} ,
+//     { name: 'cowboy', age: 1337 }
+// ])
+//     .then(data => {
+//         console.log('insertMany successful');
+//         console.log(data);
 //     });
-// });
+
+
+io.on('connection', socket => {
+    users.push(new ConnectedUser('anon', socket.id));
+    console.log('anon connected. socket.id: ' + socket.id);
+    io.to(socket.id).emit('server-welcome', `server says welcome. Your socket ID is ${socket.id}. There are ${users.length} users connected.`);
+
+    socket.on('disconnect', () => {
+        let index = getPlayerIndexFromSocket(socket);
+
+        if (index != -1) {
+            users.splice(index, 1);
+        }
+    });
+});
+
+
+
+setInterval(sendPulse, 1000);
+
+function sendPulse() {
+    if (users.length > 0) {
+        console.log('emitting server-pulse with user count: ' + users.length);
+        io.sockets.emit('server-pulse', users.length);
+    }
+}
