@@ -1,3 +1,5 @@
+const debug = false;
+
 const path = require('path');
 const http = require('http');
 const express = require('express');
@@ -14,7 +16,18 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 29070;
 
 const io = socketIO(server);
-const uri = "mongodb+srv://freg:test123@nrol-39.2degb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+//my way of creating #defines (very bad!)
+const BAD_INDEX = -1;
+
+let uri;
+
+if (debug) {
+    uri = "mongodb+srv://freg:test123@nrol-39.2degb.mongodb.net/debugdb?retryWrites=true&w=majority";
+}
+else {
+    uri = "mongodb+srv://freg:test123@nrol-39.2degb.mongodb.net/productiondb?retryWrites=true&w=majority";
+}
 
 let users = new Array();
 class ConnectedUser {
@@ -25,14 +38,12 @@ class ConnectedUser {
 }
 
 function getPlayerIndexFromSocket(socket) {
-    let returnVal = -1;
-
     for (let i = 0; i < users.length; i++) {
         if (users[i].socketid == socket.id) {
-            returnVal = i;
+            return i;
         }
     }
-    return returnVal;
+    return BAD_INDEX;
 }
 
 
@@ -75,10 +86,16 @@ io.on('connection', socket => {
     console.log('anon connected. socket.id: ' + socket.id);
     io.to(socket.id).emit('server-welcome', `server says welcome. Your socket ID is ${socket.id}. There are ${users.length} users connected.`);
 
+    // Anon.create({ name: socket.id, age: 69 })
+    //     .then(data => {
+    //         console.log('successful insert');
+    //         console.log(data);
+    // });
+
     socket.on('disconnect', () => {
         let index = getPlayerIndexFromSocket(socket);
 
-        if (index != -1) {
+        if (index != BAD_INDEX) {
             users.splice(index, 1);
         }
     });
@@ -90,7 +107,6 @@ setInterval(sendPulse, 1000);
 
 function sendPulse() {
     if (users.length > 0) {
-        console.log('emitting server-pulse with user count: ' + users.length);
         io.sockets.emit('server-pulse', users.length);
     }
 }

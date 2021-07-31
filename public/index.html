@@ -7,19 +7,16 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <div class ="navbar">
-            <a href="#" class="active">Lobby</a>
-            <a href="#">/sfg/ Archives</a>
-            <a href="#">Freg's Portal</a>
-        </div>
-
-        <!-- <img src="res/spacefrog.png">
-        <h1>space frogs</h1> -->
-
 
         <div id="main-screen">
-            <canvas id="canvas" width="1366" height="768"></canvas>
-            <input id="chat-textbox" autocomplete="off">
+            <div id="opening-prompt">
+                <input id="new-user-box" autocomplete="off" placeholder="Type name here" class="hide">
+                <button id="new-user-btn">New User</button>
+                <button id="load-user-btn">Load From Existing Username</button>
+                <ul id="db-usernames-list" class="hide"></ul>
+            </div>
+            <canvas id="canvas" width="1366" height="768" class="hide"></canvas>
+            <!-- <input id="chat-textbox" autocomplete="off"> -->
         </div>
 
         

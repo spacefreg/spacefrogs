@@ -9,37 +9,6 @@
   }
 
 
-
-/* .grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: 10;
-    width: 100vw;
-    height: 100vh;
-}
-
-
-#activity-bar {
-    grid-column: 1;
-    grid-row: 1/10;
-    background-color: rgb(18, 31, 53);
-    text-align: center;
-    height: 100vh;
-    position: fixed;
-}
-
-#activity-bar > img {
-    text-align: center;
-}
-
-#activity-bar > h1 {
-    grid-column: 1/5;
-    grid-row: 2;
-    color: rgb(255, 255, 238);
-    font-family: monospace;
-    font-size: 3rem;
-} */
-
 .navbar {
     width: 160px;
     height: 100%;
@@ -63,10 +32,42 @@
   }
 
 
-#main-screen {
-    margin-left: 160px;
-    background-color: rgb(255, 255, 238);
+#opening-prompt {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%; left: 50%;
 }
+
+
+#opening-prompt > #new-user-btn {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+    border: hidden;
+    border-radius: 10px;
+    background-color: rgb(96, 195, 252);
+}
+
+#opening-prompt > #new-user-btn:hover {
+    background-color: rgb(56, 75, 152);
+    cursor: pointer;
+}
+
+
+#opening-prompt > #load-user-btn {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+    border: hidden;
+    border-radius: 10px;
+    background-color: rgb(96, 195, 252);
+}
+#opening-prompt > #load-user-btn:hover {
+    background-color: rgb(56, 75, 152);
+    cursor: pointer;
+}
+
+
+
+
 
 #chat-textbox { 
     position: fixed;
@@ -84,15 +85,19 @@
 }
 
 
-#canvas {
+canvas {
     margin: auto;
     display: block;
     position: fixed;
-    background-color: red;
+    background-color: rgb(78, 61, 139);
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+}
+
+.hide {
+    display: none;
 }
 
 
