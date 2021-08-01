@@ -1,5 +1,9 @@
 const debug = false;
 
+//backend imports
+// const userSchema = require('./backend/schemas');
+
+
 const path = require('path');
 const http = require('http');
 const express = require('express');
@@ -19,6 +23,16 @@ const io = socketIO(server);
 
 //my way of creating #defines (very bad!)
 const BAD_INDEX = -1;
+
+const userSchema = mongoose.Schema({
+    name: String,
+    saveData: {
+        gameDate: Number,
+        country: String,
+        startingTileX: Number,
+        startingTileY: Number
+    }
+});
 
 let uri;
 
@@ -61,12 +75,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 server.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 
-const testSchema = mongoose.Schema({
-    name: String,
-    age: Number
-});
 
-const Anon = mongoose.model('Anon', testSchema);
+
+const UserEntry = mongoose.model('UserEntry', userSchema);
 
 
 
@@ -91,6 +102,24 @@ io.on('connection', socket => {
     //         console.log('successful insert');
     //         console.log(data);
     // });
+
+    socket.on('client-request-usernames', () => {
+        console.log(socket.id + ' requested usernames');
+    });
+
+    socket.on('client-create-user', (username) => {
+        UserEntry.create(
+            { name: username, 
+              saveData: {
+                  gameDate: 0,
+                  country: "US",
+                  startingTileX: 4,
+                  startingTileY: 20
+              } 
+            });
+
+        console.log(socket.id + ' created user entry with name: ' + username);
+    });
 
     socket.on('disconnect', () => {
         let index = getPlayerIndexFromSocket(socket);

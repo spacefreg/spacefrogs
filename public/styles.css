@@ -39,7 +39,7 @@
 }
 
 
-#opening-prompt > #new-user-btn {
+#new-user-btn {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 2rem;
     border: hidden;
@@ -47,22 +47,31 @@
     background-color: rgb(96, 195, 252);
 }
 
-#opening-prompt > #new-user-btn:hover {
+#new-user-btn:hover {
     background-color: rgb(56, 75, 152);
     cursor: pointer;
 }
 
 
-#opening-prompt > #load-user-btn {
+#load-user-btn {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 2rem;
     border: hidden;
     border-radius: 10px;
     background-color: rgb(96, 195, 252);
 }
-#opening-prompt > #load-user-btn:hover {
+#load-user-btn:hover {
     background-color: rgb(56, 75, 152);
     cursor: pointer;
+}
+
+#new-user-box {
+    border:hidden;
+    border-radius: 10px;
+    background-color: rgb(200, 200, 200);
+    font-size: 2rem;
+    text-align: center;
+    outline: none;
 }
 
 
