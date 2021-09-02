@@ -43,6 +43,11 @@ socket.on('server-welcome', message => {
 
 socket.on('server-username-list', usernames => {
     showMenuElement(dbUsernamesList);
+    for(let i = 0; i < usernames.length; i++) {
+        let li = document.createElement('button');
+        li.textContent = usernames[i];
+        dbUsernamesList.appendChild(li);
+    }
     console.log(usernames);
 });
 

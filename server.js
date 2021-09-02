@@ -1,7 +1,7 @@
-const debug = false;
+const debug = true;
 
 //backend imports
-// const userSchema = require('./backend/schemas');
+const userSchema = require('./schemas/user')
 
 
 const path = require('path');
@@ -10,10 +10,6 @@ const express = require('express');
 const socketIO = require('socket.io');
 const mongoose = require('mongoose');
 
-//jquery
-const { JSDOM } = require('jsdom');
-const { window } = new JSDOM('');
-const $ = require('jquery')(window);
 
 const app = express();
 const server = http.createServer(app);
@@ -24,15 +20,6 @@ const io = socketIO(server);
 //my way of creating #defines (very bad!)
 const BAD_INDEX = -1;
 
-const userSchema = mongoose.Schema({
-    name: String,
-    saveData: {
-        gameDate: Number,
-        country: String,
-        startingTileX: Number,
-        startingTileY: Number
-    }
-});
 
 let dbString = debug ? "debugdb" : "productiondb";
 let uri = "mongodb+srv://freg:test123@nrol-39.2degb.mongodb.net/" + dbString + "?retryWrites=true&w=majority";
@@ -78,11 +65,6 @@ io.on('connection', socket => {
     console.log('anon connected. socket.id: ' + socket.id);
     io.to(socket.id).emit('server-welcome', `server says welcome. Your socket ID is ${socket.id}. There are ${users.length} users connected.`);
 
-    // Anon.create({ name: socket.id, age: 69 })
-    //     .then(data => {
-    //         console.log('successful insert');
-    //         console.log(data);
-    // });
 
     socket.on('client-request-usernames', async () => {
         console.log(socket.id + ' requested usernames');
