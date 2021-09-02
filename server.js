@@ -34,14 +34,9 @@ const userSchema = mongoose.Schema({
     }
 });
 
-let uri;
+let dbString = debug ? "debugdb" : "productiondb";
+let uri = "mongodb+srv://freg:test123@nrol-39.2degb.mongodb.net/" + dbString + "?retryWrites=true&w=majority";
 
-if (debug) {
-    uri = "mongodb+srv://freg:test123@nrol-39.2degb.mongodb.net/debugdb?retryWrites=true&w=majority";
-}
-else {
-    uri = "mongodb+srv://freg:test123@nrol-39.2degb.mongodb.net/productiondb?retryWrites=true&w=majority";
-}
 
 let users = new Array();
 class ConnectedUser {
@@ -62,13 +57,10 @@ function getPlayerIndexFromSocket(socket) {
 
 
 
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-        console.log('connection open with mongodb');
-    })
-    .catch(err => {
-        console.log('oh no didnt connect!');
-    })
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+db.on('error', error => console.log(error));
+db.once('open', () => console.log('connection open with mongodb'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -79,17 +71,6 @@ server.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 const UserEntry = mongoose.model('UserEntry', userSchema);
 
-
-
-// Anon.insertMany([
-//     { name: 'Freg', age: 24 },
-//     { name: 'Bozay', age: 25} ,
-//     { name: 'cowboy', age: 1337 }
-// ])
-//     .then(data => {
-//         console.log('insertMany successful');
-//         console.log(data);
-//     });
 
 
 io.on('connection', socket => {
@@ -103,8 +84,13 @@ io.on('connection', socket => {
     //         console.log(data);
     // });
 
-    socket.on('client-request-usernames', () => {
+    socket.on('client-request-usernames', async () => {
         console.log(socket.id + ' requested usernames');
+        //allUsers is an object that is an array of objects, each object being an entry
+        const allUsers = await UserEntry.find({}, 'name -_id');
+        const usernames = allUsers.map(user => user.name);
+        io.to(socket.id).emit('server-username-list', usernames);
+        console.log(usernames);
     });
 
     socket.on('client-create-user', (username) => {
@@ -123,7 +109,7 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
         let index = getPlayerIndexFromSocket(socket);
-
+        console.log(socket.id + " disconnected");
         if (index != BAD_INDEX) {
             users.splice(index, 1);
         }
