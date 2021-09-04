@@ -1,4 +1,4 @@
-const debug = true;
+const debug = false;
 
 //backend imports
 const userSchema = require('./schemas/user')
@@ -9,6 +9,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 const mongoose = require('mongoose');
+const { json } = require('express');
 
 
 const app = express();
@@ -68,14 +69,14 @@ io.on('connection', socket => {
 
     socket.on('client-request-usernames', async () => {
         console.log(socket.id + ' requested usernames');
-        //allUsers is an object that is an array of objects, each object being an entry
-        const allUsers = await UserEntry.find({}, 'name -_id');
-        const usernames = allUsers.map(user => user.name);
-        io.to(socket.id).emit('server-username-list', usernames);
-        console.log(usernames);
+        //client has requested a list of users in the db, so query mongo for usernames + the dates they were created
+        //(no need to query for the full db)
+        const allUsers = await UserEntry.find({}, 'name createdAt saveData.gameDate -_id');
+        const usernames = allUsers.map(user => user.createdAt);
+        io.to(socket.id).emit('server-username-list', allUsers);
     });
 
-    socket.on('client-create-user', (username) => {
+    socket.on('client-create-user', async (username) => {
         UserEntry.create(
             { name: username, 
               saveData: {
@@ -87,10 +88,19 @@ io.on('connection', socket => {
             });
 
         console.log(socket.id + ' created user entry with name: ' + username);
+        // const user = await getUserSaveFromUsername(username);
+        // console.log('testing getUserSaveFromUsername: ' + user.name);
+
+    });
+
+    socket.on('client-request-saveFile', async (username) => {
+        console.log(socket.id + ' requested to load file: ' + username);
+        let entry = await getUserSaveFromUsername(username);
+        io.to(socket.id).emit('server-dispatch-saveFile', entry);
     });
 
     socket.on('disconnect', () => {
-        let index = getPlayerIndexFromSocket(socket);
+        const index = getPlayerIndexFromSocket(socket);
         console.log(socket.id + " disconnected");
         if (index != BAD_INDEX) {
             users.splice(index, 1);
@@ -100,10 +110,18 @@ io.on('connection', socket => {
 
 
 
-setInterval(sendPulse, 1000);
+//setInterval(sendPulse, 2000);
 
-function sendPulse() {
+async function sendPulse() {
     if (users.length > 0) {
         io.sockets.emit('server-pulse', users.length);
     }
+    // const testUser = await getUserSaveFromUsername("time wizard");
+    // console.log(testUser.name);
+}
+
+//server helper functions
+
+async function getUserSaveFromUsername(username) {
+    return UserEntry.findOne({ name: username }).exec();
 }

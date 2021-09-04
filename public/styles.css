@@ -75,21 +75,34 @@
 }
 
 #db-usernames-list {
-    max-height: 200px;
-    width: 600px;
+    max-height: 800px;
+    width: 1000px;
     overflow: auto;
+    
 }
 
-#db-usernames-list > button {
-    display: block;
+#db-usernames-list > div {
+    background-color: rgb(220, 220, 220);
+    margin-top: 10px;
+}
+
+#db-usernames-list > div > button {
+    /* display: block; */
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 2rem;
     border: hidden;
 }
 
-#db-usernames-list > button:hover {
+#db-usernames-list > div > button:hover {
     background-color: rgb(96, 195, 252);
     cursor: pointer;
+}
+
+#db-usernames-list > div > p {
+    display: inline;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1rem;
+    float: right;
 }
 
 

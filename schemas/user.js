@@ -8,6 +8,11 @@ const userSchema = mongoose.Schema({
         startingTileX: Number,
         startingTileY: Number
     }
-});
+}, 
+    {
+        //adds Date fields createdAt and UpdatedAt 
+        timestamps: true
+    }
+);
 
 module.exports = userSchema;

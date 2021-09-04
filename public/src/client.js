@@ -25,11 +25,20 @@ newUserButton.addEventListener('click', () => {
     showMenuElement(newUserBox);
 });
 
-newUserForm.addEventListener('submit', (e) => {
+newUserForm.addEventListener('submit', e => {
     e.preventDefault();
     socket.emit('client-create-user', newUserBox.value);
     hideMenuElement(newUserBox);
     showMenuElement(canvas);
+});
+
+dbUsernamesList.addEventListener('click', e => {
+    if (e.target.tagName == 'BUTTON') {
+        console.log('requesting to load file from server: ' + e.target.textContent);
+        socket.emit('client-request-saveFile', e.target.textContent);
+        hideMenuElement(dbUsernamesList);
+        showMenuElement(canvas);
+    }
 });
 
 
@@ -41,14 +50,32 @@ socket.on('server-welcome', message => {
     console.log(message);
 });
 
-socket.on('server-username-list', usernames => {
+socket.on('server-username-list', userEntries => {
     showMenuElement(dbUsernamesList);
-    for(let i = 0; i < usernames.length; i++) {
-        let li = document.createElement('button');
-        li.textContent = usernames[i];
-        dbUsernamesList.appendChild(li);
+    for(let i = 0; i < userEntries.length; i++) {
+        //first create a div to contain the username, the date the save was created, and the current save game date
+        let userEntryDiv = document.createElement('div');
+        userEntryDiv.setAttribute('id', userEntries[i].name + '-div');
+        dbUsernamesList.appendChild(userEntryDiv);
+
+        //create the username button and place in this entry's div
+        let usernameButton = document.createElement('button');
+        usernameButton.textContent = userEntries[i].name;
+        userEntryDiv.appendChild(usernameButton);
+
+        //add some helpful info about the save entry to the div
+        let userSaveInfo = document.createElement('p');
+        userSaveInfo.textContent += 'Created: ' + userEntries[i].createdAt;
+        userSaveInfo.textContent += ' - Game Date: ' + userEntries[i].saveData.gameDate;
+        userEntryDiv.appendChild(userSaveInfo);
+
     }
-    console.log(usernames);
+    console.log(userEntries);
+});
+
+socket.on('server-dispatch-saveFile', file => {
+    console.log('received save file from server');
+    console.log(file);
 });
 
 //helper functions
