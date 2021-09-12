@@ -11,6 +11,8 @@ const dbUsernamesList = document.getElementById('db-usernames-list');
 
 const canvas = document.getElementById('canvas');
 
+let game = new Game(canvas.getContext('2d'));
+
 
 loadUserButton.addEventListener('click', () => {
     socket.emit('client-request-usernames');
@@ -30,6 +32,7 @@ newUserForm.addEventListener('submit', e => {
     socket.emit('client-create-user', newUserBox.value);
     hideMenuElement(newUserBox);
     showMenuElement(canvas);
+    game.init(newUserBox.value);
 });
 
 dbUsernamesList.addEventListener('click', e => {
@@ -76,6 +79,9 @@ socket.on('server-username-list', userEntries => {
 socket.on('server-dispatch-saveFile', file => {
     console.log('received save file from server');
     console.log(file);
+    
+    //call game init which initializes game state and starts the game loop
+    game.initFromSave(file.name);
 });
 
 //helper functions

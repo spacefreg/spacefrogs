@@ -22,10 +22,11 @@ const io = socketIO(server);
 const BAD_INDEX = -1;
 
 
-let dbString = debug ? "debugdb" : "productiondb";
-let uri = "mongodb+srv://freg:test123@nrol-39.2degb.mongodb.net/" + dbString + "?retryWrites=true&w=majority";
+let dbString = debug ? 'debugdb' : 'productiondb';
+let uri = 'mongodb+srv://freg:test123@nrol-39.2degb.mongodb.net/' + dbString + '?retryWrites=true&w=majority';
 
 
+//as of 9/3/21 the users array does nothing more than act as a simple container that keeps track of currently connected users
 let users = new Array();
 class ConnectedUser {
     constructor(name, socketid) {
@@ -81,15 +82,13 @@ io.on('connection', socket => {
             { name: username, 
               saveData: {
                   gameDate: 0,
-                  country: "US",
+                  country: 'US',
                   startingTileX: 4,
                   startingTileY: 20
               } 
             });
 
         console.log(socket.id + ' created user entry with name: ' + username);
-        // const user = await getUserSaveFromUsername(username);
-        // console.log('testing getUserSaveFromUsername: ' + user.name);
 
     });
 
@@ -101,7 +100,7 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
         const index = getPlayerIndexFromSocket(socket);
-        console.log(socket.id + " disconnected");
+        console.log(socket.id + ' disconnected');
         if (index != BAD_INDEX) {
             users.splice(index, 1);
         }
@@ -116,8 +115,6 @@ async function sendPulse() {
     if (users.length > 0) {
         io.sockets.emit('server-pulse', users.length);
     }
-    // const testUser = await getUserSaveFromUsername("time wizard");
-    // console.log(testUser.name);
 }
 
 //server helper functions
