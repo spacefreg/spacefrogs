@@ -1,15 +1,24 @@
 class Tile {
-    init(xIndex, yIndex, planet, allegiance, biome) {
+    init(xIndex, yIndex, planet, allegiance, biome, rootPosition) {
         this.xIndex = xIndex;
         this.yIndex = yIndex;
         this.planet = planet;
         this.allegiance = allegiance;
         this.biome = biome;
-        console.log('creating a Tile at index ' + this.xIndex + ',' + this.yIndex);
+        this.rootPosition = rootPosition;
+        this.point = new Point(rootPosition.x + (xIndex * 32), rootPosition.y + (yIndex * 32));
+        //console.log('creating a Tile at index ' + this.xIndex + ',' + this.yIndex);
     }
 
     setAllegiance(newAllegiance) {
         this.allegiance = newAllegiance;
+    }
+}
+
+class Point  {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
     }
 }
 

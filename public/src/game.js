@@ -26,10 +26,13 @@ class Game {
 
     initTiles() {
         console.log('initializing tiles');
-        this.earthMap = new Tilemap(this.canv);
-        this.marsMap = new Tilemap(this.canv);
-        this.earthMap.init('Earth', 18, 13);
-        this.marsMap.init('Mars', 6, 2);
+        this.earthMap = new Tilemap();
+        this.marsMap = new Tilemap();
+
+        const earthRootPosition = new Point(10, 10);
+        const marsRootPosition = new Point(700, 100);
+        this.earthMap.init(this.canv, 'Earth', 18, 13, earthRootPosition);
+        this.marsMap.init(this.canv, 'Mars', 15, 9, marsRootPosition);
 
     }
 
@@ -41,6 +44,6 @@ class Game {
         this.lastTimeStamp = window.performance.now();
 
         this.earthMap.draw();
-        //this.marsMap.draw();
+        this.marsMap.draw();
     }
 }
