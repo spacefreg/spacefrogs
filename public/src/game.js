@@ -26,13 +26,15 @@ class Game {
 
     initTiles() {
         console.log('initializing tiles');
+
         this.earthMap = new Tilemap();
         this.marsMap = new Tilemap();
 
         const earthRootPosition = new Point(10, 10);
         const marsRootPosition = new Point(700, 100);
-        this.earthMap.init(this.canv, 'Earth', 18, 13, earthRootPosition);
-        this.marsMap.init(this.canv, 'Mars', 15, 9, marsRootPosition);
+
+        this.earthMap.init(this.canv, 'Earth', 18, 11, earthRootPosition);
+        this.marsMap.init(this.canv, 'Mars', 11, 6, marsRootPosition);
 
     }
 

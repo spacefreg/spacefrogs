@@ -12,7 +12,7 @@ class Tilemap {
         this.rootPosition = rootPosition;
 
         this.tileAtlas = new Image(96, 32);
-        this.tileAtlas.src = '/res/mapdata/earth/biomes/tileset.png';
+        this.tileAtlas.src = '/res/mapdata/' + planet + '/biomes/tileset.png';
 
         console.log('creating planet ' + planet + ' with rootPosition ' + this.rootPosition.x + ', ' + this.rootPosition.y);
 

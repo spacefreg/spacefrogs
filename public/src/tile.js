@@ -24,8 +24,8 @@ class Point  {
 
 const tileBiomesEarth = {
     TEMPERATE: 'temperate',
-    DESERT: 'desert',
-    OCEAN: 'ocean'
+    OCEAN: 'ocean',
+    DESERT: 'desert'
 }
 
 const tileBiomesMars = {
