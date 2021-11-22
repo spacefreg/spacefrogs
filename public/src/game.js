@@ -33,8 +33,8 @@ class Game {
         const earthRootPosition = new Point(10, 10);
         const marsRootPosition = new Point(700, 100);
 
-        this.earthMap.init(this.canv, 'Earth', 18, 11, earthRootPosition);
-        this.marsMap.init(this.canv, 'Mars', 11, 6, marsRootPosition);
+        this.earthMap.init(this.canv, 'earth', 18, 11, earthRootPosition);
+        this.marsMap.init(this.canv, 'mars', 11, 6, marsRootPosition);
 
     }
 
