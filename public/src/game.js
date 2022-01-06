@@ -1,6 +1,8 @@
 class Game {
     dt;
     lastTimeStamp;
+    earthMap;
+    marsMap;
 
 
     constructor(canv) {
@@ -33,8 +35,9 @@ class Game {
         const earthRootPosition = new Point(10, 10);
         const marsRootPosition = new Point(700, 100);
 
-        this.earthMap.init(this.canv, 'earth', 18, 11, earthRootPosition);
-        this.marsMap.init(this.canv, 'mars', 11, 6, marsRootPosition);
+        this.initEarthTiles();
+        this.earthMap.init(this.canv, planet.EARTH, 18, 11, earthRootPosition);
+        this.marsMap.init(this.canv, planet.MARS, 11, 6, marsRootPosition);
 
     }
 
@@ -47,5 +50,13 @@ class Game {
 
         this.earthMap.draw();
         this.marsMap.draw();
+    }
+
+    initEarthTiles() {
+        this.earthMap.setBiomeAtCoord('earth', 0, 0, tileBiomesEarth.OCEAN);
+    }
+
+    initMarsTiles() {
+
     }
 }

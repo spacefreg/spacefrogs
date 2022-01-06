@@ -1,4 +1,4 @@
-const debug = false;
+const debug = true;
 
 //backend imports
 const userSchema = require('./schemas/user')
