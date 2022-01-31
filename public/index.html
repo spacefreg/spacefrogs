@@ -8,36 +8,21 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>学习中文</title>
 
-    <style>
-
-        html, body {
-            margin: 0;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .scrollable-place {
-        
-        height: 3000px;
-        
-        }
-        
-        .stop-scrolling {
-        
-        height: 100%;
-        
-        overflow: hidden;
-        
-        }
-        
-        </style>
+    <link rel="stylesheet" href="src/style.css">
 
 
 </head>
 <body>
+    <div id="app-screen">
+        <div id="char-prompt" class="zh">
+            <p>汉</p>
+        </div>
+        <canvas id="canv" width="300" height="300"></canvas>
+        <button class="btn" id="check-btn">check</button>
+        <button class="btn" id="skip-btn">skip</button>
+    </div>
 
-    <h1>oi lole</h1>
-    <canvas id="canv" width="800" height="400"></canvas>
+    <button class="btn" id="save">save progress</button>
 
     <script defer src="src/client.js"></script>
 </body>

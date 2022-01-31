@@ -3,12 +3,15 @@ const ctx = canvas.getContext('2d');
 
 document.documentElement.requestFullscreen();
 
-canvas.setAttribute('width', '400');
-canvas.setAttribute('height', '800');
+//canvas.setAttribute('width', '400');
+//canvas.setAttribute('height', '800');
+
+const canvWidth = canvas.width;
+const canvHeight = canvas.height;
 
 ctx.beginPath();
-ctx.rect(0, 0, 100, 100);
-ctx.fillStyle = 'red';
+ctx.rect(0, 0, canvWidth, canvHeight);
+ctx.fillStyle = `rgb(175, 203, 204)`;
 ctx.fill();
 
 console.log('hello frfom client.js');
