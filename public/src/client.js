@@ -13,6 +13,8 @@ ctx.rect(0, 0, canvWidth, canvHeight);
 ctx.fillStyle = `rgb(175, 203, 204)`;
 ctx.fill();
 
+ctx.lineWidth = 5;
+
 console.log('hello from client.js');
 
 
