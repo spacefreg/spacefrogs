@@ -14,7 +14,7 @@ ctx.rect(0, 0, canvWidth, canvHeight);
 ctx.fillStyle = `rgb(175, 203, 204)`;
 ctx.fill();
 
-console.log('hello frfom client.js');
+console.log('hello from client.js');
 
 
 document.addEventListener('click', function(e) {

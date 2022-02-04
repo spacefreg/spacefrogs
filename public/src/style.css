@@ -17,7 +17,7 @@ html, body {
     margin-right: auto;
     width: 85%;
     background-color: rgb(170, 166, 104);
-    height: 70%;
+    height: 60%;
     text-align: center;
 }
 
@@ -25,19 +25,17 @@ html, body {
     margin: auto;
     text-align: center;
     font-size: 3rem;
-    margin-top: 120px;
 }
 
 
 #app-screen > #canv {
-    background-color: salmon;
     margin: auto;
     display: block;
 }
 
 #save {
     margin: auto;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .btn {
@@ -47,5 +45,5 @@ html, body {
     border: none;
     border-radius: 10px;
     font-size: 2rem;
-    margin-top: 10px;
+    margin-top: 5px;
 }
