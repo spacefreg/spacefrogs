@@ -4,18 +4,12 @@ const ctx = canvas.getContext('2d');
 let isDrawing = false;
 
 
-
-const canvWidth = canvas.width;
-const canvHeight = canvas.height;
-
 ctx.beginPath();
 ctx.rect(0, 0, canvWidth, canvHeight);
 ctx.fillStyle = `rgb(175, 203, 204)`;
 ctx.fill();
 
 ctx.lineWidth = 5;
-
-console.log('hello from client.js');
 
 
 document.addEventListener('click', function(e) {
@@ -26,12 +20,6 @@ document.addEventListener('click', function(e) {
 
 document.body.classList.add('stop-scrolling');
 
-
-
-canvas.addEventListener('mousedown', function(e) {
-    console.log(e.pageX - canvas.offsetLeft);
-    console.log(e.pageY - canvas.offsetTop);
-});
 
 
 function beginDraw(evt) {
