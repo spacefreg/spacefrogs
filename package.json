@@ -19,8 +19,5 @@
   "homepage": "https://github.com/harding-t-allen/Spacefrogs#readme",
   "dependencies": {
     "express": "^4.17.2"
-  },
-  "devDependencies": {
-    "@types/node": "^17.0.15"
   }
 }
