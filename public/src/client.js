@@ -63,6 +63,10 @@ canvas.addEventListener('touchstart', beginTouch, false);
 canvas.addEventListener('touchmove', touchMove, false);
 canvas.addEventListener('touchend', touchEnd, false);
 
+canvas.addEventListener('mousedown', beginDraw, false);
+canvas.addEventListener('mousemove', continueDraw, false);
+canvas.addEventListener('mouseup', endDraw, false);
+
 
 
 const clearBtn = document.getElementById('clear-btn');
