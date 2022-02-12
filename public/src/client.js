@@ -5,7 +5,7 @@ let isDrawing = false;
 
 
 ctx.beginPath();
-ctx.rect(0, 0, canvWidth, canvHeight);
+ctx.rect(0, 0, canvas.width, canvas.height);
 ctx.fillStyle = `rgb(175, 203, 204)`;
 ctx.fill();
 

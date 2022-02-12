@@ -3,7 +3,7 @@ html, body {
     margin: 0;
     height: 100%;
     overflow: hidden;
-    background-color: rgb(91, 116, 135);
+    background-color: rgb(3, 46, 66);
 }
 
         
@@ -16,7 +16,7 @@ html, body {
     margin-left: auto;
     margin-right: auto;
     width: 85%;
-    background-color: rgb(170, 166, 104);
+    /* background-color: rgb(1, 46, 103); */
     height: 60%;
     text-align: center;
 }
@@ -25,12 +25,14 @@ html, body {
     margin: auto;
     text-align: center;
     font-size: 3rem;
+    color: white;
 }
 
 
 #app-screen > #canv {
     margin: auto;
     display: block;
+    border-radius: 20px;
 }
 
 #save {
