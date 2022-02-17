@@ -11,6 +11,10 @@ ctx.fill();
 
 ctx.lineWidth = 5;
 
+console.log(canvas.getBoundingClientRect());
+
+const mytext = document.getElementById('char');
+
 
 document.addEventListener('click', function(e) {
     if (e.target.nodeName !== 'INPUT') {
@@ -29,9 +33,14 @@ function beginDraw(evt) {
 }
 
 function continueDraw(evt) {
+    const mouseX = evt.pageX - canvas.offsetLeft;
+    const mouseY = evt.pageY - canvas.offsetTop;
+
     if (!isDrawing) {
         return;
     } 
+   
+
     ctx.lineTo(evt.pageX - canvas.offsetLeft, evt.pageY - canvas.offsetTop);
     ctx.stroke();
 }
@@ -40,7 +49,7 @@ function endDraw(evt) {
     if (!isDrawing) {
         return;
     }
-    continueDraw(evt);
+    //continueDraw(evt);
     isDrawing = false;
 }
 

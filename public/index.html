@@ -13,16 +13,32 @@
 
 </head>
 <body>
-    <div id="app-screen">
-        <div id="char-prompt" class="zh">
-            <p>汉</p>
-        </div>
-        <canvas id="canv" width="300" height="300"></canvas>
-        <button class="btn" id="clear-btn">clear</button>
-        <button class="btn" id="next-btn">next</button>
-    </div>
+    <div class="app-screen">
+        <div id="screen-left">
 
-    <button class="btn" id="save">save progress</button>
+        </div>
+        <div id="screen-right">
+            <canvas id="canv" width="300" height="300"></canvas>
+            <button class="btn" id="clear-btn">clear</button>
+            <button class="btn" id="next-btn">next</button>
+        </div>
+    </div>
+    <!-- <div id="app-screen">
+        <div id="left">
+
+        </div>
+        <div id="right">
+            <div id="char-prompt" class="zh">
+                <p id="char">汉</p>
+            </div>
+            <canvas id="canv" width="300" height="300"></canvas>
+            <button class="btn" id="clear-btn">clear</button>
+            <button class="btn" id="next-btn">next</button>
+    
+            <button class="btn" id="save" >save progress</button>
+        </div>
+    </div> -->
+
 
     <script defer src="src/client.js"></script>
 </body>
