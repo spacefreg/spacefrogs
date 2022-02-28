@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "echo ayy echo inside quotes script build lole", 
     "test": "echo \"Error: no test specified\" && exit 1"
