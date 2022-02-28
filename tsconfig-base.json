@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "target": "es2016",
+        "module": "commonjs",
+        "strict": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "noFallthroughCasesInSwitch": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strictNullChecks": true,
+        "noEmitOnError": true,
+        "skipLibCheck": true,
+        "composite": true
+    }
+}
