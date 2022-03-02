@@ -2,7 +2,7 @@
     "extends": "../../tsconfig-base.json",
     "compilerOptions": {
         "module": "es2020",
-        "outDir": "../../dist/server",
+        "outDir": "../../dist/public/common",
         "rootDir": ".",
         "composite": true
     },

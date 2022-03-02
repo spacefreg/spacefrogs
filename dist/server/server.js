@@ -1,13 +1,12 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const path_1 = __importDefault(require("path"));
-const server = (0, express_1.default)();
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const server = express();
 const PORT = process.env.PORT || 29070;
-const distPath = path_1.default.dirname(__dirname);
-const publicPath = path_1.default.join(distPath, 'public');
+//const publicPath: string = path.join(distPath, 'public');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const distPath = path.dirname(__dirname);
+console.log('distpath: ' + distPath);
 server.listen(PORT, () => console.log(`server listening on port ${PORT}`));
-server.use(express_1.default.static(publicPath));
+server.use(express.static(path.join(distPath, 'public')));
