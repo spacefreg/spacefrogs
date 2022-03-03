@@ -1,3 +1,4 @@
+import Tile from "./tile.js";
 export default class DrawCanvas {
     constructor() {
         this.canvas = document.getElementById('canv');
@@ -8,7 +9,16 @@ export default class DrawCanvas {
         this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillStyle = `rgb(175, 203, 204)`;
         this.ctx.fill();
+        this.testTile = new Tile(200, 200, 50);
+        this.drawTile(this.testTile);
     }
+    init() {
+        //mouse event listeners
+        this.canvas.addEventListener('mousedown', this.beginDraw.bind(this));
+        this.canvas.addEventListener('mousemove', this.continueDraw.bind(this));
+        this.canvas.addEventListener('mouseup', this.endDraw.bind(this));
+    }
+    //callbacks------------------------------------------------
     beginDraw(evt) {
         this.isDrawing = true;
         this.ctx.beginPath();
@@ -27,10 +37,8 @@ export default class DrawCanvas {
         }
         this.isDrawing = false;
     }
-    init() {
-        //mouse event listeners
-        this.canvas.addEventListener('mousedown', this.beginDraw.bind(this));
-        this.canvas.addEventListener('mousemove', this.continueDraw.bind(this));
-        this.canvas.addEventListener('mouseup', this.endDraw.bind(this));
+    //callbacks------------------------------------------------
+    drawTile(tile) {
+        tile.render(this);
     }
 }

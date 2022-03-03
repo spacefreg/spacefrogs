@@ -1,4 +1,5 @@
 import DrawCanvas from '../client/drawcanvas.js';
+import Tile from '../client/tile.js';
 console.log('henlo from client.ts');
 const canvas = document.getElementById('canv');
 const ctx = canvas.getContext('2d');
@@ -26,6 +27,8 @@ document.body.classList.add('stop-scrolling');
 // canvas.addEventListener('touchstart', beginTouch, false);
 // canvas.addEventListener('touchmove', touchMove, false);
 // canvas.addEventListener('touchend', touchEnd, false);
+const testTile = new Tile(100, 100, 50);
+testTile.render(drawCanvas);
 const clearBtn = document.getElementById('clear-btn');
 clearBtn.onclick = function () {
     ctx.fillStyle = 'rgb(175, 203, 204)';

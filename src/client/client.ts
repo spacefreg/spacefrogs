@@ -1,4 +1,5 @@
 import DrawCanvas from '../client/drawcanvas.js';
+import Tile from '../client/tile.js';
 
 console.log('henlo from client.ts');
 
@@ -43,6 +44,9 @@ document.body.classList.add('stop-scrolling');
 // canvas.addEventListener('touchstart', beginTouch, false);
 // canvas.addEventListener('touchmove', touchMove, false);
 // canvas.addEventListener('touchend', touchEnd, false);
+
+const testTile: Tile = new Tile(100, 100, 50);
+testTile.render(drawCanvas);
 
 
 
