@@ -1,8 +1,8 @@
-import DrawCanvas from "./drawcanvas.js";
+import WorldCanvas from './world/worldcanvas.js';
 export default class Tile {
     xPosition: number;
     yPosition: number;
     size: number;
     constructor(x: number, y: number, size: number);
-    render(dc: DrawCanvas): void;
+    render(dc: WorldCanvas): void;
 }

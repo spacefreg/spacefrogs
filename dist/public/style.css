@@ -3,74 +3,22 @@ html, body {
     margin: 0;
     height: 100%;
     overflow: hidden;
-    background-color: rgb(3, 46, 66);
+    background-color: rgb(34, 34, 34);
 }
 
-        
-.stop-scrolling {  
-    height: 100%;    
-    text-align: center;
-}
 
 #canv {
+    padding: 0;
+    margin: auto;
+    display: block;
     position: absolute;
-    display: block;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     border-radius: 10px;
 }
 
-/* #app-screen {
-    display: flex;
-}
-
-#app-screen > #left {
-    flex-basis: 100px;
-    margin-left: none;
-    margin-right: auto;
-    width: 50%;
-    background-color: cyan;
-    height: 90%;
-}
-
-#app-screen > #right {
-    flex-basis: 100px;
-    margin-left: auto;
-    width: 50%;
-    background-color: rgb(1, 46, 103);
-    height: 90%;
-    text-align: center;
-}
-
-#app-screen > #right > #char-prompt {
-    margin: auto;
-    text-align: center;
-    font-size: 3rem;
-    color: white;
-}
-
-
-#app-screen > #right > #canv {
-    margin: auto;
-    display: block;
-    border-radius: 20px;
-}
-
-#save {
-    margin: auto;
-}
-
-.btn {
-    color: white;
-    background-color: rgb(56, 104, 197);
-    text-shadow: none;
-    border: none;
-    border-radius: 10px;
-    font-size: 2rem;
-    margin-top: 5px;
-}
-
-.debug {
+/* .debug {
     border: 1px solid red;
-} */
+}  */

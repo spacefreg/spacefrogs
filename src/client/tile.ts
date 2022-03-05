@@ -1,4 +1,4 @@
-import DrawCanvas from "./drawcanvas.js";
+import WorldCanvas from './world/worldcanvas.js';
 
 export default class Tile {
     xPosition: number;
@@ -11,7 +11,7 @@ export default class Tile {
         this.size = size;
     }
 
-    render(dc: DrawCanvas) {
+    render(dc: WorldCanvas) {
         dc.ctx.beginPath();
         dc.ctx.rect(this.xPosition, this.yPosition, this.size, this.size);
         dc.ctx.stroke();
