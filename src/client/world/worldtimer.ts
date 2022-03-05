@@ -1,16 +1,8 @@
 export default class WorldTimer {
-    static worldDaysSinceStart: number;
-    private static timeOfClockStart: Date;
     private static isPaused: boolean;
-    private static lastPauseTime: Date;
     private static currentTime: number;
-    private static totalSimTime: number;
-
-
-    private static elapsedTime: number;
 
     static start(): void {
-        this.timeOfClockStart = new Date();
         this.isPaused = false;
         this.currentTime = 0;
     }
@@ -34,10 +26,4 @@ export default class WorldTimer {
         return this.currentTime;
     }
     
-    static getElapsedSeconds(): number {
-        return Math.floor((Date.now() - this.timeOfClockStart.getTime()) / 1000);
-    }
-    static getElapsedMilliseconds(): number {
-        return Date.now() - this.timeOfClockStart.getTime();
-    }
 }
