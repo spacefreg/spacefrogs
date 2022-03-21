@@ -26,12 +26,13 @@ export default class WorldCanvas {
     }
 
     update(dt: number): void {
+        //(3/7/22) don't need to update the fps indicator EVERY frame, 4 times a second is fast enough
         if (Date.now() - this.timeFpsIndicatorLastUpdated > 250) {
             this.fpsIndicator = 'fps:' + Math.floor(((1/dt) * 1000));
             this.timeFpsIndicatorLastUpdated = Date.now();
         }
     }
-
+    
     
     render(): void {
         this.ctx.fillStyle = `rgb(20, 20, 20)`;

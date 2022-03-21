@@ -10,14 +10,14 @@ export default class Application {
     constructor() {
         this.worldCanvas = new WorldCanvas();
         WorldTimer.start();
+        InputManager.initCallbacks();
+
+
         this.dt = 0;
         this.timeOfLastUpdate = performance.now();
-
-        InputManager.initCallbacks();
     }
 
     loop(): void {
-
 
         this.dt = performance.now() - this.timeOfLastUpdate;
         this.timeOfLastUpdate = performance.now();
@@ -26,7 +26,7 @@ export default class Application {
         this.update(this.dt);
         this.render();
 
-        //console.log(WorldTimer.getCurrentTime());
+        console.log(InputManager.getMousePos());
 
         requestAnimationFrame(this.loop.bind(this));
     }

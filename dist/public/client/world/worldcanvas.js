@@ -15,6 +15,7 @@ export default class WorldCanvas {
         this.drawTile(this.testTile);
     }
     update(dt) {
+        //(3/7/22) don't need to update the fps indicator EVERY frame, 4 times a second is fast enough
         if (Date.now() - this.timeFpsIndicatorLastUpdated > 250) {
             this.fpsIndicator = 'fps:' + Math.floor(((1 / dt) * 1000));
             this.timeFpsIndicatorLastUpdated = Date.now();
