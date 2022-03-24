@@ -5,10 +5,10 @@
         "path": "./src/server"
       },
       {
-        "path": "./src/client"
+        "path": "./src/public/client"
       },
       {
-        "path": "./src/common"
+        "path": "./src/public/core"
       }
     ]
   }

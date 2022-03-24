@@ -5,7 +5,6 @@
         "module": "es2020",
         "strict": true,
         "noUnusedLocals": false,
-        "noUnusedParameters": true,
         "noImplicitReturns": true,
         "noImplicitAny": true,
         "noFallthroughCasesInSwitch": true,
@@ -14,6 +13,7 @@
         "strictNullChecks": true,
         "noEmitOnError": true,
         "skipLibCheck": true,
-        "composite": true
+        "composite": true,
+        "moduleResolution": "node",
     }
 }
