@@ -4,10 +4,11 @@ html, body {
     height: 100%;
     overflow: hidden;
     background-color: rgb(34, 34, 34);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
 
-#canv {
+#sf-canvas {
     padding: 0;
     margin: auto;
     display: block;
@@ -16,8 +17,68 @@ html, body {
     bottom: 0;
     left: 0;
     right: 0;
+    background-color: rgb(0, 0, 0);
 }
 
+#spacebouncer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#or {
+    text-align: center;
+    font-size: 5rem;
+    color: rgb(200, 200, 200);
+}
+
+#textbox {
+    border-radius: 20px;
+    text-align: center;
+    width: 600px;
+    font-size: 5rem;
+    outline-style: none;
+}
+
+#anon-button {
+    position: absolute;
+    left: 50%;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 100px;
+    font-size: 2rem;
+    color: rgb(34, 34, 34);
+    transition: 250ms ease-in-out;
+}
+
+#anon-button:hover {
+    background-color: rgb(140, 140, 140);
+}
+
+#sf-footer {
+    text-align: center;
+    font-size: 10px;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    position: absolute;
+}
+
+#sf-version {
+    color:rgb(200, 200, 200);
+    margin: 1px;
+}
+
+#sf-notes {
+    margin-right: 5px;
+    color: rgb(51, 167, 255);
+}
+
+#sf-twitter {
+    color: rgb(51, 167, 255);
+}
 /* .debug {
     border: 1px solid red;
 }  */
