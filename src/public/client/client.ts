@@ -1,3 +1,6 @@
+//@ts-ignore
+import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
+
 import coreFunction from '../core/common.js';
 
 //(3/25/22) the space bouncer has to get the user's name (or be told the user is anonymous)
@@ -5,6 +8,9 @@ const spaceBouncer: HTMLDivElement = <HTMLDivElement>document.getElementById('sp
 const inpForm: HTMLFormElement = <HTMLFormElement>document.getElementById('name-form');
 const inpFormVal: HTMLInputElement = <HTMLInputElement>document.getElementById('textbox');
 const anonButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById('anon-button');
+
+inpForm.onsubmit = submitPlayerName;
+anonButton.onclick = goAnon;
 
 function submitPlayerName(e: SubmitEvent) {
     e.preventDefault();
@@ -29,38 +35,4 @@ function createGameHTML() {
     canvas.height = 768;
     document.body.append(canvas);
 
-    const footer = document.createElement('footer');
-    footer.id = 'sf-footer';
-    const sfVersion = document.createElement('p');
-    sfVersion.id = 'sf-version';
-
-    //******-----------ATTENTION-----------******
-    //THIS WHAT YOU WANT TO EDIT EVERY RELEASE
-    sfVersion.textContent = 'spacefrogs pre-alpha-v0.0.1 (latest build: March 25th, 2022)';
-    //LOOK HERE
-    //******-----------ATTENTION-----------******
-
-    const patchNotes = document.createElement('a');
-    patchNotes.textContent = 'patch notes';
-    patchNotes.id = 'sf-notes';
-    patchNotes.target = '_blank';
-
-    //*** --- don't forget to add a release on the github repo when you edit the version lole --- ***
-    patchNotes.href = 'https://github.com/martiangremlin/spacefrogs/releases';
-    //*** --- this line above me right here --- ***
-
-
-    const twitter = document.createElement('a');
-    twitter.textContent = 'twitter';
-    twitter.id = 'sf-twitter';
-    twitter.target = '_blank';
-    twitter.href = 'https://twitter.com/spacefreg';
-
-    footer.appendChild(sfVersion);
-    footer.appendChild(patchNotes);
-    footer.appendChild(twitter);
-    document.body.append(footer);
 }
-
-inpForm.onsubmit = submitPlayerName;
-anonButton.onclick = goAnon;
