@@ -1,3 +1,7 @@
+//@ts-ignore
+import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
+import sfcNewUser from '../core/messages/sfcnewuser.js';
+//(3/25/22) begin space bouncer code
 //(3/25/22) the space bouncer has to get the user's name (or be told the user is anonymous)
 const spaceBouncer = document.getElementById('spacebouncer');
 const inpForm = document.getElementById('name-form');
@@ -5,20 +9,24 @@ const inpFormVal = document.getElementById('textbox');
 const anonButton = document.getElementById('anon-button');
 inpForm.onsubmit = submitPlayerName;
 anonButton.onclick = goAnon;
+const socket = io();
 function submitPlayerName(e) {
     e.preventDefault();
     createGameHTML();
     const name = inpFormVal.value;
+    const newUserMessage = new sfcNewUser(socket.id, name);
+    socket.emit('sfcNewUser', newUserMessage);
     //gc.receiveIDFromUser(name);
 }
 function goAnon(e) {
     e.preventDefault();
     createGameHTML();
+    const newUserMessage = new sfcNewUser(socket.id, 'anon');
+    socket.emit('sfcNewUser', newUserMessage);
     //gc.receiveIDFromUser('anon');
 }
-//(3/15/22) this function now also controls the release/patch version. remember to sync it with github releases!
+//(3/25/22) end space bouncer code
 function createGameHTML() {
-    //commonFunction('commmmmmmmmmmmmmmon');
     spaceBouncer.remove();
     const canvas = document.createElement('canvas');
     canvas.id = 'sf-canvas';
@@ -26,4 +34,3 @@ function createGameHTML() {
     canvas.height = 768;
     document.body.append(canvas);
 }
-export {};

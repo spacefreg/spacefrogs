@@ -6,8 +6,8 @@ import http from 'http';
 import * as socketIO from 'socket.io';
 
 
-//core imports
-//import coreFunction from '../public/core/common.js'; //example
+//message imports
+import sfcNewUser from '../public/core/messages/sfcnewuser.js';
 
 
 const __filename: string = fileURLToPath(import.meta.url);
@@ -38,6 +38,10 @@ class Server {
 
         this.io.on('connection', (socket: socketIO.Socket) => {
             console.log('gamer connect');
+
+            socket.on('sfcNewUser', (msg: sfcNewUser) => {
+                console.log(`${msg.id} sent sfcNewUser: ${msg.name}`);
+            });
 
             socket.on('disconnect', () => {
                 console.log('gamer disconnect');

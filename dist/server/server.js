@@ -4,8 +4,6 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import http from 'http';
 import * as socketIO from 'socket.io';
-//core imports
-//import coreFunction from '../public/core/common.js'; //example
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const distPath = path.dirname(__dirname);
@@ -22,6 +20,9 @@ class Server {
         this.httpServer.listen(this.port, () => console.log(`server listening on ${this.port}`));
         this.io.on('connection', (socket) => {
             console.log('gamer connect');
+            socket.on('sfcNewUser', (msg) => {
+                console.log(`${msg.id} sent sfcNewUser: ${msg.name}`);
+            });
             socket.on('disconnect', () => {
                 console.log('gamer disconnect');
             });
