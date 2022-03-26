@@ -1,7 +1,7 @@
 //@ts-ignore
 import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
 
-import sfcNewUser from '../core/messages/sfcnewuser.js';
+import sfcNewUser from '../core/messages/client/sfcnewuser.js';
 
 //(3/25/22) begin space bouncer code
 //(3/25/22) the space bouncer has to get the user's name (or be told the user is anonymous)
@@ -9,6 +9,7 @@ const spaceBouncer: HTMLDivElement = <HTMLDivElement>document.getElementById('sp
 const inpForm: HTMLFormElement = <HTMLFormElement>document.getElementById('name-form');
 const inpFormVal: HTMLInputElement = <HTMLInputElement>document.getElementById('textbox');
 const anonButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById('anon-button');
+const introVideo: HTMLVideoElement = <HTMLVideoElement>document.getElementById('fullscreen-video-intro');
 
 inpForm.onsubmit = submitPlayerName;
 anonButton.onclick = goAnon;
@@ -35,6 +36,7 @@ function goAnon(e: MouseEvent) {
 
 
 function createGameHTML() {
+    introVideo.remove();
     spaceBouncer.remove();
     const canvas = document.createElement('canvas');
     canvas.id = 'sf-canvas';
@@ -43,3 +45,11 @@ function createGameHTML() {
     document.body.append(canvas);
 
 }
+
+socket.on('sfNewUserInvite', () => {
+    console.log('a game is in progress. would you like to join?');
+});
+
+socket.on('sfNewOrLoadGame', () => {
+    console.log('create a new or load an existing game?');
+});
