@@ -33,12 +33,6 @@ html, body {
     transform: translate(-50%, -50%);
 }
 
-#or {
-    text-align: center;
-    font-size: 5rem;
-    color: rgb(200, 200, 200);
-}
-
 #textbox {
     border-radius: 20px;
     text-align: center;
@@ -47,17 +41,6 @@ html, body {
     outline-style: none;
 }
 
-#anon-button {
-    position: absolute;
-    left: 50%;
-    border-radius: 10px;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 100px;
-    font-size: 2rem;
-    color: rgb(34, 34, 34);
-    transition: 250ms ease-in-out;
-}
 
 #anon-button:hover {
     background-color: rgb(140, 140, 140);

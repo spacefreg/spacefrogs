@@ -13,12 +13,10 @@ const introVideo: HTMLVideoElement = <HTMLVideoElement>document.getElementById('
 
 const selfUsername: HTMLFormElement = <HTMLFormElement>document.getElementById('name-form');
 const inpFormVal: HTMLInputElement = <HTMLInputElement>document.getElementById('textbox');
-const anonButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById('anon-button');
 
 
 
 selfUsername.onsubmit = submitPlayerName;
-anonButton.onclick = goAnon;
 
 const socket = io();
 
@@ -27,15 +25,8 @@ function submitPlayerName(e: SubmitEvent) {
     const name: string = inpFormVal.value;
     const newUserMessage: sfcNewUser = new sfcNewUser(socket.id, name); 
     socket.emit('sfcNewUser', newUserMessage);
-    //gc.receiveIDFromUser(name);
 }
 
-function goAnon(e: MouseEvent) {
-    e.preventDefault();
-    const newUserMessage: sfcNewUser = new sfcNewUser(socket.id, 'anon'); 
-    socket.emit('sfcNewUser', newUserMessage);
-    //gc.receiveIDFromUser('anon');
-}
 //(3/25/22) end space bouncer code
 
 
