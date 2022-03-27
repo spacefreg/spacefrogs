@@ -8,22 +8,13 @@ const spaceBouncer = document.getElementById('spacebouncer');
 const introVideo = document.getElementById('fullscreen-video-intro');
 const selfUsername = document.getElementById('name-form');
 const inpFormVal = document.getElementById('textbox');
-const anonButton = document.getElementById('anon-button');
 selfUsername.onsubmit = submitPlayerName;
-anonButton.onclick = goAnon;
 const socket = io();
 function submitPlayerName(e) {
     e.preventDefault();
     const name = inpFormVal.value;
     const newUserMessage = new sfcNewUser(socket.id, name);
     socket.emit('sfcNewUser', newUserMessage);
-    //gc.receiveIDFromUser(name);
-}
-function goAnon(e) {
-    e.preventDefault();
-    const newUserMessage = new sfcNewUser(socket.id, 'anon');
-    socket.emit('sfcNewUser', newUserMessage);
-    //gc.receiveIDFromUser('anon');
 }
 //(3/25/22) end space bouncer code
 function beginFrogCampaign(e) {
