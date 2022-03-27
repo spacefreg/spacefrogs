@@ -90,6 +90,7 @@ class Server {
         } 
         else if (this.gameLobby) {
             //(3/27/22) give the new user the lobby info directly and let them join the lobby 
+            this.gameLobby.lobbyPlayers.push(new Player(msg.id, msg.name));
             const lobbyWelcomeMessage: sfLobbyWelcome = new sfLobbyWelcome(this.gameLobby.campaignName, this.playerHost, this.gameLobby.lobbyPlayers);
             this.io.to(msg.id).emit('sfLobbyWelcome', lobbyWelcomeMessage);
             return;
@@ -103,6 +104,24 @@ class Server {
     }
 
     private sfcCreateCampaign(msg: sfcCreateCampaign): void {
+        //(3/27/22) before creating a new lobby, check if there's already one
+        if (this.gameLobby) {
+            //(3/27/22) todo: probably should send a message to the user that a lobby already exists
+            //(3/27/22) currently, the user silently joins someone's lobby when he was expecting to create his own
+            const lobbyWelcomeMessage: sfLobbyWelcome = new sfLobbyWelcome(this.gameLobby.campaignName, this.playerHost, this.gameLobby.lobbyPlayers);
+            this.io.to(msg.id).emit('sfLobbyWelcome', lobbyWelcomeMessage);
+        }
+        /*else if (game is running) {
+            //(3/27/22) this happens when a user is trying to create a new campaign but someone has 
+            //beaten them to the punch and already advanced from a lobby to starting a game session (very rare situation)
+
+            //(3/27/22) todo: tell the new user to ask the host to join the existing game
+            //this.io.to(msg.id).emit('sfNewUserInvite');
+        }
+        */ 
+        else {
+            this.io.to(msg.id).emit('sfLobbyCreated');
+        }
         this.gameLobby = new Lobby(this.playerHost, msg.campaignName);
         console.log(`${msg.id} sent createCampaign: ${msg.campaignName}`);
     }

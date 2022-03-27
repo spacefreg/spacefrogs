@@ -17,16 +17,15 @@ function submitPlayerName(e) {
     socket.emit('sfcNewUser', newUserMessage);
 }
 //(3/25/22) end space bouncer code
-function beginFrogCampaign(e) {
+function submitNewCampaignRequest(e) {
     e.preventDefault();
     const campaignTextbox = document.getElementById('campaign-textbox');
     const campName = campaignTextbox.value;
     const createCampaignMessage = new sfcCreateCampaign(socket.id, campName);
     socket.emit('sfcCreateCampaign', createCampaignMessage);
-    console.log('creating a lobby!');
     const gameStartup = document.getElementById('game-startup');
     gameStartup.remove();
-    createGameHTML();
+    //(3/27/22) at this point, the user is waiting for either a sfLobbyCreated or sfLobbyAlreadyExists message
 }
 function createGameHTML() {
     introVideo.remove();
@@ -37,9 +36,7 @@ function createGameHTML() {
     canvas.height = 768;
     document.body.append(canvas);
 }
-socket.on('sfNewUserInvite', () => {
-    console.log('a game is in progress. would you like to join?');
-    spaceBouncer.remove();
+function receiveUserInvite() {
     const requestToJoinDiv = document.createElement('div');
     document.body.appendChild(requestToJoinDiv);
     const requestToJoinPrompt = document.createElement('p');
@@ -50,6 +47,11 @@ socket.on('sfNewUserInvite', () => {
     requestToJoinButton.id = 'request-to-join-button';
     requestToJoinButton.textContent = 'Request to Join';
     requestToJoinDiv.appendChild(requestToJoinButton);
+}
+socket.on('sfNewUserInvite', () => {
+    console.log('a game is in progress. would you like to join?');
+    spaceBouncer.remove();
+    receiveUserInvite();
 });
 socket.on('sfNewOrLoadGame', () => {
     spaceBouncer.remove();
@@ -64,7 +66,7 @@ socket.on('sfNewOrLoadGame', () => {
     campaignTextbox.spellcheck = false;
     const campaignForm = document.createElement('form');
     campaignForm.id = 'campaign-form';
-    campaignForm.onsubmit = beginFrogCampaign;
+    campaignForm.onsubmit = submitNewCampaignRequest;
     campaignForm.appendChild(campaignTextbox);
     gameStartup.appendChild(campaignForm);
     document.body.appendChild(gameStartup);
@@ -72,5 +74,13 @@ socket.on('sfNewOrLoadGame', () => {
 });
 socket.on('sfLobbyWelcome', (msg) => {
     console.log(`joined lobby: ${msg.campaignName} hosted by ${msg.playerHost.name}`);
+    console.log(`player count: ${msg.playerList.length}`);
     createGameHTML();
+});
+socket.on('sfLobbyCreated', () => {
+    console.log('created a new lobby');
+    createGameHTML();
+});
+socket.on('sfLobbyAlreadyExists', () => {
+    receiveUserInvite();
 });
