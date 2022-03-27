@@ -63,6 +63,50 @@ html, body {
     background-color: rgb(140, 140, 140);
 }
 
+#game-startup {
+    z-index: 5;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#campaign-textbox {
+    border-radius: 20px;
+    text-align: center;
+    width: 600px;
+    font-size: 3rem;
+    outline-style: none;
+}
+
+#request-to-join-prompt {
+    z-index: 5;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color:aliceblue;
+
+}
+
+#request-to-join-button {
+    z-index: 5;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    width: 350px;
+    height: 75px;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    transition: 250ms ease-in-out;
+}
+
+#request-to-join-button:hover {
+    background-color: rgb(140, 140, 140);
+}
+
 #sf-footer {
     text-align: center;
     font-size: 10px;
