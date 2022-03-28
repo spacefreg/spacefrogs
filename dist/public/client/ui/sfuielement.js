@@ -18,4 +18,13 @@ export default class sfuiElement {
     getOrigin() {
         return this.origin;
     }
+    setOrigin(origin) {
+        this.origin = origin;
+    }
+    getText() {
+        return this.text;
+    }
+    setText(text) {
+        this.text = text;
+    }
 }

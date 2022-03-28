@@ -14,13 +14,9 @@ export default class LobbyClient {
             this.lobbyPlayers = lobbyPlayers;
         }
         this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, this.lobbyPlayers);
-        for (let i = 0; i < this.lobbyPlayers.length; i++) {
-            this.lCanvas.addPlayer(this.lobbyPlayers[i]);
-        }
         //const host = getPlayerByID(hostID, this.lobbyPlayers);
         this.dt = 0;
         this.timeOfLastUpdate = 0;
-        this.lCanvas.addPlayer(this.selfPlayer);
         this.loop();
         //(3/27/22) socket callbacks
         this.playerDropped();
@@ -41,6 +37,7 @@ export default class LobbyClient {
     playerDropped() {
         this.socket.on('sfLobbyPlayerDropped', (id) => {
             const player = getPlayerByID(id, this.lobbyPlayers);
+            this.lCanvas.dropPlayer(player);
             console.log(`${player.name} dropped`);
             this.lobbyPlayers.splice(this.lobbyPlayers.indexOf(player), 1);
             console.log(`new lobby players: ${this.lobbyPlayers.length}`);

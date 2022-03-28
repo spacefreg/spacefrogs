@@ -33,4 +33,16 @@ export default class sfuiElement {
     public getOrigin(): vec2 {
         return this.origin;
     }
+
+    public setOrigin(origin: vec2): void {
+        this.origin = origin;
+    }
+
+    public getText(): string {
+        return this.text;
+    }
+
+    public setText(text: string): void {
+        this.text = text;
+    }
 }

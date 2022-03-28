@@ -5,8 +5,9 @@ export default class FrogPlayer {
         this.isHost = false;
         this.name = name;
         this.playerNumber = playerNumber;
-        const origin = new vec2(30, (playerNumber * 100) + 30);
-        this.frog = new sfuiElement(origin, this.name, new Image(), '../../res/spaceapu.png');
+        this.origin = new vec2(30, (this.playerNumber * 100) + 30);
+        this.frog = new sfuiElement(this.origin, this.name, new Image(), '../../res/spaceapu.png');
+        this.setPlayerNumber(playerNumber);
     }
     setHost() {
         this.isHost = true;
@@ -22,7 +23,22 @@ export default class FrogPlayer {
         const n = this.playerNumber;
         return n;
     }
+    setPlayerNumber(num) {
+        this.playerNumber = num;
+        this.origin = new vec2(30, (this.playerNumber * 100) + 30);
+        this.frog.setOrigin(this.origin);
+        this.frog.setText(this.name + ': ' + this.playerNumber);
+    }
     render(ctx) {
         this.frog.render(ctx);
     }
+}
+export function getFrogPlayerByNumber(num, players) {
+    for (let i = 0; i < players.length; i++) {
+        if (players[i].getPlayerNumber() == num) {
+            return players[i];
+        }
+    }
+    //(3/27/22) gremlin is the 'player not found' player
+    return new FrogPlayer('gremlin', 0);
 }

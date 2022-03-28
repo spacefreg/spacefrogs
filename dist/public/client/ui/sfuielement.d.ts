@@ -10,4 +10,7 @@ export default class sfuiElement {
     update(): void;
     render(ctx: CanvasRenderingContext2D): void;
     getOrigin(): vec2;
+    setOrigin(origin: vec2): void;
+    getText(): string;
+    setText(text: string): void;
 }

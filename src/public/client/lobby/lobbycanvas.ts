@@ -1,12 +1,12 @@
 import Player from '../../core/player.js';
 
-import FrogPlayer from '../ui/frogplayer.js';
+import FrogPlayer, { getFrogPlayerByNumber } from '../ui/frogplayer.js';
 
 export default class LobbyCanvas {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
     
-    private frogplayers: Array<FrogPlayer>;
+    private frogPlayers: Array<FrogPlayer>;
 
     private fpsIndicator: string;
     private timeFpsIndicatorLastUpdated: number;
@@ -17,7 +17,7 @@ export default class LobbyCanvas {
         this.canvas = <HTMLCanvasElement>document.getElementById('sf-canvas');
         this.ctx = <CanvasRenderingContext2D>this.canvas.getContext('2d');
 
-        this.frogplayers = new Array();
+        this.frogPlayers = new Array();
 
         for (let i = 0; i < lobbyPlayers.length; i++) {
             this.addPlayer(lobbyPlayers[i]);
@@ -33,6 +33,24 @@ export default class LobbyCanvas {
             this.fpsIndicator = 'fps:' + Math.floor(((1 / dt) * 1000));
             this.timeFpsIndicatorLastUpdated = performance.now();
         }
+
+        console.log(`frogplayers length: ${this.frogPlayers.length}`);
+    }
+
+    public addPlayer(player: Player): void {
+        this.frogPlayers.push(new FrogPlayer(player.name, player.playerNumber));
+    }
+
+    public dropPlayer(player: Player): void {
+        const droppedFrog: FrogPlayer = getFrogPlayerByNumber(player.playerNumber, this.frogPlayers);
+        if (droppedFrog) {
+            this.frogPlayers.splice(this.frogPlayers.indexOf(droppedFrog), 1);
+            console.log(`dropped player: ${droppedFrog.getName(), droppedFrog.getPlayerNumber()}`);
+        }
+
+        for (let i = 0; i < this.frogPlayers.length; i++) {
+            this.frogPlayers[i].setPlayerNumber(i + 1);
+        }
     }
 
     public render(): void {
@@ -42,16 +60,13 @@ export default class LobbyCanvas {
         this.ctx.font = '12px Arial';
         this.ctx.fillStyle = 'white';
 
-        for (let i = 0; i < this.frogplayers.length; i++) {
-            console.log(`rendering frog: ${this.frogplayers[i].getName()}, ${this.frogplayers[i].getPlayerNumber()}`);
-            this.frogplayers[i].render(this.ctx);
+        for (let i = 0; i < this.frogPlayers.length; i++) {
+            this.frogPlayers[i].render(this.ctx);
         }
 
 
         this.ctx.fillText(this.fpsIndicator, 10, 20);
     }
 
-    public addPlayer(player: Player): void {
-        this.frogplayers.push(new FrogPlayer(player.name, player.playerNumber));
-    }
+
 }

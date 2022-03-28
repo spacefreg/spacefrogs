@@ -4,6 +4,8 @@ import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
 import Player, { getPlayerByID } from '../../core/player.js';
 import LobbyCanvas from './lobbycanvas.js';
 
+import { getFrogPlayerByNumber } from '../ui/frogplayer.js';
+
 export default class LobbyClient {
     private socket: io;
     private selfPlayer: Player;
@@ -35,9 +37,6 @@ export default class LobbyClient {
         
         this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, this.lobbyPlayers);
             
-        for (let i = 0; i < this.lobbyPlayers.length; i++) {
-            this.lCanvas.addPlayer(this.lobbyPlayers[i]);
-        }
         
 
         //const host = getPlayerByID(hostID, this.lobbyPlayers);
@@ -48,7 +47,6 @@ export default class LobbyClient {
         this.dt = 0;
         this.timeOfLastUpdate = 0;
 
-        this.lCanvas.addPlayer(this.selfPlayer);
 
         this.loop();
 
@@ -75,7 +73,7 @@ export default class LobbyClient {
         this.socket.on('sfLobbyPlayerDropped', (id: string) => {
 
             const player = getPlayerByID(id, this.lobbyPlayers);
-
+            this.lCanvas.dropPlayer(player);
             console.log(`${player.name} dropped`);
             this.lobbyPlayers.splice(this.lobbyPlayers.indexOf(player), 1);
             console.log(`new lobby players: ${this.lobbyPlayers.length}`);
