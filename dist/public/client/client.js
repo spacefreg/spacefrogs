@@ -92,6 +92,13 @@ socket.on('sfLobbyCreated', () => {
     console.log(`created a new campaign lobby: ${campaignName}`);
     createGameHTML();
 });
-socket.on('sfLobbyAlreadyExists', () => {
-    receiveUserInvite();
+socket.on('sfLobbyAlreadyExists', (msg) => {
+    //(3/27/22) the user tried creating a lobby but someone beat them to the punch. connect to the new lobby
+    //normally as if there was a normal sfLobbyWelcome message (because there was, lole)
+    const selfPlayer = new Player(socket.id, playerName);
+    const hostPlayer = getPlayerByID(msg.playerHostID, msg.playerList);
+    const lc = new LobbyClient(socket, selfPlayer, hostPlayer, msg.campaignName, msg.playerList);
+    const hostName = getPlayerByID(msg.playerHostID, msg.playerList).name;
+    console.log(`joined lobby: ${msg.campaignName} hosted by ${hostName} (${msg.playerList.length} players)`);
+    createGameHTML();
 });

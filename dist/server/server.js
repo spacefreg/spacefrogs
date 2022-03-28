@@ -83,7 +83,7 @@ class Server {
             //(3/27/22) currently, the user silently joins someone's lobby when he was expecting to create his own
             this.gameLobby.lobbyPlayers.push(new Player(msg.id, msg.name));
             const lobbyWelcomeMessage = new sfLobbyWelcome(this.gameLobby.campaignName, this.playerHostID, this.gameLobby.lobbyPlayers);
-            this.io.to(msg.id).emit('sfLobbyWelcome', lobbyWelcomeMessage);
+            this.io.to(msg.id).emit('sfLobbyAlreadyExists', lobbyWelcomeMessage);
             return;
         }
         /*else if (game is running) {
