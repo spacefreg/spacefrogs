@@ -11,6 +11,14 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="/res/favicon.ico">
 
+        <!-- send everything to the google brain-->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-GZKEPNN52H"></script>
+        <script defer>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-GZKEPNN52H');
+        </script>
 
 
 </head>
@@ -30,7 +38,7 @@
     <footer id="sf-footer">
         <!-- ATTENTION -->
         <!-- UPDATE sf-version EVERY RELEASE -->
-        <p id="sf-version">spacefrogs pre-alpha-v0.0.2 (latest build: March 27th, 2022)</p>
+        <p id="sf-version">spacefrogs pre-alpha-v0.0.2 (latest build: March 28th, 2022)</p>
         <a id="sf-notes" href="https://github.com/spacefreg/spacefrogs/releases" target="_blank">patch notes</a>
         <!-- also don't forget to do a release changelog on gh -->
 
@@ -39,5 +47,6 @@
 
     <!-- entry point for client-side code -->
     <script type="module" defer src="client/client.js"></script>
+
 </body>
 </html>

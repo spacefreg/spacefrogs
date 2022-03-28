@@ -10,7 +10,6 @@ export default class LobbyClient {
         else {
             this.lobbyPlayers = lobbyPlayers;
         }
-        this.lCanvas = new LobbyCanvas();
         console.log(`selfName: ${self.name}`);
         this.selfPlayer = self;
         //const host = getPlayerByID(hostID, this.lobbyPlayers);
@@ -19,6 +18,8 @@ export default class LobbyClient {
         this.campaignName = campaignName;
         this.dt = 0;
         this.timeOfLastUpdate = 0;
+        this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, this.lobbyPlayers);
+        this.lCanvas.addPlayer(this.selfPlayer);
         this.loop();
         //(3/27/22) socket callbacks
         this.playerDropped();
@@ -31,6 +32,7 @@ export default class LobbyClient {
             if (player.id != this.selfPlayer.id) {
                 console.log(`player joined. name: ${player.name}`);
                 this.lobbyPlayers.push(player);
+                this.lCanvas.addPlayer(player);
                 console.log(`new lobby players: ${this.lobbyPlayers.length}`);
             }
         });
@@ -54,7 +56,6 @@ export default class LobbyClient {
         requestAnimationFrame(this.loop.bind(this));
     }
     update(dt) {
-        console.log('updating');
         this.lCanvas.update(dt);
     }
     render() {

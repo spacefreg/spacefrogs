@@ -27,7 +27,6 @@ export default class LobbyClient {
             this.lobbyPlayers = lobbyPlayers;
         }
 
-        this.lCanvas = new LobbyCanvas();
         
         console.log(`selfName: ${self.name}`);
         this.selfPlayer = self;
@@ -40,6 +39,9 @@ export default class LobbyClient {
 
         this.dt = 0;
         this.timeOfLastUpdate = 0;
+
+        this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, this.lobbyPlayers);
+        this.lCanvas.addPlayer(this.selfPlayer);
 
         this.loop();
 
@@ -56,6 +58,7 @@ export default class LobbyClient {
             if (player.id != this.selfPlayer.id) {
                 console.log(`player joined. name: ${player.name}`);
                 this.lobbyPlayers.push(player);
+                this.lCanvas.addPlayer(player);
                 console.log(`new lobby players: ${this.lobbyPlayers.length}`);
         }
         });
@@ -86,7 +89,6 @@ export default class LobbyClient {
     }
 
     private update(dt: number): void {
-        console.log('updating');
         this.lCanvas.update(dt);
 
 
