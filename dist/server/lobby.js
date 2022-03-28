@@ -1,15 +1,22 @@
+import Player from '../public/core/player.js';
 export default class Lobby {
-    constructor(host, campaignName) {
+    constructor() {
         this.isActive = false;
-        this.isActive = true;
-        this.campaignName = campaignName;
-        this.lobbyHost = host;
+        this.campaignName = '';
+        this.lobbyHostID = '';
         this.lobbyPlayers = new Array();
-        this.lobbyPlayers.push(this.lobbyHost);
+    }
+    activate(hostID, hostName, campaignName) {
+        console.log(`server: activating lobby. hostID: ${hostID}, hostName: ${hostName}, campaignName: ${campaignName}`);
+        this.isActive = true;
+        this.lobbyHostID = hostID;
+        this.campaignName = campaignName;
+        this.lobbyPlayers.push(new Player(hostID, hostName));
     }
     deactivate() {
+        console.log('server: deactivating lobby');
         this.isActive = false;
-        this.lobbyHost = null;
+        this.lobbyHostID = '';
         this.lobbyPlayers.length = 0;
     }
 }

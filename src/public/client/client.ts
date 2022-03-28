@@ -1,9 +1,16 @@
+//(3/27/22) client.ts  handles all of the client html as well as managing the behavior of the page before the user joins or creates a lobby
+//(3/27/22) upon joining or creating a lobby, control passes to lobbyclient.ts
+
 //@ts-ignore
 import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
+const socket = io();
 
 import sfcNewUser from '../core/messages/client/sfcnewuser.js';
 import sfcCreateCampaign from '../core/messages/client/sfccreatecampaign.js';
 import sfLobbyWelcome from '../core/messages/server/sflobbywelcome.js';
+
+import LobbyClient from './lobbyclient.js';
+import Player, { getPlayerByID } from '../core/player.js';
 
 
 //(3/25/22) begin space bouncer code
@@ -14,16 +21,18 @@ const introVideo: HTMLVideoElement = <HTMLVideoElement>document.getElementById('
 const selfUsername: HTMLFormElement = <HTMLFormElement>document.getElementById('name-form');
 const inpFormVal: HTMLInputElement = <HTMLInputElement>document.getElementById('textbox');
 
+let playerName: string = '';
+let campaignName: string = '';
 
 
 selfUsername.onsubmit = submitPlayerName;
 
-const socket = io();
+
 
 function submitPlayerName(e: SubmitEvent) {
     e.preventDefault();
-    const name: string = inpFormVal.value;
-    const newUserMessage: sfcNewUser = new sfcNewUser(socket.id, name); 
+    playerName = inpFormVal.value;
+    const newUserMessage: sfcNewUser = new sfcNewUser(socket.id, playerName); 
     socket.emit('sfcNewUser', newUserMessage);
 }
 
@@ -34,9 +43,9 @@ function submitNewCampaignRequest(e: SubmitEvent): void {
     e.preventDefault();
 
     const campaignTextbox : HTMLInputElement = <HTMLInputElement>document.getElementById('campaign-textbox');
-    const campName: string = campaignTextbox.value; 
+    campaignName = campaignTextbox.value; 
     
-    const createCampaignMessage: sfcCreateCampaign = new sfcCreateCampaign(socket.id, campName);
+    const createCampaignMessage: sfcCreateCampaign = new sfcCreateCampaign(socket.id, playerName, campaignName);
     socket.emit('sfcCreateCampaign', createCampaignMessage);
 
     
@@ -106,13 +115,19 @@ socket.on('sfNewOrLoadGame', () => {
 });
 
 socket.on('sfLobbyWelcome', (msg: sfLobbyWelcome) => {
-    console.log(`joined lobby: ${msg.campaignName} hosted by ${msg.playerHost.name}`);
-    console.log(`player count: ${msg.playerList.length}`);
+    const selfPlayer: Player = new Player(socket.id, playerName);
+    const hostPlayer: Player = getPlayerByID(msg.playerHostID, msg.playerList);
+    const lc = new LobbyClient(socket, selfPlayer, hostPlayer, msg.campaignName, msg.playerList);
+    
+    const hostName: string = getPlayerByID(msg.playerHostID, msg.playerList).name;
+    console.log(`joined lobby: ${msg.campaignName} hosted by ${hostName} (${msg.playerList.length} players)`);
     createGameHTML();
 });
 
 socket.on('sfLobbyCreated', () => {
-    console.log('created a new lobby');
+    const selfHost: Player = new Player(socket.id, playerName);
+    const lc = new LobbyClient(socket, selfHost, selfHost, campaignName, []);
+    console.log(`created a new campaign lobby: ${campaignName}`);
     createGameHTML();
 });
 

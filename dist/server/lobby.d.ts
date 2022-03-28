@@ -3,7 +3,8 @@ export default class Lobby {
     isActive: boolean;
     campaignName: string;
     lobbyPlayers: Array<Player>;
-    lobbyHost: Player | null;
-    constructor(host: Player, campaignName: string);
+    lobbyHostID: string;
+    constructor();
+    activate(hostID: string, hostName: string, campaignName: string): void;
     deactivate(): void;
 }

@@ -1,7 +1,7 @@
 import sfMessage from '../sfmessage.js';
 export default class sfcCreateCampaign extends sfMessage {
-    constructor(id, name) {
-        super(id, Date.now());
-        this.campaignName = name;
+    constructor(id, name, campName) {
+        super(id, name, Date.now());
+        this.campaignName = campName;
     }
 }

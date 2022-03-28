@@ -4,19 +4,26 @@ export default class Lobby {
     public isActive: boolean = false;
     public campaignName: string;
     public lobbyPlayers: Array<Player>
-    public lobbyHost: Player | null;
+    public lobbyHostID: string;
 
-    constructor(host: Player, campaignName: string) {
-        this.isActive = true;
-        this.campaignName = campaignName;
-        this.lobbyHost = host;
+    constructor() {
+        this.campaignName = '';
+        this.lobbyHostID = '';
         this.lobbyPlayers = new Array();
-        this.lobbyPlayers.push(this.lobbyHost);
+
     }
 
+    public activate(hostID: string, hostName: string, campaignName: string): void {
+        console.log(`server: activating lobby. hostID: ${hostID}, hostName: ${hostName}, campaignName: ${campaignName}`);
+        this.isActive = true;
+        this.lobbyHostID = hostID;
+        this.campaignName = campaignName;
+        this.lobbyPlayers.push(new Player(hostID, hostName));
+    }
     public deactivate(): void {
+        console.log('server: deactivating lobby');
         this.isActive = false;
-        this.lobbyHost = null;
+        this.lobbyHostID = '';
         this.lobbyPlayers.length = 0;
     }
 }

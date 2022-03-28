@@ -4,7 +4,7 @@ export default class sfcNewUser extends sfMessage {
     public name: string;
 
     constructor(id: string, name: string) {
-        super(id, Date.now());
+        super(id, name, Date.now());
         this.name = name;
     }
 }

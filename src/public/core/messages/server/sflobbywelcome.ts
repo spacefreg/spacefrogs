@@ -5,11 +5,11 @@ import Player from '../../player.js';
 export default class sfLobbyWelcome extends sfMessage {
     public campaignName: string;
     public playerList: Array<Player>;
-    public playerHost: Player;
-    constructor(campaignName: string, host: Player, players : Array<Player>) {
-        super('server', Date.now());
+    public playerHostID: string;
+    constructor(campaignName: string, hostID: string, players : Array<Player>) {
+        super('server', 'sfServer', Date.now());
         this.campaignName = campaignName;
-        this.playerHost = host;
+        this.playerHostID = hostID;
         this.playerList = players;
     }
 }

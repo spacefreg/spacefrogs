@@ -1,9 +1,9 @@
 import sfMessage from '../sfmessage.js';
 export default class sfLobbyWelcome extends sfMessage {
-    constructor(campaignName, host, players) {
-        super('server', Date.now());
+    constructor(campaignName, hostID, players) {
+        super('server', 'sfServer', Date.now());
         this.campaignName = campaignName;
-        this.playerHost = host;
+        this.playerHostID = hostID;
         this.playerList = players;
     }
 }
