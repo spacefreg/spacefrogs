@@ -18,29 +18,36 @@ export default class LobbyClient {
 
     constructor(socket: io, self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>) {
         this.socket = socket;
+        this.selfPlayer = self;
+        this.hostPlayer = host;
+        this.campaignName = campaignName;
 
+        
         if (lobbyPlayers.length == 0) {
             this.lobbyPlayers = new Array();
             this.lobbyPlayers.push(host); //(3/27/22) either host or self could be pushed to lobbyPlayers since they are the same here, but host is slightly more explicit
+            
         }
         else {
             this.lobbyPlayers = lobbyPlayers;
-        }
 
+        }
         
-        console.log(`selfName: ${self.name}`);
-        this.selfPlayer = self;
+        this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, this.lobbyPlayers);
+            
+        for (let i = 0; i < this.lobbyPlayers.length; i++) {
+            this.lCanvas.addPlayer(this.lobbyPlayers[i]);
+        }
+        
 
         //const host = getPlayerByID(hostID, this.lobbyPlayers);
-        console.log(`hostName: ${host.name}`);
-        this.hostPlayer = host;
 
-        this.campaignName = campaignName;
+
+
 
         this.dt = 0;
         this.timeOfLastUpdate = 0;
 
-        this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, this.lobbyPlayers);
         this.lCanvas.addPlayer(this.selfPlayer);
 
         this.loop();
@@ -56,7 +63,7 @@ export default class LobbyClient {
         this.socket.on('sfLobbyPlayerJoined', (player: Player) => {
             //(3/27/22) this if statement is to prevent the player from being added to the lobby twice
             if (player.id != this.selfPlayer.id) {
-                console.log(`player joined. name: ${player.name}`);
+                console.log(`player joined. name: ${player.name}, number: ${player.playerNumber}`);
                 this.lobbyPlayers.push(player);
                 this.lCanvas.addPlayer(player);
                 console.log(`new lobby players: ${this.lobbyPlayers.length}`);
@@ -91,7 +98,9 @@ export default class LobbyClient {
     private update(dt: number): void {
         this.lCanvas.update(dt);
 
-
+        // for (let i = 0; i < this.lobbyPlayers.length; i++) {
+        //     console.log(`${this.lobbyPlayers[i].name}, ${this.lobbyPlayers[i].playerNumber}`);
+        // }
     }
 
     private render(): void {

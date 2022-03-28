@@ -8,6 +8,6 @@ export default class sfuiElement {
     private origin;
     constructor(origin: vec2, text: string, mainImage: HTMLImageElement, imgSrc: string);
     update(): void;
-    render(ctx: CanvasRenderingContext2D, x: number, y: number): void;
+    render(ctx: CanvasRenderingContext2D): void;
     getOrigin(): vec2;
 }

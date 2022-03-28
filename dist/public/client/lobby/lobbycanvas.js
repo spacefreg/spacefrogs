@@ -5,6 +5,9 @@ export default class LobbyCanvas {
         this.canvas = document.getElementById('sf-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.frogplayers = new Array();
+        for (let i = 0; i < lobbyPlayers.length; i++) {
+            this.addPlayer(lobbyPlayers[i]);
+        }
         this.fpsIndicator = '';
         this.timeFpsIndicatorLastUpdated = performance.now();
     }
@@ -19,13 +22,12 @@ export default class LobbyCanvas {
         this.ctx.font = '12px Arial';
         this.ctx.fillStyle = 'white';
         for (let i = 0; i < this.frogplayers.length; i++) {
-            console.log('calling render in lobbycanvas');
+            console.log(`rendering frog: ${this.frogplayers[i].getName()}, ${this.frogplayers[i].getPlayerNumber()}`);
             this.frogplayers[i].render(this.ctx);
         }
         this.ctx.fillText(this.fpsIndicator, 10, 20);
     }
     addPlayer(player) {
-        console.log('adding player to lobbycanvas');
-        this.frogplayers.push(new FrogPlayer(player.name, 1));
+        this.frogplayers.push(new FrogPlayer(player.name, player.playerNumber));
     }
 }

@@ -24,7 +24,17 @@ export default class FrogPlayer {
         this.isHost = false;
     }
 
+    public getName(): string {
+        const n = this.name
+        return n;
+    }
+
+    public getPlayerNumber(): number {
+        const n = this.playerNumber;
+        return n;
+    }
+
     public render(ctx: CanvasRenderingContext2D): void {
-        this.frog.render(ctx, this.frog.getOrigin().x, this.frog.getOrigin().y);
+        this.frog.render(ctx);
     }
 }

@@ -14,7 +14,15 @@ export default class FrogPlayer {
     removeHost() {
         this.isHost = false;
     }
+    getName() {
+        const n = this.name;
+        return n;
+    }
+    getPlayerNumber() {
+        const n = this.playerNumber;
+        return n;
+    }
     render(ctx) {
-        this.frog.render(ctx, this.frog.getOrigin().x, this.frog.getOrigin().y);
+        this.frog.render(ctx);
     }
 }

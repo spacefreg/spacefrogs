@@ -10,9 +10,9 @@ export default class sfuiElement {
     //(3/27/22) for passive elements like animations
     update() {
     }
-    render(ctx, x, y) {
+    render(ctx) {
         ctx.drawImage(this.mainImage, this.origin.x, this.origin.y);
-        ctx.fillText(this.text, x, y);
+        ctx.fillText(this.text, this.origin.x, this.origin.y);
     }
     //(3/28/22) getters
     getOrigin() {

@@ -24,9 +24,9 @@ export default class sfuiElement {
 
     }
 
-    public render(ctx: CanvasRenderingContext2D, x: number, y: number): void {
+    public render(ctx: CanvasRenderingContext2D): void {
         ctx.drawImage(this.mainImage, this.origin.x, this.origin.y);
-        ctx.fillText(this.text, x, y);
+        ctx.fillText(this.text, this.origin.x, this.origin.y);
     }
 
     //(3/28/22) getters

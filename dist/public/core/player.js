@@ -1,7 +1,8 @@
 export default class Player {
-    constructor(id, name) {
+    constructor(id, name, playerNumber) {
         this.isHost = false;
         console.log(`player constructor: name:${name}, id:${id}`);
+        this.playerNumber = playerNumber;
         this.id = id;
         this.name = name;
     }
@@ -17,5 +18,5 @@ export function getPlayerByID(id, players) {
         }
     }
     //(3/27/22) gremlin is the 'player not found' player
-    return new Player('gremlin', 'gremlin');
+    return new Player('gremlin', 'gremlin', 0);
 }
