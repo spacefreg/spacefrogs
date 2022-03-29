@@ -36,6 +36,7 @@ class Server {
                 this.sfcCreateCampaign(msg);
             });
             socket.on('disconnect', () => {
+                this.receptionGuests.delete(socket.id);
                 if (this.gameLobby.isActive) {
                     const lobbyPlayer = getPlayerByID(socket.id, this.gameLobby.lobbyPlayers);
                     this.gameLobby.lobbyPlayers.splice(this.gameLobby.lobbyPlayers.indexOf(lobbyPlayer), 1);
@@ -45,6 +46,9 @@ class Server {
                     }
                     else {
                         this.io.emit('sfLobbyPlayerDropped', socket.id);
+                        for (let i = 0; i < this.gameLobby.lobbyPlayers.length; i++) {
+                            this.gameLobby.lobbyPlayers[i].setPlayerNumber(i + 1);
+                        }
                     }
                 }
             });
@@ -65,7 +69,9 @@ class Server {
         }
         else if (this.gameLobby.isActive) {
             //(3/27/22) give the new user the lobby info directly and let them join the lobby 
-            this.gameLobby.lobbyPlayers.push(new Player(msg.id, msg.name, this.gameLobby.lobbyPlayers.length + 1));
+            this.gameLobby.lobbyPlayers.push(new Player(msg.id, msg.name));
+            const newIndex = this.gameLobby.lobbyPlayers.length - 1;
+            this.gameLobby.lobbyPlayers[newIndex].setPlayerNumber(this.gameLobby.lobbyPlayers.length);
             const newestLobbyUser = getPlayerByID(msg.id, this.gameLobby.lobbyPlayers);
             const lobbyWelcomeMessage = new sfLobbyWelcome(this.gameLobby.campaignName, this.playerHostID, this.gameLobby.lobbyPlayers);
             this.io.to(msg.id).emit('sfLobbyWelcome', lobbyWelcomeMessage);
@@ -81,7 +87,9 @@ class Server {
         if (this.gameLobby.isActive) {
             //(3/27/22) todo: probably should send a message to the user that a lobby already exists
             //(3/27/22) currently, the user silently joins someone's lobby when he was expecting to create his own
-            this.gameLobby.lobbyPlayers.push(new Player(msg.id, msg.name, this.gameLobby.lobbyPlayers.length + 1));
+            this.gameLobby.lobbyPlayers.push(new Player(msg.id, msg.name));
+            const newIndex = this.gameLobby.lobbyPlayers.length - 1;
+            this.gameLobby.lobbyPlayers[newIndex].setPlayerNumber(this.gameLobby.lobbyPlayers.length);
             const lobbyWelcomeMessage = new sfLobbyWelcome(this.gameLobby.campaignName, this.playerHostID, this.gameLobby.lobbyPlayers);
             this.io.to(msg.id).emit('sfLobbyAlreadyExists', lobbyWelcomeMessage);
             return;
@@ -104,3 +112,4 @@ class Server {
 }
 const srv = new Server(29070);
 srv.run();
+// (3/29/22)todo: create a game class and give it three states: inactive, lobby, and active

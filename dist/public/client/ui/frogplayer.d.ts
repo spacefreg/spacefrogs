@@ -1,6 +1,6 @@
 export default class FrogPlayer {
     private name;
-    private playerNumber;
+    private fPlayerNumber;
     private frog;
     private origin;
     private isHost;

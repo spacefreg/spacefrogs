@@ -1,12 +1,13 @@
 export default class Player {
     public id: string;
     public name: string;
-    public playerNumber: number;
     public isHost: boolean = false;
     
-    constructor(id: string, name: string, playerNumber: number) {
+    public playerNumber: number;
+
+    constructor(id: string, name: string) {
+        this.playerNumber = -1;
         console.log(`player constructor: name:${name}, id:${id}`);
-        this.playerNumber = playerNumber;
         this.id = id;
         this.name = name;
     }
@@ -14,6 +15,16 @@ export default class Player {
     public setHost(): void {
         this.isHost = true;
     }
+
+    public getPlayerNumber(): number {
+        return this.playerNumber;
+    }
+
+    //(3/27/22) only the server should probably be using this
+    public setPlayerNumber(num: number): void {
+        this.playerNumber = num;
+    }
+
 }
 
 //(3/27/22) helper functions
@@ -25,5 +36,5 @@ export function getPlayerByID(id: string, players: Array<Player>): Player {
         }
     }
     //(3/27/22) gremlin is the 'player not found' player
-    return new Player('gremlin', 'gremlin', 0);
+    return new Player('gremlin', 'gremlin');
 }

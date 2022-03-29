@@ -95,10 +95,6 @@ export default class LobbyClient {
 
     private update(dt: number): void {
         this.lCanvas.update(dt);
-
-        // for (let i = 0; i < this.lobbyPlayers.length; i++) {
-        //     console.log(`${this.lobbyPlayers[i].name}, ${this.lobbyPlayers[i].playerNumber}`);
-        // }
     }
 
     private render(): void {

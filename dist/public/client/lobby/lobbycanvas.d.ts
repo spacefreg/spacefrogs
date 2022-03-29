@@ -7,7 +7,7 @@ export default class LobbyCanvas {
     private timeFpsIndicatorLastUpdated;
     constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>);
     update(dt: number): void;
-    addPlayer(player: Player): void;
+    addPlayer(playerarg: Player): void;
     dropPlayer(player: Player): void;
     render(): void;
 }

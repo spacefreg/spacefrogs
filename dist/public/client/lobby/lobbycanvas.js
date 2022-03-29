@@ -18,17 +18,15 @@ export default class LobbyCanvas {
         }
         console.log(`frogplayers length: ${this.frogPlayers.length}`);
     }
-    addPlayer(player) {
-        this.frogPlayers.push(new FrogPlayer(player.name, player.playerNumber));
+    addPlayer(playerarg) {
+        const newfrog = playerarg;
+        this.frogPlayers.push(new FrogPlayer(newfrog.name, newfrog.playerNumber));
     }
     dropPlayer(player) {
         const droppedFrog = getFrogPlayerByNumber(player.playerNumber, this.frogPlayers);
         if (droppedFrog) {
             this.frogPlayers.splice(this.frogPlayers.indexOf(droppedFrog), 1);
             console.log(`dropped player: ${droppedFrog.getName(), droppedFrog.getPlayerNumber()}`);
-        }
-        for (let i = 0; i < this.frogPlayers.length; i++) {
-            this.frogPlayers[i].setPlayerNumber(i + 1);
         }
     }
     render() {

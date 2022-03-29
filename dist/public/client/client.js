@@ -80,7 +80,7 @@ socket.on('sfNewOrLoadGame', () => {
 });
 socket.on('sfLobbyWelcome', (msg) => {
     createGameHTML();
-    const selfPlayer = new Player(socket.id, playerName, msg.playerList.length);
+    const selfPlayer = new Player(socket.id, playerName);
     const hostPlayer = getPlayerByID(msg.playerHostID, msg.playerList);
     const lc = new LobbyClient(socket, selfPlayer, hostPlayer, msg.campaignName, msg.playerList);
     const hostName = getPlayerByID(msg.playerHostID, msg.playerList).name;
@@ -88,7 +88,7 @@ socket.on('sfLobbyWelcome', (msg) => {
 });
 socket.on('sfLobbyCreated', () => {
     createGameHTML();
-    const selfHost = new Player(socket.id, playerName, 1);
+    const selfHost = new Player(socket.id, playerName);
     const lc = new LobbyClient(socket, selfHost, selfHost, campaignName, []);
     console.log(`created a new campaign lobby: ${campaignName}`);
 });
@@ -96,7 +96,7 @@ socket.on('sfLobbyAlreadyExists', (msg) => {
     //(3/27/22) the user tried creating a lobby but someone beat them to the punch. connect to the new lobby
     //normally as if there was a normal sfLobbyWelcome message (because there was, lole)
     createGameHTML();
-    const selfPlayer = new Player(socket.id, playerName, msg.playerList.length);
+    const selfPlayer = new Player(socket.id, playerName);
     const hostPlayer = getPlayerByID(msg.playerHostID, msg.playerList);
     const lc = new LobbyClient(socket, selfPlayer, hostPlayer, msg.campaignName, msg.playerList);
     const hostName = getPlayerByID(msg.playerHostID, msg.playerList).name;

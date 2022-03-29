@@ -18,7 +18,9 @@ export default class Lobby {
         this.isActive = true;
         this.lobbyHostID = hostID;
         this.campaignName = campaignName;
-        this.lobbyPlayers.push(new Player(hostID, hostName, 1));
+        this.lobbyPlayers.push(new Player(hostID, hostName));
+        this.lobbyPlayers[0].setHost();
+        this.lobbyPlayers[0].setPlayerNumber(1);
     }
     public deactivate(): void {
         console.log('server: deactivating lobby');

@@ -37,8 +37,10 @@ export default class LobbyCanvas {
         console.log(`frogplayers length: ${this.frogPlayers.length}`);
     }
 
-    public addPlayer(player: Player): void {
-        this.frogPlayers.push(new FrogPlayer(player.name, player.playerNumber));
+    public addPlayer(playerarg: Player): void {
+        const newfrog: Player = playerarg;
+        this.frogPlayers.push(new FrogPlayer(newfrog.name, newfrog.playerNumber));
+
     }
 
     public dropPlayer(player: Player): void {
@@ -48,9 +50,7 @@ export default class LobbyCanvas {
             console.log(`dropped player: ${droppedFrog.getName(), droppedFrog.getPlayerNumber()}`);
         }
 
-        for (let i = 0; i < this.frogPlayers.length; i++) {
-            this.frogPlayers[i].setPlayerNumber(i + 1);
-        }
+
     }
 
     public render(): void {
