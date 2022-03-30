@@ -15,11 +15,7 @@ export default class sfuiElement {
     }
     render(ctx) {
         ctx.fillText(this.text, this.origin.x, this.origin.y);
-        console.log(this.width);
-        ctx.fillStyle = 'purple';
-        ctx.fillRect(this.origin.x, this.origin.y, this.width, this.height);
         ctx.drawImage(this.mainImage, this.origin.x, this.origin.y);
-        ctx.fillStyle = 'white';
     }
     //(3/28/22) getters
     getOrigin() {

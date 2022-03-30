@@ -20,6 +20,9 @@ export default class LobbyCanvas {
         this.frogPlayers.length = 0;
         for (let i = 0; i < lobbyPlayers.length; i++) {
             this.frogPlayers.push(new FrogPlayer(lobbyPlayers[i].name, lobbyPlayers[i].playerNumber));
+            if (i == 0) {
+                this.frogPlayers[i].setHost();
+            }
         }
     }
     dropPlayer(player, lobbyPlayers) {
@@ -27,6 +30,9 @@ export default class LobbyCanvas {
         this.frogPlayers.length = 0;
         for (let i = 0; i < lobbyPlayers.length; i++) {
             this.frogPlayers.push(new FrogPlayer(lobbyPlayers[i].name, lobbyPlayers[i].playerNumber));
+            if (i == 0) {
+                this.frogPlayers[i].setHost();
+            }
         }
     }
     render() {

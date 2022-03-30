@@ -76,10 +76,18 @@ class Server {
                     this.gameLobby.lobbyPlayers.splice(this.gameLobby.lobbyPlayers.indexOf(lobbyPlayer), 1);
                     console.log(`player ${lobbyPlayer.name} (${lobbyPlayer.id}) left lobby. size: ${this.gameLobby.lobbyPlayers.length}`);
 
+
                     if (this.gameLobby.lobbyPlayers.length == 0) {
                         this.gameLobby.deactivate();
                     }
                     else {
+                        
+                        if (lobbyPlayer.isHost) {
+                            console.log(`host left lobby.`);
+                            this.playerHostID = this.gameLobby.lobbyPlayers[0].id;
+                            this.gameLobby.lobbyPlayers[0].setHost();
+                            console.log(`new host: ${this.gameLobby.lobbyPlayers[0].name}`);
+                        }
 
                         for (let i = 0; i < this.gameLobby.lobbyPlayers.length; i++) {
                             this.gameLobby.lobbyPlayers[i].setPlayerNumber(i + 1);

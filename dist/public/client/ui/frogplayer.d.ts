@@ -6,7 +6,7 @@ export default class FrogPlayer {
     private isHost;
     constructor(name: string, playerNumber: number);
     setHost(): void;
-    removeHost(): void;
+    getHost(): boolean;
     getName(): string;
     getfPlayerNumber(): number;
     setFrogPlayerNumber(num: number): void;

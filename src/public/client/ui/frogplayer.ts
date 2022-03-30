@@ -20,10 +20,11 @@ export default class FrogPlayer {
 
     public setHost(): void {
         this.isHost = true;
+        this.frog.setText(this.frog.getText() + ' (host)');
     }
 
-    public removeHost(): void {
-        this.isHost = false;
+    public getHost(): boolean {
+        return this.isHost;
     }
 
     public getName(): string {

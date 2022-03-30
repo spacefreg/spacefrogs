@@ -11,9 +11,10 @@ export default class FrogPlayer {
     }
     setHost() {
         this.isHost = true;
+        this.frog.setText(this.frog.getText() + ' (host)');
     }
-    removeHost() {
-        this.isHost = false;
+    getHost() {
+        return this.isHost;
     }
     getName() {
         const n = this.name;
