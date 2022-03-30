@@ -24,23 +24,21 @@ export default class LobbyClient {
         this.hostPlayer = host;
         this.campaignName = campaignName;
 
+        console.log(`LOBBYCLIENT CONSTRUCTOR: ${lobbyPlayers.length}`);
+        this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, lobbyPlayers);
         
         if (lobbyPlayers.length == 0) {
             this.lobbyPlayers = new Array();
-            this.lobbyPlayers.push(host); //(3/27/22) either host or self could be pushed to lobbyPlayers since they are the same here, but host is slightly more explicit
-            
+            console.log(`DOES THIS EVER HAPPEN?`);
+            //this.lobbyPlayers.push(host); //(3/27/22) either host or self could be pushed to lobbyPlayers since they are the same here, but host is slightly more explicit
+            this.lCanvas.addPlayer(this.hostPlayer); 
         }
         else {
-            this.lobbyPlayers = lobbyPlayers;
 
+            this.lobbyPlayers = lobbyPlayers;
         }
         
-        this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, this.lobbyPlayers);
-            
         
-
-        //const host = getPlayerByID(hostID, this.lobbyPlayers);
-
 
 
 
@@ -65,7 +63,10 @@ export default class LobbyClient {
                 this.lobbyPlayers.push(player);
                 this.lCanvas.addPlayer(player);
                 console.log(`new lobby players: ${this.lobbyPlayers.length}`);
-        }
+            }
+            else {
+                console.log(`IDK: ${player.id}`);
+            }
         });
     }
 

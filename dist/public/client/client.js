@@ -89,7 +89,9 @@ socket.on('sfLobbyWelcome', (msg) => {
 socket.on('sfLobbyCreated', () => {
     createGameHTML();
     const selfHost = new Player(socket.id, playerName);
-    const lc = new LobbyClient(socket, selfHost, selfHost, campaignName, []);
+    selfHost.setPlayerNumber(1);
+    const lobbyPlayersOnlyHost = [selfHost];
+    const lc = new LobbyClient(socket, selfHost, selfHost, campaignName, lobbyPlayersOnlyHost);
     console.log(`created a new campaign lobby: ${campaignName}`);
 });
 socket.on('sfLobbyAlreadyExists', (msg) => {

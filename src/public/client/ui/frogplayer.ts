@@ -37,6 +37,8 @@ export default class FrogPlayer {
     }
 
     public setPlayerNumber(num: number): void {
+        console.log(`setting player number to ${num}`);
+
         this.fPlayerNumber = num;
         this.origin = new vec2(30, (this.fPlayerNumber * 100) + 30);
         this.frog.setOrigin(this.origin);

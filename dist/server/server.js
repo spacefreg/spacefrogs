@@ -105,8 +105,8 @@ class Server {
         else {
             this.playerHostID = msg.id;
             const hostName = this.receptionGuests.get(msg.id);
-            this.io.to(msg.id).emit('sfLobbyCreated');
             this.gameLobby.activate(this.playerHostID, hostName, msg.campaignName);
+            this.io.to(msg.id).emit('sfLobbyCreated');
         }
     }
 }

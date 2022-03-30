@@ -6,7 +6,7 @@ export default class Player {
     public playerNumber: number;
 
     constructor(id: string, name: string) {
-        this.playerNumber = -1;
+        this.playerNumber = 0;
         console.log(`player constructor: name:${name}, id:${id}`);
         this.id = id;
         this.name = name;

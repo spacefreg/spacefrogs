@@ -1,7 +1,7 @@
 export default class Player {
     constructor(id, name) {
         this.isHost = false;
-        this.playerNumber = -1;
+        this.playerNumber = 0;
         console.log(`player constructor: name:${name}, id:${id}`);
         this.id = id;
         this.name = name;

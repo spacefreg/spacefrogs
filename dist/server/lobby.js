@@ -13,6 +13,7 @@ export default class Lobby {
         this.campaignName = campaignName;
         this.lobbyPlayers.push(new Player(hostID, hostName));
         this.lobbyPlayers[0].setHost();
+        console.log(`setting playernumber of ${this.lobbyPlayers[0].name} to 1`);
         this.lobbyPlayers[0].setPlayerNumber(1);
     }
     deactivate() {

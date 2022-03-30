@@ -23,6 +23,10 @@ export default class LobbyCanvas {
             this.addPlayer(lobbyPlayers[i]);
         }
 
+
+        console.log(`LOBBYCANVAS: frog players length: ${this.frogPlayers.length}`);
+        console.log(`LOBBYCANVAS: lobby players length: ${lobbyPlayers.length}`);
+
         this.fpsIndicator = '';
         this.timeFpsIndicatorLastUpdated = performance.now();
 
@@ -34,10 +38,11 @@ export default class LobbyCanvas {
             this.timeFpsIndicatorLastUpdated = performance.now();
         }
 
-        console.log(`frogplayers length: ${this.frogPlayers.length}`);
+        //console.log(`frogplayers length: ${this.frogPlayers.length}`);
     }
 
     public addPlayer(playerarg: Player): void {
+        console.log(`inside lobbyCanvas.addPlayer: adding player: ${playerarg.name}`);
         const newfrog: Player = playerarg;
         this.frogPlayers.push(new FrogPlayer(newfrog.name, newfrog.playerNumber));
 
