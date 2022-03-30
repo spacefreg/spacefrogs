@@ -24,8 +24,8 @@ export default class LobbyClient {
         this.hostPlayer = host;
         this.campaignName = campaignName;
 
-        this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, lobbyPlayers);
         this.lobbyPlayers = lobbyPlayers;
+        this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, this.lobbyPlayers);
 
         
 

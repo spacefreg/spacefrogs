@@ -38,7 +38,6 @@ export default class LobbyCanvas {
     }
 
     public addPlayer(playerarg: Player, lobbyPlayers: Array<Player>): void {
-        const newfrog: Player = playerarg;
         
         this.frogPlayers.length = 0;
         for (let i = 0; i < lobbyPlayers.length; i++) {

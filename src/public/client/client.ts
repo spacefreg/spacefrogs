@@ -124,13 +124,10 @@ socket.on('sfLobbyWelcome', (msg: sfLobbyWelcome) => {
     console.log(`joined lobby: ${msg.campaignName} hosted by ${hostName} (${msg.playerList.length} players)`);
 });
 
-socket.on('sfLobbyCreated', () => {
+socket.on('sfLobbyCreated', (lobbyPlayersOnlyHost: Array<Player>) => {
     createGameHTML();
-    const selfHost: Player = new Player(socket.id, playerName);
-    selfHost.setPlayerNumber(1);
 
-    const lobbyPlayersOnlyHost: Player[] = [selfHost];
-    const lc = new LobbyClient(socket, selfHost, selfHost, campaignName, lobbyPlayersOnlyHost);
+    const lc = new LobbyClient(socket, lobbyPlayersOnlyHost[0], lobbyPlayersOnlyHost[0], campaignName, lobbyPlayersOnlyHost);
     console.log(`created a new campaign lobby: ${campaignName}`);
 });
 

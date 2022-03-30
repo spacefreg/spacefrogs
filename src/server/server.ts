@@ -84,7 +84,7 @@ class Server {
                         for (let i = 0; i < this.gameLobby.lobbyPlayers.length; i++) {
                             this.gameLobby.lobbyPlayers[i].setPlayerNumber(i + 1);
                         }
-                        
+
                         this.io.emit('sfLobbyPlayerDropped', socket.id, this.gameLobby.lobbyPlayers);
                     }
                 }
@@ -155,7 +155,7 @@ class Server {
             this.playerHostID = msg.id;
             const hostName: string = this.receptionGuests.get(msg.id)!;
             this.gameLobby.activate(this.playerHostID, hostName, msg.campaignName);
-            this.io.to(msg.id).emit('sfLobbyCreated');
+            this.io.to(msg.id).emit('sfLobbyCreated', this.gameLobby.lobbyPlayers);
         }
 
     }

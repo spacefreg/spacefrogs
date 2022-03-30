@@ -17,22 +17,20 @@ export default class sfuiElement {
         this.mainImage.src = this.imgSrc;
         this.width = this.mainImage.width;
         this.height = this.mainImage.height;
+        
+        console.log(`sfuiElement constructor. mainImage: ${mainImage.width}`);
+        console.log(`w:${this.width}, h:${this.height}`);
 
     }
 
 
     //(3/27/22) for passive elements like animations
     public update(): void {
-
     }
 
     public render(ctx: CanvasRenderingContext2D): void {
         ctx.fillText(this.text, this.origin.x, this.origin.y);
-
-        ctx.fillStyle = 'purple';
-        ctx.fillRect(this.origin.x, this.origin.y, this.width, this.height);
         ctx.drawImage(this.mainImage, this.origin.x, this.origin.y);
-        ctx.fillStyle = 'white';
     }
 
     //(3/28/22) getters
