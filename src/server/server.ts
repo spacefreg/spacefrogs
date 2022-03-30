@@ -80,11 +80,12 @@ class Server {
                         this.gameLobby.deactivate();
                     }
                     else {
-                        this.io.emit('sfLobbyPlayerDropped', socket.id);
 
                         for (let i = 0; i < this.gameLobby.lobbyPlayers.length; i++) {
                             this.gameLobby.lobbyPlayers[i].setPlayerNumber(i + 1);
                         }
+                        
+                        this.io.emit('sfLobbyPlayerDropped', socket.id, this.gameLobby.lobbyPlayers);
                     }
                 }
             });
@@ -117,7 +118,7 @@ class Server {
             const newestLobbyUser: Player = getPlayerByID(msg.id, this.gameLobby.lobbyPlayers);
             const lobbyWelcomeMessage: sfLobbyWelcome = new sfLobbyWelcome(this.gameLobby.campaignName, this.playerHostID, this.gameLobby.lobbyPlayers);
             this.io.to(msg.id).emit('sfLobbyWelcome', lobbyWelcomeMessage);
-            this.io.emit('sfLobbyPlayerJoined', newestLobbyUser);
+            this.io.emit('sfLobbyPlayerJoined', newestLobbyUser, this.gameLobby.lobbyPlayers);
             
             return;
         }

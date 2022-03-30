@@ -8,8 +8,8 @@ export default class FrogPlayer {
     setHost(): void;
     removeHost(): void;
     getName(): string;
-    getPlayerNumber(): number;
-    setPlayerNumber(num: number): void;
+    getfPlayerNumber(): number;
+    setFrogPlayerNumber(num: number): void;
     render(ctx: CanvasRenderingContext2D): void;
 }
 export declare function getFrogPlayerByNumber(num: number, players: Array<FrogPlayer>): FrogPlayer;

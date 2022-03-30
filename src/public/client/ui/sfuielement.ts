@@ -14,8 +14,10 @@ export default class sfuiElement {
         this.text = text;
         this.mainImage = mainImage;
         this.imgSrc = imgSrc;
+        this.mainImage.src = this.imgSrc;
         this.width = this.mainImage.width;
         this.height = this.mainImage.height;
+
     }
 
 
@@ -25,8 +27,12 @@ export default class sfuiElement {
     }
 
     public render(ctx: CanvasRenderingContext2D): void {
-        ctx.drawImage(this.mainImage, this.origin.x, this.origin.y);
         ctx.fillText(this.text, this.origin.x, this.origin.y);
+
+        ctx.fillStyle = 'purple';
+        ctx.fillRect(this.origin.x, this.origin.y, this.width, this.height);
+        ctx.drawImage(this.mainImage, this.origin.x, this.origin.y);
+        ctx.fillStyle = 'white';
     }
 
     //(3/28/22) getters

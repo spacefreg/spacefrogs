@@ -1,15 +1,11 @@
-import FrogPlayer, { getFrogPlayerByNumber } from '../ui/frogplayer.js';
+import FrogPlayer from '../ui/frogplayer.js';
 export default class LobbyCanvas {
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
     constructor(self, host, campaignName, lobbyPlayers) {
         this.canvas = document.getElementById('sf-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.frogPlayers = new Array();
-        for (let i = 0; i < lobbyPlayers.length; i++) {
-            this.addPlayer(lobbyPlayers[i]);
-        }
-        console.log(`LOBBYCANVAS: frog players length: ${this.frogPlayers.length}`);
-        console.log(`LOBBYCANVAS: lobby players length: ${lobbyPlayers.length}`);
+        this.addPlayer(self, lobbyPlayers);
         this.fpsIndicator = '';
         this.timeFpsIndicatorLastUpdated = performance.now();
     }
@@ -20,16 +16,18 @@ export default class LobbyCanvas {
         }
         //console.log(`frogplayers length: ${this.frogPlayers.length}`);
     }
-    addPlayer(playerarg) {
-        console.log(`inside lobbyCanvas.addPlayer: adding player: ${playerarg.name}`);
+    addPlayer(playerarg, lobbyPlayers) {
         const newfrog = playerarg;
-        this.frogPlayers.push(new FrogPlayer(newfrog.name, newfrog.playerNumber));
+        this.frogPlayers.length = 0;
+        for (let i = 0; i < lobbyPlayers.length; i++) {
+            this.frogPlayers.push(new FrogPlayer(lobbyPlayers[i].name, lobbyPlayers[i].playerNumber));
+        }
     }
-    dropPlayer(player) {
-        const droppedFrog = getFrogPlayerByNumber(player.playerNumber, this.frogPlayers);
-        if (droppedFrog) {
-            this.frogPlayers.splice(this.frogPlayers.indexOf(droppedFrog), 1);
-            console.log(`dropped player: ${droppedFrog.getName(), droppedFrog.getPlayerNumber()}`);
+    dropPlayer(player, lobbyPlayers) {
+        console.log(`dropped player: ${player.name}`);
+        this.frogPlayers.length = 0;
+        for (let i = 0; i < lobbyPlayers.length; i++) {
+            this.frogPlayers.push(new FrogPlayer(lobbyPlayers[i].name, lobbyPlayers[i].playerNumber));
         }
     }
     render() {

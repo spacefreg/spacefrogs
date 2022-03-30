@@ -24,23 +24,10 @@ export default class LobbyClient {
         this.hostPlayer = host;
         this.campaignName = campaignName;
 
-        console.log(`LOBBYCLIENT CONSTRUCTOR: ${lobbyPlayers.length}`);
         this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, lobbyPlayers);
-        
-        if (lobbyPlayers.length == 0) {
-            this.lobbyPlayers = new Array();
-            console.log(`DOES THIS EVER HAPPEN?`);
-            //this.lobbyPlayers.push(host); //(3/27/22) either host or self could be pushed to lobbyPlayers since they are the same here, but host is slightly more explicit
-            this.lCanvas.addPlayer(this.hostPlayer); 
-        }
-        else {
+        this.lobbyPlayers = lobbyPlayers;
 
-            this.lobbyPlayers = lobbyPlayers;
-        }
         
-        
-
-
 
         this.dt = 0;
         this.timeOfLastUpdate = 0;
@@ -56,28 +43,24 @@ export default class LobbyClient {
     //(3/27/22) socket callbacks
 
     public playerJoined(): void {
-        this.socket.on('sfLobbyPlayerJoined', (player: Player) => {
-            //(3/27/22) this if statement is to prevent the player from being added to the lobby twice
-            if (player.id != this.selfPlayer.id) {
-                console.log(`player joined. name: ${player.name}, number: ${player.playerNumber}`);
-                this.lobbyPlayers.push(player);
-                this.lCanvas.addPlayer(player);
-                console.log(`new lobby players: ${this.lobbyPlayers.length}`);
-            }
-            else {
-                console.log(`IDK: ${player.id}`);
-            }
+        this.socket.on('sfLobbyPlayerJoined', (newPlayer: Player, lobbyPlayers: Array<Player>) => {
+
+            //(3/30/22) lobbyPlayers is a light array, it's fine to just remake it every join/drop
+            console.log(`${newPlayer.name} joined, number: ${newPlayer.playerNumber}`);
+            this.lobbyPlayers = lobbyPlayers;
+            this.lCanvas.addPlayer(newPlayer, this.lobbyPlayers);
         });
     }
 
     public playerDropped(): void {
-        this.socket.on('sfLobbyPlayerDropped', (id: string) => {
+        this.socket.on('sfLobbyPlayerDropped', (id: string, lobbyPlayers: Array<Player>) => {
 
-            const player = getPlayerByID(id, this.lobbyPlayers);
-            this.lCanvas.dropPlayer(player);
-            console.log(`${player.name} dropped`);
-            this.lobbyPlayers.splice(this.lobbyPlayers.indexOf(player), 1);
-            console.log(`new lobby players: ${this.lobbyPlayers.length}`);
+            // const player = getPlayerByID(id, this.lobbyPlayers);
+
+            const droppedPlayer = getPlayerByID(id, this.lobbyPlayers);
+            console.log(`${droppedPlayer.name} dropped`);
+            this.lobbyPlayers = lobbyPlayers;
+            this.lCanvas.dropPlayer(droppedPlayer, this.lobbyPlayers);
         });
     }
 

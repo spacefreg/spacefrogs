@@ -19,13 +19,9 @@ export default class LobbyCanvas {
 
         this.frogPlayers = new Array();
 
-        for (let i = 0; i < lobbyPlayers.length; i++) {
-            this.addPlayer(lobbyPlayers[i]);
-        }
+        this.addPlayer(self, lobbyPlayers);
 
 
-        console.log(`LOBBYCANVAS: frog players length: ${this.frogPlayers.length}`);
-        console.log(`LOBBYCANVAS: lobby players length: ${lobbyPlayers.length}`);
 
         this.fpsIndicator = '';
         this.timeFpsIndicatorLastUpdated = performance.now();
@@ -41,20 +37,23 @@ export default class LobbyCanvas {
         //console.log(`frogplayers length: ${this.frogPlayers.length}`);
     }
 
-    public addPlayer(playerarg: Player): void {
-        console.log(`inside lobbyCanvas.addPlayer: adding player: ${playerarg.name}`);
+    public addPlayer(playerarg: Player, lobbyPlayers: Array<Player>): void {
         const newfrog: Player = playerarg;
-        this.frogPlayers.push(new FrogPlayer(newfrog.name, newfrog.playerNumber));
+        
+        this.frogPlayers.length = 0;
+        for (let i = 0; i < lobbyPlayers.length; i++) {
+            this.frogPlayers.push(new FrogPlayer(lobbyPlayers[i].name, lobbyPlayers[i].playerNumber));
+        }
 
     }
 
-    public dropPlayer(player: Player): void {
-        const droppedFrog: FrogPlayer = getFrogPlayerByNumber(player.playerNumber, this.frogPlayers);
-        if (droppedFrog) {
-            this.frogPlayers.splice(this.frogPlayers.indexOf(droppedFrog), 1);
-            console.log(`dropped player: ${droppedFrog.getName(), droppedFrog.getPlayerNumber()}`);
-        }
+    public dropPlayer(player: Player, lobbyPlayers: Array<Player>): void {
+        console.log(`dropped player: ${player.name}`);
 
+        this.frogPlayers.length = 0;
+        for (let i = 0; i < lobbyPlayers.length; i++) {
+            this.frogPlayers.push(new FrogPlayer(lobbyPlayers[i].name, lobbyPlayers[i].playerNumber));
+        }
 
     }
 

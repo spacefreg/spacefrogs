@@ -13,9 +13,9 @@ export default class FrogPlayer {
     constructor(name: string, playerNumber: number) {
         this.name = name;
         this.fPlayerNumber = playerNumber
-        this.origin = new vec2(30, (this.fPlayerNumber * 100) + 30);
-        this.frog = new sfuiElement(this.origin, this.name, new Image(), '../../res/spaceapu.png');
-        this.setPlayerNumber(playerNumber);
+        this.origin = new vec2(30, (this.fPlayerNumber * 50) + 30);
+        this.frog = new sfuiElement(this.origin, this.name, new Image(), '../../res/images/frogs/spaceapu-lobby.png');
+        this.setFrogPlayerNumber(playerNumber);
     }
 
     public setHost(): void {
@@ -31,16 +31,15 @@ export default class FrogPlayer {
         return n;
     }
 
-    public getPlayerNumber(): number {
+    public getfPlayerNumber(): number {
         const n = this.fPlayerNumber;
         return n;
     }
 
-    public setPlayerNumber(num: number): void {
-        console.log(`setting player number to ${num}`);
+    public setFrogPlayerNumber(num: number): void {
 
         this.fPlayerNumber = num;
-        this.origin = new vec2(30, (this.fPlayerNumber * 100) + 30);
+        this.origin = new vec2(30, (this.fPlayerNumber * 50) + 30);
         this.frog.setOrigin(this.origin);
         this.frog.setText(this.name + ': ' + this.fPlayerNumber);
     }
@@ -52,7 +51,7 @@ export default class FrogPlayer {
 
 export function getFrogPlayerByNumber(num: number, players: Array<FrogPlayer>): FrogPlayer {
     for (let i = 0; i < players.length; i++) {
-        if (players[i].getPlayerNumber() == num) {
+        if (players[i].getfPlayerNumber() == num) {
             return players[i];
         }
     }
