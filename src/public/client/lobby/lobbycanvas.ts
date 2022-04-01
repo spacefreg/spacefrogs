@@ -2,6 +2,9 @@ import Player from '../../core/player.js';
 
 import FrogPlayer, { getFrogPlayerByNumber } from '../ui/frogplayer.js';
 
+import ChatWindow from '../ui/chatwindow.js';
+import vec2 from '../../core/math/vec2.js';
+
 export default class LobbyCanvas {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
@@ -10,6 +13,8 @@ export default class LobbyCanvas {
 
     private fpsIndicator: string;
     private timeFpsIndicatorLastUpdated: number;
+
+    private chatWindow: ChatWindow;
 
 
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
@@ -26,6 +31,7 @@ export default class LobbyCanvas {
         this.fpsIndicator = '';
         this.timeFpsIndicatorLastUpdated = performance.now();
 
+        this.chatWindow = new ChatWindow(new vec2(0, 0));
     }   
 
     public update(dt: number): void {
@@ -34,6 +40,7 @@ export default class LobbyCanvas {
             this.timeFpsIndicatorLastUpdated = performance.now();
         }
 
+        this.chatWindow.update(dt);
         //console.log(`frogplayers length: ${this.frogPlayers.length}`);
     }
 

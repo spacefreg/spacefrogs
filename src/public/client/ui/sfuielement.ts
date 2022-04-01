@@ -1,15 +1,21 @@
 import vec2 from '../../core/math/vec2.js';
 
 export default class sfuiElement {
-    private text: string;
-    private mainImage: HTMLImageElement;
-    private imgSrc: string;
-    private width: number;
-    private height: number;
+    protected canvas: HTMLCanvasElement;
+    protected ctx: CanvasRenderingContext2D;
 
-    private origin: vec2;
+    protected text: string;
+    protected mainImage: HTMLImageElement;
+    protected imgSrc: string;
+    protected width: number;
+    protected height: number;
+
+    protected origin: vec2;
 
     constructor(origin: vec2, text: string, mainImage: HTMLImageElement, imgSrc: string) {
+        this.canvas = <HTMLCanvasElement>document.getElementById('sf-canvas');
+        this.ctx = <CanvasRenderingContext2D>this.canvas.getContext('2d');
+        
         this.origin = origin;
         this.text = text;
         this.mainImage = mainImage;
@@ -19,13 +25,12 @@ export default class sfuiElement {
         this.height = this.mainImage.height;
         
         console.log(`sfuiElement constructor. mainImage: ${mainImage.width}`);
-        console.log(`w:${this.width}, h:${this.height}`);
 
     }
 
 
     //(3/27/22) for passive elements like animations
-    public update(): void {
+    public update(dt: number): void {
     }
 
     public render(ctx: CanvasRenderingContext2D): void {
