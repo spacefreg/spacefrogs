@@ -63,14 +63,6 @@ function createGameHTML() {
     canvas.height = 768;
     document.body.append(canvas);
 
-
-    const chatBoxInput: HTMLInputElement = document.createElement('input');
-    chatBoxInput.id = 'chat-box-input';
-    chatBoxInput.type = 'text';
-    chatBoxInput.placeholder = 'Press enter to chat';
-    chatBoxInput.width = 680;
-    chatBoxInput.height = 50;
-    document.body.appendChild(chatBoxInput);
 }
 
 function receiveUserInvite() {

@@ -5,7 +5,6 @@ export default class LobbyCanvas {
     private frogPlayers;
     private fpsIndicator;
     private timeFpsIndicatorLastUpdated;
-    private chatWindow;
     constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>);
     update(dt: number): void;
     addPlayer(playerarg: Player, lobbyPlayers: Array<Player>): void;

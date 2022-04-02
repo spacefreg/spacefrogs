@@ -5,8 +5,9 @@ export default class FrogPlayer {
         this.isHost = false;
         this.name = name;
         this.fPlayerNumber = playerNumber;
-        this.origin = new vec2(30, (this.fPlayerNumber * 50) + 30);
+        this.origin = new vec2(0, 0);
         this.frog = new sfuiElement(this.origin, this.name, new Image(), '../../res/images/frogs/spaceapu-lobby.png');
+        this.frog.setText(this.name);
         this.setFrogPlayerNumber(playerNumber);
     }
     setHost() {
@@ -26,12 +27,11 @@ export default class FrogPlayer {
     }
     setFrogPlayerNumber(num) {
         this.fPlayerNumber = num;
-        this.origin = new vec2(30, (this.fPlayerNumber * 50) + 30);
+        this.origin = new vec2(5, (this.fPlayerNumber * 45) - 30);
         this.frog.setOrigin(this.origin);
-        this.frog.setText(this.name + ': ' + this.fPlayerNumber);
     }
-    render(ctx) {
-        this.frog.render(ctx);
+    render() {
+        this.frog.render();
     }
 }
 export function getFrogPlayerByNumber(num, players) {

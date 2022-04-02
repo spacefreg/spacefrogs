@@ -7,25 +7,26 @@ export default class sfuiElement {
     protected text: string;
     protected mainImage: HTMLImageElement;
     protected imgSrc: string;
-    protected width: number;
-    protected height: number;
+    protected size: vec2;
 
     protected origin: vec2;
+
+    protected backgroundColor: string;
+    protected opacity: number;
 
     constructor(origin: vec2, text: string, mainImage: HTMLImageElement, imgSrc: string) {
         this.canvas = <HTMLCanvasElement>document.getElementById('sf-canvas');
         this.ctx = <CanvasRenderingContext2D>this.canvas.getContext('2d');
-        
+
         this.origin = origin;
         this.text = text;
         this.mainImage = mainImage;
         this.imgSrc = imgSrc;
         this.mainImage.src = this.imgSrc;
-        this.width = this.mainImage.width;
-        this.height = this.mainImage.height;
-        
-        console.log(`sfuiElement constructor. mainImage: ${mainImage.width}`);
+        this.size = new vec2(0, 0);
 
+        this.backgroundColor = 'red';
+        this.opacity = .3;
     }
 
 
@@ -33,9 +34,21 @@ export default class sfuiElement {
     public update(dt: number): void {
     }
 
-    public render(ctx: CanvasRenderingContext2D): void {
-        ctx.fillText(this.text, this.origin.x, this.origin.y);
-        ctx.drawImage(this.mainImage, this.origin.x, this.origin.y);
+    public render(): void {
+        this.ctx.fillText(this.text, this.origin.x, this.origin.y);
+        this.ctx.drawImage(this.mainImage, this.origin.x, this.origin.y);
+
+        if (this.backgroundColor) {
+            const oldAlpha: number = this.ctx.globalAlpha;
+            const oldFillStyle: string = <string>this.ctx.fillStyle;
+
+            this.ctx.globalAlpha = this.opacity;
+            this.ctx.fillStyle = this.backgroundColor;
+            this.ctx.fillRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
+
+            this.ctx.globalAlpha = oldAlpha;
+            this.ctx.fillStyle = oldFillStyle
+        }
     }
 
     //(3/28/22) getters
@@ -53,5 +66,21 @@ export default class sfuiElement {
 
     public setText(text: string): void {
         this.text = text;
+    }
+
+    public setSize(size: vec2) {
+        this.size = size;
+    }
+
+    public getSize(): vec2 {
+        return this.size;
+    }
+
+    public setBackgroundColor(color: string): void {
+        this.backgroundColor = color;
+    }
+
+    public setOpacity(opacity: number): void {
+        this.opacity = opacity;
     }
 }
