@@ -6,5 +6,6 @@ export default class Lobby {
     lobbyHostID: string;
     constructor();
     activate(hostID: string, hostName: string, campaignName: string): void;
+    addPlayerToLobby(id: string, name: string): Player;
     deactivate(): void;
 }

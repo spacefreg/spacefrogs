@@ -5,11 +5,15 @@ export default class Player {
     
     public playerNumber: number;
 
+    //(4/2/22) used to advance from the lobby to the game
+    public isReady: boolean;
+
     constructor(id: string, name: string) {
         this.playerNumber = 0;
         console.log(`player constructor: name:${name}, id:${id}`);
         this.id = id;
         this.name = name;
+        this.isReady = false;
     }
 
     public setHost(): void {

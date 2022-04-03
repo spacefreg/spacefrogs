@@ -3,6 +3,7 @@ export default class Player {
     name: string;
     isHost: boolean;
     playerNumber: number;
+    isReady: boolean;
     constructor(id: string, name: string);
     setHost(): void;
     getPlayerNumber(): number;

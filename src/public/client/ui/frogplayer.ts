@@ -8,15 +8,21 @@ export default class FrogPlayer {
     private frog: sfuiElement;
     private origin: vec2;
 
+    private readyToPlayButton: sfuiElement;
+
     private isHost: boolean = false;
 
     constructor(name: string, playerNumber: number) {
         this.name = name;
         this.fPlayerNumber = playerNumber
         this.origin = new vec2(0, 0);
-        this.frog = new sfuiElement(this.origin, this.name, new Image(), '../../res/images/frogs/spaceapu-lobby.png');
+        this.frog = new sfuiElement(this.origin, this.name);
+        this.frog.setImage('../../res/images/frogs/spaceapu-lobby.png');
         this.frog.setText(this.name);
+        this.readyToPlayButton = new sfuiElement(this.origin, 'Ready to Play');
+
         this.setFrogPlayerNumber(playerNumber);
+
     }
 
     public setHost(): void {
@@ -43,10 +49,15 @@ export default class FrogPlayer {
         this.fPlayerNumber = num;
         this.origin = new vec2(5, (this.fPlayerNumber * 45) - 30);
         this.frog.setOrigin(this.origin);
+
+        const buttonPos: vec2 = new vec2(this.origin.x + 100, this.origin.y);
+        this.readyToPlayButton.setOrigin(buttonPos);
+        
     }
 
     public render(): void {
         this.frog.render();
+        this.readyToPlayButton.render();
     }
 }
 

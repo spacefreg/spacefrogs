@@ -1,13 +1,13 @@
 import vec2 from '../../core/math/vec2.js';
 export default class sfuiElement {
-    constructor(origin, text, mainImage, imgSrc) {
+    constructor(origin, title) {
+        this.hasImage = false;
+        this.isButton = false;
         this.canvas = document.getElementById('sf-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.origin = origin;
-        this.text = text;
-        this.mainImage = mainImage;
-        this.imgSrc = imgSrc;
-        this.mainImage.src = this.imgSrc;
+        this.title = title;
+        this.imageHTML = new Image();
         this.size = new vec2(0, 0);
         this.backgroundColor = 'red';
         this.opacity = .3;
@@ -16,8 +16,10 @@ export default class sfuiElement {
     update(dt) {
     }
     render() {
-        this.ctx.fillText(this.text, this.origin.x, this.origin.y);
-        this.ctx.drawImage(this.mainImage, this.origin.x, this.origin.y);
+        this.ctx.fillText(this.title, this.origin.x, this.origin.y);
+        if (this.hasImage) {
+            this.ctx.drawImage(this.imageHTML, this.origin.x, this.origin.y);
+        }
         if (this.backgroundColor) {
             const oldAlpha = this.ctx.globalAlpha;
             const oldFillStyle = this.ctx.fillStyle;
@@ -36,10 +38,10 @@ export default class sfuiElement {
         this.origin = origin;
     }
     getText() {
-        return this.text;
+        return this.title;
     }
     setText(text) {
-        this.text = text;
+        this.title = text;
     }
     setSize(size) {
         this.size = size;
@@ -52,5 +54,9 @@ export default class sfuiElement {
     }
     setOpacity(opacity) {
         this.opacity = opacity;
+    }
+    setImage(src) {
+        this.hasImage = true;
+        this.imageHTML.src = src;
     }
 }

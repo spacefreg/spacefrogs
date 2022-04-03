@@ -3,6 +3,7 @@ import Player from '../../core/player.js';
 import FrogPlayer, { getFrogPlayerByNumber } from '../ui/frogplayer.js';
 
 import vec2 from '../../core/math/vec2.js';
+import sfuiElement from '../ui/sfuielement.js';
 
 export default class LobbyCanvas {
     private canvas: HTMLCanvasElement;
@@ -24,6 +25,8 @@ export default class LobbyCanvas {
 
         this.addPlayer(self, lobbyPlayers);
 
+
+        this.canvas.onmousedown = this.mouseDown.bind(this);
 
 
         this.fpsIndicator = '';
@@ -63,6 +66,13 @@ export default class LobbyCanvas {
             }
         }
 
+    }
+
+    public mouseDown(evt: MouseEvent): void {
+        if (evt.clientX >=this.canvas.offsetLeft && evt.clientX <= this.canvas.offsetLeft + this.canvas.width && evt.clientY >= this.canvas.offsetTop && evt.clientY <= this.canvas.offsetTop + this.canvas.height) {
+            evt.preventDefault();
+            console.log(`${evt.clientX - this.canvas.offsetLeft}, ${evt.clientY - this.canvas.offsetTop}`);
+        }
     }
 
     public render(): void {

@@ -15,6 +15,13 @@ export default class Lobby {
         this.lobbyPlayers[0].setHost();
         this.lobbyPlayers[0].setPlayerNumber(1);
     }
+    addPlayerToLobby(id, name) {
+        console.log(`lobby: adding player to lobby. id: ${id}, name: ${name}`);
+        this.lobbyPlayers.push(new Player(id, name));
+        const newIndex = this.lobbyPlayers.length - 1;
+        this.lobbyPlayers[newIndex].setPlayerNumber(this.lobbyPlayers.length);
+        return this.lobbyPlayers[newIndex];
+    }
     deactivate() {
         console.log('lobby: deactivating');
         this.isActive = false;

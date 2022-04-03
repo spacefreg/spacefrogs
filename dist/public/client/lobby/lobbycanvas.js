@@ -6,6 +6,7 @@ export default class LobbyCanvas {
         this.ctx = this.canvas.getContext('2d');
         this.frogPlayers = new Array();
         this.addPlayer(self, lobbyPlayers);
+        this.canvas.onmousedown = this.mouseDown.bind(this);
         this.fpsIndicator = '';
         this.timeFpsIndicatorLastUpdated = performance.now();
     }
@@ -32,6 +33,12 @@ export default class LobbyCanvas {
             if (i == 0) {
                 this.frogPlayers[i].setHost();
             }
+        }
+    }
+    mouseDown(evt) {
+        if (evt.clientX >= this.canvas.offsetLeft && evt.clientX <= this.canvas.offsetLeft + this.canvas.width && evt.clientY >= this.canvas.offsetTop && evt.clientY <= this.canvas.offsetTop + this.canvas.height) {
+            evt.preventDefault();
+            console.log(`${evt.clientX - this.canvas.offsetLeft}, ${evt.clientY - this.canvas.offsetTop}`);
         }
     }
     render() {

@@ -3,6 +3,7 @@ export default class FrogPlayer {
     private fPlayerNumber;
     private frog;
     private origin;
+    private readyToPlayButton;
     private isHost;
     constructor(name: string, playerNumber: number);
     setHost(): void;

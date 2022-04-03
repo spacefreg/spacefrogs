@@ -5,7 +5,7 @@ import express from 'express';
 import http from 'http';
 import * as socketIO from 'socket.io';
 import sfLobbyWelcome from '../public/core/messages/server/sflobbywelcome.js';
-import Player, { getPlayerByID } from '../public/core/player.js';
+import { getPlayerByID } from '../public/core/player.js';
 import Lobby from './lobby.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -75,10 +75,7 @@ class Server {
         }
         else if (this.gameLobby.isActive) {
             //(3/27/22) give the new user the lobby info directly and let them join the lobby 
-            this.gameLobby.lobbyPlayers.push(new Player(msg.id, msg.name));
-            const newIndex = this.gameLobby.lobbyPlayers.length - 1;
-            this.gameLobby.lobbyPlayers[newIndex].setPlayerNumber(this.gameLobby.lobbyPlayers.length);
-            const newestLobbyUser = getPlayerByID(msg.id, this.gameLobby.lobbyPlayers);
+            const newestLobbyUser = this.gameLobby.addPlayerToLobby(msg.id, msg.name);
             const lobbyWelcomeMessage = new sfLobbyWelcome(this.gameLobby.campaignName, this.playerHostID, this.gameLobby.lobbyPlayers);
             this.io.to(msg.id).emit('sfLobbyWelcome', lobbyWelcomeMessage);
             this.io.emit('sfLobbyPlayerJoined', newestLobbyUser, this.gameLobby.lobbyPlayers);
@@ -93,9 +90,7 @@ class Server {
         if (this.gameLobby.isActive) {
             //(3/27/22) todo: probably should send a message to the user that a lobby already exists
             //(3/27/22) currently, the user silently joins someone's lobby when he was expecting to create his own
-            this.gameLobby.lobbyPlayers.push(new Player(msg.id, msg.name));
-            const newIndex = this.gameLobby.lobbyPlayers.length - 1;
-            this.gameLobby.lobbyPlayers[newIndex].setPlayerNumber(this.gameLobby.lobbyPlayers.length);
+            this.gameLobby.addPlayerToLobby(msg.id, msg.name);
             const lobbyWelcomeMessage = new sfLobbyWelcome(this.gameLobby.campaignName, this.playerHostID, this.gameLobby.lobbyPlayers);
             this.io.to(msg.id).emit('sfLobbyAlreadyExists', lobbyWelcomeMessage);
             return;

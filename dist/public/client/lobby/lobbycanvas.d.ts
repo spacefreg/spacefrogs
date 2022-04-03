@@ -9,5 +9,6 @@ export default class LobbyCanvas {
     update(dt: number): void;
     addPlayer(playerarg: Player, lobbyPlayers: Array<Player>): void;
     dropPlayer(player: Player, lobbyPlayers: Array<Player>): void;
+    mouseDown(evt: MouseEvent): void;
     render(): void;
 }

@@ -5,6 +5,7 @@ export default class Player {
         console.log(`player constructor: name:${name}, id:${id}`);
         this.id = id;
         this.name = name;
+        this.isReady = false;
     }
     setHost() {
         this.isHost = true;

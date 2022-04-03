@@ -118,12 +118,9 @@ class Server {
         } 
         else if (this.gameLobby.isActive) {
             //(3/27/22) give the new user the lobby info directly and let them join the lobby 
-            this.gameLobby.lobbyPlayers.push(new Player(msg.id, msg.name));
+            
 
-            const newIndex: number = this.gameLobby.lobbyPlayers.length - 1;
-            this.gameLobby.lobbyPlayers[newIndex].setPlayerNumber(this.gameLobby.lobbyPlayers.length);
-
-            const newestLobbyUser: Player = getPlayerByID(msg.id, this.gameLobby.lobbyPlayers);
+            const newestLobbyUser = this.gameLobby.addPlayerToLobby(msg.id, msg.name);
             const lobbyWelcomeMessage: sfLobbyWelcome = new sfLobbyWelcome(this.gameLobby.campaignName, this.playerHostID, this.gameLobby.lobbyPlayers);
             this.io.to(msg.id).emit('sfLobbyWelcome', lobbyWelcomeMessage);
             this.io.emit('sfLobbyPlayerJoined', newestLobbyUser, this.gameLobby.lobbyPlayers);
@@ -142,10 +139,7 @@ class Server {
         if (this.gameLobby.isActive) {
             //(3/27/22) todo: probably should send a message to the user that a lobby already exists
             //(3/27/22) currently, the user silently joins someone's lobby when he was expecting to create his own
-            this.gameLobby.lobbyPlayers.push(new Player(msg.id, msg.name));
-
-            const newIndex: number = this.gameLobby.lobbyPlayers.length - 1;
-            this.gameLobby.lobbyPlayers[newIndex].setPlayerNumber(this.gameLobby.lobbyPlayers.length);
+            this.gameLobby.addPlayerToLobby(msg.id, msg.name);
 
             const lobbyWelcomeMessage: sfLobbyWelcome = new sfLobbyWelcome(this.gameLobby.campaignName, this.playerHostID, this.gameLobby.lobbyPlayers);
             this.io.to(msg.id).emit('sfLobbyAlreadyExists', lobbyWelcomeMessage);
