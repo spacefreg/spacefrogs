@@ -1,15 +1,16 @@
 import Player from '../../core/player.js';
 
-import FrogPlayer, { getFrogPlayerByNumber } from '../ui/frogplayer.js';
-
 import vec2 from '../../core/math/vec2.js';
-import sfuiElement from '../ui/sfuielement.js';
+
+import FrogPlayer, { getFrogPlayerByNumber } from '../ui/frogplayer.js';
+import SystemWindow from '../ui/systemwindow.js';
 
 export default class LobbyCanvas {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
     
     private frogPlayers: Array<FrogPlayer>;
+    private systemWindow: SystemWindow;
 
     private fpsIndicator: string;
     private timeFpsIndicatorLastUpdated: number;
@@ -24,6 +25,8 @@ export default class LobbyCanvas {
         this.frogPlayers = new Array();
 
         this.addPlayer(self, lobbyPlayers);
+
+        this.systemWindow = new SystemWindow(new vec2(200, 30), new vec2(800, 600));
 
 
         this.canvas.onmousedown = this.mouseDown.bind(this);
@@ -85,6 +88,8 @@ export default class LobbyCanvas {
         for (let i = 0; i < this.frogPlayers.length; i++) {
             this.frogPlayers[i].render();
         }
+
+        this.systemWindow.render();
 
 
         const fpsTextLength = this.ctx.measureText(this.fpsIndicator).width;

@@ -2,6 +2,7 @@ import vec2 from '../../core/math/vec2.js';
 export default class sfuiElement {
     constructor(origin, title) {
         this.hasImage = false;
+        this.hasOutline = false;
         this.isButton = false;
         this.canvas = document.getElementById('sf-canvas');
         this.ctx = this.canvas.getContext('2d');
@@ -9,7 +10,7 @@ export default class sfuiElement {
         this.title = title;
         this.imageHTML = new Image();
         this.size = new vec2(0, 0);
-        this.backgroundColor = 'red';
+        this.backgroundColor = '#5d4178';
         this.opacity = .3;
     }
     //(3/27/22) for passive elements like animations
@@ -28,6 +29,9 @@ export default class sfuiElement {
             this.ctx.fillRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
             this.ctx.globalAlpha = oldAlpha;
             this.ctx.fillStyle = oldFillStyle;
+        }
+        if (this.hasOutline) {
+            this.ctx.strokeStyle;
         }
     }
     //(3/28/22) getters
@@ -58,5 +62,8 @@ export default class sfuiElement {
     setImage(src) {
         this.hasImage = true;
         this.imageHTML.src = src;
+    }
+    setOutline(bool) {
+        this.hasOutline = bool;
     }
 }

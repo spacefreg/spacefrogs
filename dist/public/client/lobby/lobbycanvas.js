@@ -1,4 +1,6 @@
+import vec2 from '../../core/math/vec2.js';
 import FrogPlayer from '../ui/frogplayer.js';
+import SystemWindow from '../ui/systemwindow.js';
 export default class LobbyCanvas {
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
     constructor(self, host, campaignName, lobbyPlayers) {
@@ -6,6 +8,7 @@ export default class LobbyCanvas {
         this.ctx = this.canvas.getContext('2d');
         this.frogPlayers = new Array();
         this.addPlayer(self, lobbyPlayers);
+        this.systemWindow = new SystemWindow(new vec2(200, 30), new vec2(800, 600));
         this.canvas.onmousedown = this.mouseDown.bind(this);
         this.fpsIndicator = '';
         this.timeFpsIndicatorLastUpdated = performance.now();
@@ -48,6 +51,7 @@ export default class LobbyCanvas {
         for (let i = 0; i < this.frogPlayers.length; i++) {
             this.frogPlayers[i].render();
         }
+        this.systemWindow.render();
         const fpsTextLength = this.ctx.measureText(this.fpsIndicator).width;
         this.ctx.fillText(this.fpsIndicator, this.canvas.width - fpsTextLength - 3, 10);
     }

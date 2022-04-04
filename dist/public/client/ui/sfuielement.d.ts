@@ -2,11 +2,12 @@ import vec2 from '../../core/math/vec2.js';
 export default class sfuiElement {
     protected canvas: HTMLCanvasElement;
     protected ctx: CanvasRenderingContext2D;
+    protected origin: vec2;
     protected title: string;
     protected size: vec2;
     protected hasImage: boolean;
     protected imageHTML: HTMLImageElement;
-    protected origin: vec2;
+    protected hasOutline: boolean;
     protected isButton: boolean;
     protected backgroundColor: string;
     protected opacity: number;
@@ -22,4 +23,5 @@ export default class sfuiElement {
     setBackgroundColor(color: string): void;
     setOpacity(opacity: number): void;
     setImage(src: string): void;
+    setOutline(bool: boolean): void;
 }

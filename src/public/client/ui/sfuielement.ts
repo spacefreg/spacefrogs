@@ -3,7 +3,8 @@ import vec2 from '../../core/math/vec2.js';
 export default class sfuiElement {
     protected canvas: HTMLCanvasElement;
     protected ctx: CanvasRenderingContext2D;
-
+    
+    protected origin: vec2;
     protected title: string;
     
     protected size: vec2;
@@ -11,8 +12,8 @@ export default class sfuiElement {
     protected hasImage: boolean = false;
     protected imageHTML: HTMLImageElement;
     
+    protected hasOutline: boolean = false;
 
-    protected origin: vec2;
 
     protected isButton: boolean = false;
 
@@ -28,7 +29,7 @@ export default class sfuiElement {
         this.imageHTML = new Image();
         this.size = new vec2(0, 0);
 
-        this.backgroundColor = 'red';
+        this.backgroundColor = '#5d4178';
         this.opacity = .3;
     }
 
@@ -52,7 +53,11 @@ export default class sfuiElement {
             this.ctx.fillRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
 
             this.ctx.globalAlpha = oldAlpha;
-            this.ctx.fillStyle = oldFillStyle
+            this.ctx.fillStyle = oldFillStyle;
+        }
+
+        if (this.hasOutline) {
+            this.ctx.strokeStyle
         }
     }
 
@@ -93,4 +98,8 @@ export default class sfuiElement {
         this.hasImage = true;
         this.imageHTML.src = src;
     }
+
+    public setOutline(bool: boolean): void {
+        this.hasOutline = bool;
+    } 
 }
