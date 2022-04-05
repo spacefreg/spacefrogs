@@ -1,4 +1,4 @@
-import vec2 from '../../core/math/vec2.js';
+import vec2 from '../math/vec2.js';
 import sfuiElement from './sfuielement.js';
 
 
@@ -19,6 +19,7 @@ export default class FrogPlayer {
         this.frog = new sfuiElement(this.origin, this.name);
         this.frog.setImage('../../res/images/frogs/spaceapu-lobby.png');
         this.frog.setText(this.name);
+        this.frog.enableTitle();
         this.readyToPlayButton = new sfuiElement(this.origin, 'Ready to Play');
 
         this.setFrogPlayerNumber(playerNumber);

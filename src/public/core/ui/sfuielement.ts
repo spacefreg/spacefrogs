@@ -1,4 +1,4 @@
-import vec2 from '../../core/math/vec2.js';
+import vec2 from '../math/vec2.js';
 
 export default class sfuiElement {
     protected canvas: HTMLCanvasElement;
@@ -6,11 +6,15 @@ export default class sfuiElement {
     
     protected origin: vec2;
     protected title: string;
+    protected titleShowing: boolean = false;
+
+    protected initialized: boolean = false;
     
     protected size: vec2;
 
     protected hasImage: boolean = false;
     protected imageHTML: HTMLImageElement;
+    protected imageSize: vec2;
     
     protected hasOutline: boolean = false;
 
@@ -28,6 +32,7 @@ export default class sfuiElement {
         this.title = title;
         this.imageHTML = new Image();
         this.size = new vec2(0, 0);
+        this.imageSize = new vec2(0, 0);
 
         this.backgroundColor = '#5d4178';
         this.opacity = .3;
@@ -36,10 +41,15 @@ export default class sfuiElement {
 
     //(3/27/22) for passive elements like animations
     public update(dt: number): void {
+        this.imageSize.x = this.imageHTML.width;
+        this.imageSize.y = this.imageHTML.height;
+
     }
 
     public render(): void {
-        this.ctx.fillText(this.title, this.origin.x, this.origin.y);
+        if (this.titleShowing) {
+            this.ctx.fillText(this.title, this.origin.x, this.origin.y);
+        }
         
         if (this.hasImage) {
             this.ctx.drawImage(this.imageHTML, this.origin.x, this.origin.y);
@@ -86,6 +96,10 @@ export default class sfuiElement {
         return this.size;
     }
 
+    public getImageSize(): vec2 {
+        return this.imageSize;
+    }
+
     public setBackgroundColor(color: string): void {
         this.backgroundColor = color;
     }
@@ -97,9 +111,25 @@ export default class sfuiElement {
     public setImage(src: string): void {
         this.hasImage = true;
         this.imageHTML.src = src;
+        
+        this.imageHTML.onload = () => {
+            this.onImageLoad();
+        }
     }
 
     public setOutline(bool: boolean): void {
         this.hasOutline = bool;
     } 
+
+    protected onImageLoad(): void {
+        this.initialized = true;
+    }
+
+    public isInitialized(): boolean {
+        return this.initialized;
+    }
+
+    public enableTitle(): void {
+        this.titleShowing = true;
+    }
 }

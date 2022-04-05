@@ -6,5 +6,5 @@
         "rootDir": ".",
         "composite": true,
         "esModuleInterop": true
-    },   
+    },  
 }
