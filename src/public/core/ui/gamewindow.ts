@@ -1,10 +1,13 @@
 import vec2 from '../math/vec2.js';
 import sfuiElement from './sfuielement.js';
+
 import Sun from '../planets/sun.js';
+import Earth from '../planets/earth.js';
 
 export default class GameWindow extends sfuiElement {
 
     private sun: Sun;
+    private earth: Earth;
 
     constructor(origin: vec2, size: vec2) {
         super(origin, 'Game Window');
@@ -14,10 +17,12 @@ export default class GameWindow extends sfuiElement {
 
         let systemOrigin: vec2 = new vec2(this.origin.x + this.size.x / 2, this.origin.y + this.size.y / 2);
         this.sun = new Sun(systemOrigin);
+        this.earth = new Earth('Earth', 'Sun', 0, 0);
     }
 
     public update(dt: number): void {
         this.sun.update(dt);
+        this.earth.update(dt);
     }
 
     public render(): void {
@@ -27,6 +32,7 @@ export default class GameWindow extends sfuiElement {
         this.ctx.strokeRect(this.origin.x, this.origin.y, 800, 600);
 
         this.sun.render();
+        this.earth.render();
     }
 
     public getCenter(): vec2 {
