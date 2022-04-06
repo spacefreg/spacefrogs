@@ -10,10 +10,12 @@ export default class GameWindow extends sfuiElement {
         this.backgroundColor = '';
         let systemOrigin = new vec2(this.origin.x + this.size.x / 2, this.origin.y + this.size.y / 2);
         this.sun = new Sun(systemOrigin);
-        this.earth = new Earth('Earth', 'Sun', 0, 0);
+        this.earth = new Earth('Earth', 'Sun', 0, 240);
     }
     update(dt) {
         this.sun.update(dt);
+        let systemOrigin = new vec2(this.origin.x + this.size.x / 2, this.origin.y + this.size.y / 2);
+        this.earth.receiveParentCenter(systemOrigin);
         this.earth.update(dt);
     }
     render() {

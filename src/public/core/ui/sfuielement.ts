@@ -1,8 +1,8 @@
 import vec2 from '../math/vec2.js';
 
 export default class sfuiElement {
-    protected canvas: HTMLCanvasElement;
-    protected ctx: CanvasRenderingContext2D;
+    public canvas: HTMLCanvasElement;
+    public ctx: CanvasRenderingContext2D;
     
     protected origin: vec2;
     protected title: string;

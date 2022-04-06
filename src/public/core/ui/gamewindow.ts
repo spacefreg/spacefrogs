@@ -17,11 +17,14 @@ export default class GameWindow extends sfuiElement {
 
         let systemOrigin: vec2 = new vec2(this.origin.x + this.size.x / 2, this.origin.y + this.size.y / 2);
         this.sun = new Sun(systemOrigin);
-        this.earth = new Earth('Earth', 'Sun', 0, 0);
+        this.earth = new Earth('Earth', 'Sun', 0, 230);
     }
 
     public update(dt: number): void {
         this.sun.update(dt);
+        let systemOrigin: vec2 = new vec2(this.origin.x + this.size.x / 2, this.origin.y + this.size.y / 2);
+
+        this.earth.receiveParentCenter(systemOrigin);
         this.earth.update(dt);
     }
 
