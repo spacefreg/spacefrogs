@@ -26,7 +26,7 @@ export default class LobbyCanvas {
 
         this.addPlayer(self, lobbyPlayers);
 
-        this.gameWindow = new GameWindow(new vec2(200, 30), new vec2(800, 600));
+        this.gameWindow = new GameWindow(new vec2(200, 10), new vec2(800, 748));
 
 
         this.canvas.onmousedown = this.mouseDown.bind(this);
