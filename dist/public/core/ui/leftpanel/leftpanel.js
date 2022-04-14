@@ -1,8 +1,9 @@
 import vec2 from '../../math/vec2.js';
 import sfuiPanel from '../sfuipanel.js';
-export default class LeftPanel extends sfuiPanel {
+export default class SocialPanel extends sfuiPanel {
     constructor(origin, title) {
         super(origin, title);
+        this.frogPlayers = new Array();
         this.setSize(new vec2(210, 500));
         this.setBackgroundColor('#74a653');
         this.setOutline(true);

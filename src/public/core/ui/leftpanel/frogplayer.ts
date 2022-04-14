@@ -6,16 +6,18 @@ export default class FrogPlayer {
     private name: string;
     private fPlayerNumber: number;
     private frog: sfuiElement;
+    private panelOrigin: vec2;
     private origin: vec2;
 
     private readyToPlayButton: sfuiElement;
 
     private isHost: boolean = false;
 
-    constructor(name: string, playerNumber: number) {
+    constructor(name: string, playerNumber: number, panelOrigin: vec2) {
         this.name = name;
         this.fPlayerNumber = playerNumber
         this.origin = new vec2(0, 0);
+        this.panelOrigin = panelOrigin;
         this.frog = new sfuiElement(this.origin, this.name);
         this.frog.setImage('../../res/images/frogs/spaceapu-lobby.png');
         this.frog.setText(this.name);
@@ -49,6 +51,8 @@ export default class FrogPlayer {
 
         this.fPlayerNumber = num;
         this.origin = new vec2(5, (this.fPlayerNumber * 45) - 30);
+        this.origin.x += this.panelOrigin.x;
+        this.origin.y += this.panelOrigin.y;
         this.frog.setOrigin(this.origin);
 
         const buttonPos: vec2 = new vec2(this.origin.x + 100, this.origin.y);
@@ -69,5 +73,5 @@ export function getFrogPlayerByNumber(num: number, players: Array<FrogPlayer>): 
         }
     }
     //(3/27/22) gremlin is the 'player not found' player
-    return new FrogPlayer('gremlin', 0);
+    return new FrogPlayer('gremlin', 0, new vec2(0, 0));
 }

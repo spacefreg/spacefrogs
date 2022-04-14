@@ -1,11 +1,12 @@
 import vec2 from '../../math/vec2.js';
 import sfuiElement from '../sfuielement.js';
 export default class FrogPlayer {
-    constructor(name, playerNumber) {
+    constructor(name, playerNumber, panelOrigin) {
         this.isHost = false;
         this.name = name;
         this.fPlayerNumber = playerNumber;
         this.origin = new vec2(0, 0);
+        this.panelOrigin = panelOrigin;
         this.frog = new sfuiElement(this.origin, this.name);
         this.frog.setImage('../../res/images/frogs/spaceapu-lobby.png');
         this.frog.setText(this.name);
@@ -31,6 +32,8 @@ export default class FrogPlayer {
     setFrogPlayerNumber(num) {
         this.fPlayerNumber = num;
         this.origin = new vec2(5, (this.fPlayerNumber * 45) - 30);
+        this.origin.x += this.panelOrigin.x;
+        this.origin.y += this.panelOrigin.y;
         this.frog.setOrigin(this.origin);
         const buttonPos = new vec2(this.origin.x + 100, this.origin.y);
         this.readyToPlayButton.setOrigin(buttonPos);
@@ -47,5 +50,5 @@ export function getFrogPlayerByNumber(num, players) {
         }
     }
     //(3/27/22) gremlin is the 'player not found' player
-    return new FrogPlayer('gremlin', 0);
+    return new FrogPlayer('gremlin', 0, new vec2(0, 0));
 }

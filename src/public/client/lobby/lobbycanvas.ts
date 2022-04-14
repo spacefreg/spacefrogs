@@ -2,11 +2,10 @@ import Player from '../../core/player.js';
 
 import vec2 from '../../core/math/vec2.js';
 
-import FrogPlayer, { getFrogPlayerByNumber } from '../../core/ui/leftpanel/frogplayer.js';
 import GameWindow from '../../core/ui/gamewindow.js';
 
 import sfuiPanel from '../../core/ui/sfuipanel.js';
-import LeftPanel from '../../core/ui/leftpanel/leftpanel.js';
+import SocialPanel from '../../core/ui/leftpanel/socialpanel.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
 import RightPanel from '../../core/ui/rightpanel/rightpanel.js';
 
@@ -14,36 +13,33 @@ export default class LobbyCanvas {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
     
-    private frogPlayers: Array<FrogPlayer>;
     private gameWindow: GameWindow;
 
     private fpsIndicator: string;
     private timeFpsIndicatorLastUpdated: number;
 
-    private panels: Array<sfuiPanel>;
+    private socialPanel: SocialPanel;
+    private frogPanel: FrogPanel;
+    private gamePanel: RightPanel;;
 
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
     constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>) {
         this.canvas = <HTMLCanvasElement>document.getElementById('sf-canvas');
         this.ctx = <CanvasRenderingContext2D>this.canvas.getContext('2d');
 
-        this.frogPlayers = new Array();
 
-        this.addPlayer(self, lobbyPlayers);
+
 
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
 
-        //(4/12/22) sfuiPanel initialization
-        this.panels = new Array<sfuiPanel>();
 
-        const leftPanel: LeftPanel = new LeftPanel(new vec2(10, 10), 'left panel');
-        this.panels.push(leftPanel);
+        this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel');
 
-        const frogPanel: FrogPanel = new FrogPanel(new vec2(1, 480), 'frog panel');
-        this.panels.push(frogPanel);
+        this.frogPanel = new FrogPanel(new vec2(1, 480), 'frog panel');
 
-        const rightPanel: RightPanel = new RightPanel(new vec2(1040, 10), 'right panel');
-        this.panels.push(rightPanel);
+        this.gamePanel = new RightPanel(new vec2(1040, 10), 'right panel');
+
+        this.addPlayer(self, lobbyPlayers);
 
         this.canvas.onmousedown = this.mouseDown.bind(this);
 
@@ -63,30 +59,12 @@ export default class LobbyCanvas {
     }
 
     public addPlayer(playerarg: Player, lobbyPlayers: Array<Player>): void {
-        
-        this.frogPlayers.length = 0;
-        for (let i = 0; i < lobbyPlayers.length; i++) {
-            this.frogPlayers.push(new FrogPlayer(lobbyPlayers[i].name, lobbyPlayers[i].playerNumber));
-
-            if (i == 0) {
-                this.frogPlayers[i].setHost();
-            }
-        }
-
+        this.socialPanel.frogPlayerChanged(lobbyPlayers);
     }
 
     public dropPlayer(player: Player, lobbyPlayers: Array<Player>): void {
         console.log(`dropped player: ${player.name}`);
-
-        this.frogPlayers.length = 0;
-        for (let i = 0; i < lobbyPlayers.length; i++) {
-            this.frogPlayers.push(new FrogPlayer(lobbyPlayers[i].name, lobbyPlayers[i].playerNumber));
-
-            if (i == 0) {
-                this.frogPlayers[i].setHost();
-            }
-        }
-
+        this.socialPanel.frogPlayerChanged(lobbyPlayers);
     }
 
     public mouseDown(evt: MouseEvent): void {
@@ -103,15 +81,13 @@ export default class LobbyCanvas {
         this.ctx.font = '12px Arial';
         this.ctx.fillStyle = 'white';
 
-        for (let i = 0; i < this.frogPlayers.length; i++) {
-            this.frogPlayers[i].render();
-        }
+        
 
         this.gameWindow.render();
 
-        for (let i = 0; i < this.panels.length; i++) {
-            this.panels[i].render();
-        }
+        this.socialPanel.render();
+        this.frogPanel.render();
+        this.gamePanel.render();
 
         const fpsTextLength = this.ctx.measureText(this.fpsIndicator).width;
         this.ctx.fillText(this.fpsIndicator, this.canvas.width - fpsTextLength - 3, 10);

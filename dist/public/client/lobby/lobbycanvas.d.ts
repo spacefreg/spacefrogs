@@ -2,11 +2,12 @@ import Player from '../../core/player.js';
 export default class LobbyCanvas {
     private canvas;
     private ctx;
-    private frogPlayers;
     private gameWindow;
     private fpsIndicator;
     private timeFpsIndicatorLastUpdated;
-    private panels;
+    private socialPanel;
+    private frogPanel;
+    private gamePanel;
     constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>);
     update(dt: number): void;
     addPlayer(playerarg: Player, lobbyPlayers: Array<Player>): void;
