@@ -40,7 +40,6 @@ export default class GameWindow extends sfuiElement {
     render() {
         super.render();
         this.ctx.strokeStyle = '#5f4c73';
-        this.ctx.strokeRect(this.origin.x, this.origin.y, 800, 748);
         this.sun.render();
         this.earth.render();
         this.moon.render();

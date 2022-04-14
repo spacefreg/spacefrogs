@@ -1,6 +1,9 @@
 import vec2 from '../../core/math/vec2.js';
-import FrogPlayer from '../../core/ui/frogplayer.js';
+import FrogPlayer from '../../core/ui/leftpanel/frogplayer.js';
 import GameWindow from '../../core/ui/gamewindow.js';
+import LeftPanel from '../../core/ui/leftpanel/leftpanel.js';
+import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
+import RightPanel from '../../core/ui/rightpanel/rightpanel.js';
 export default class LobbyCanvas {
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
     constructor(self, host, campaignName, lobbyPlayers) {
@@ -8,7 +11,15 @@ export default class LobbyCanvas {
         this.ctx = this.canvas.getContext('2d');
         this.frogPlayers = new Array();
         this.addPlayer(self, lobbyPlayers);
-        this.gameWindow = new GameWindow(new vec2(200, 10), new vec2(800, 748));
+        this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
+        //(4/12/22) sfuiPanel initialization
+        this.panels = new Array();
+        const leftPanel = new LeftPanel(new vec2(10, 10), 'left panel');
+        this.panels.push(leftPanel);
+        const frogPanel = new FrogPanel(new vec2(1, 480), 'frog panel');
+        this.panels.push(frogPanel);
+        const rightPanel = new RightPanel(new vec2(1040, 10), 'right panel');
+        this.panels.push(rightPanel);
         this.canvas.onmousedown = this.mouseDown.bind(this);
         this.fpsIndicator = '';
         this.timeFpsIndicatorLastUpdated = performance.now();
@@ -53,6 +64,9 @@ export default class LobbyCanvas {
             this.frogPlayers[i].render();
         }
         this.gameWindow.render();
+        for (let i = 0; i < this.panels.length; i++) {
+            this.panels[i].render();
+        }
         const fpsTextLength = this.ctx.measureText(this.fpsIndicator).width;
         this.ctx.fillText(this.fpsIndicator, this.canvas.width - fpsTextLength - 3, 10);
     }

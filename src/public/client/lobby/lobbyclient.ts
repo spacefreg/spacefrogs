@@ -4,7 +4,7 @@ import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
 import Player, { getPlayerByID } from '../../core/player.js';
 import LobbyCanvas from './lobbycanvas.js';
 
-import { getFrogPlayerByNumber } from '../../core/ui/frogplayer.js';
+import { getFrogPlayerByNumber } from '../../core/ui/leftpanel/frogplayer.js';
 
 export default class LobbyClient {
     private socket: io;

@@ -43,7 +43,6 @@ export default class sfuiElement {
     public update(dt: number): void {
         this.imageSize.x = this.imageHTML.width;
         this.imageSize.y = this.imageHTML.height;
-
     }
 
     public render(): void {
@@ -67,7 +66,7 @@ export default class sfuiElement {
         }
 
         if (this.hasOutline) {
-            this.ctx.strokeStyle
+            this.ctx.strokeRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
         }
     }
 
@@ -104,7 +103,7 @@ export default class sfuiElement {
         this.backgroundColor = color;
     }
 
-    public setOpacity(opacity: number): void {
+    public setBackgroundOpacity(opacity: number): void {
         this.opacity = opacity;
     }
 

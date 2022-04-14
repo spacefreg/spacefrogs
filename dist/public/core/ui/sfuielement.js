@@ -38,7 +38,7 @@ export default class sfuiElement {
             this.ctx.fillStyle = oldFillStyle;
         }
         if (this.hasOutline) {
-            this.ctx.strokeStyle;
+            this.ctx.strokeRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
         }
     }
     //(3/28/22) getters
@@ -66,7 +66,7 @@ export default class sfuiElement {
     setBackgroundColor(color) {
         this.backgroundColor = color;
     }
-    setOpacity(opacity) {
+    setBackgroundOpacity(opacity) {
         this.opacity = opacity;
     }
     setImage(src) {

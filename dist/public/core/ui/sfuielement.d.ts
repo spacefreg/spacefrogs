@@ -25,7 +25,7 @@ export default class sfuiElement {
     getSize(): vec2;
     getImageSize(): vec2;
     setBackgroundColor(color: string): void;
-    setOpacity(opacity: number): void;
+    setBackgroundOpacity(opacity: number): void;
     setImage(src: string): void;
     setOutline(bool: boolean): void;
     protected onImageLoad(): void;

@@ -6,6 +6,7 @@ export default class LobbyCanvas {
     private gameWindow;
     private fpsIndicator;
     private timeFpsIndicatorLastUpdated;
+    private panels;
     constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>);
     update(dt: number): void;
     addPlayer(playerarg: Player, lobbyPlayers: Array<Player>): void;

@@ -2,8 +2,13 @@ import Player from '../../core/player.js';
 
 import vec2 from '../../core/math/vec2.js';
 
-import FrogPlayer, { getFrogPlayerByNumber } from '../../core/ui/frogplayer.js';
+import FrogPlayer, { getFrogPlayerByNumber } from '../../core/ui/leftpanel/frogplayer.js';
 import GameWindow from '../../core/ui/gamewindow.js';
+
+import sfuiPanel from '../../core/ui/sfuipanel.js';
+import LeftPanel from '../../core/ui/leftpanel/leftpanel.js';
+import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
+import RightPanel from '../../core/ui/rightpanel/rightpanel.js';
 
 export default class LobbyCanvas {
     private canvas: HTMLCanvasElement;
@@ -15,7 +20,7 @@ export default class LobbyCanvas {
     private fpsIndicator: string;
     private timeFpsIndicatorLastUpdated: number;
 
-
+    private panels: Array<sfuiPanel>;
 
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
     constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>) {
@@ -26,8 +31,19 @@ export default class LobbyCanvas {
 
         this.addPlayer(self, lobbyPlayers);
 
-        this.gameWindow = new GameWindow(new vec2(200, 10), new vec2(800, 748));
+        this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
 
+        //(4/12/22) sfuiPanel initialization
+        this.panels = new Array<sfuiPanel>();
+
+        const leftPanel: LeftPanel = new LeftPanel(new vec2(10, 10), 'left panel');
+        this.panels.push(leftPanel);
+
+        const frogPanel: FrogPanel = new FrogPanel(new vec2(1, 480), 'frog panel');
+        this.panels.push(frogPanel);
+
+        const rightPanel: RightPanel = new RightPanel(new vec2(1040, 10), 'right panel');
+        this.panels.push(rightPanel);
 
         this.canvas.onmousedown = this.mouseDown.bind(this);
 
@@ -93,6 +109,9 @@ export default class LobbyCanvas {
 
         this.gameWindow.render();
 
+        for (let i = 0; i < this.panels.length; i++) {
+            this.panels[i].render();
+        }
 
         const fpsTextLength = this.ctx.measureText(this.fpsIndicator).width;
         this.ctx.fillText(this.fpsIndicator, this.canvas.width - fpsTextLength - 3, 10);
