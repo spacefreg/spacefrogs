@@ -1,15 +1,16 @@
 import vec2 from '../math/vec2.js';
 export default class sfuiElement {
     constructor(origin, title) {
+        this.isButton = false;
         this.titleShowing = false;
         this.initialized = false;
         this.hasImage = false;
         this.hasOutline = false;
-        this.isButton = false;
         this.canvas = document.getElementById('sf-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.origin = origin;
         this.title = title;
+        this.titleOrigin = new vec2(0, 0);
         this.imageHTML = new Image();
         this.size = new vec2(0, 0);
         this.imageSize = new vec2(0, 0);
@@ -23,7 +24,12 @@ export default class sfuiElement {
     }
     render() {
         if (this.titleShowing) {
-            this.ctx.fillText(this.title, this.origin.x, this.origin.y);
+            if (this.isButton) {
+                this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
+            }
+            else {
+                this.ctx.fillText(this.title, this.origin.x, this.origin.y);
+            }
         }
         if (this.hasImage) {
             this.ctx.drawImage(this.imageHTML, this.origin.x, this.origin.y);
@@ -47,6 +53,10 @@ export default class sfuiElement {
     }
     setOrigin(origin) {
         this.origin = origin;
+        if (this.isButton) {
+            this.titleOrigin.x = this.origin.x + this.size.x / 2 - (75 / 2);
+            this.titleOrigin.y = this.origin.y + this.size.y / 2;
+        }
     }
     getText() {
         return this.title;
@@ -86,6 +96,10 @@ export default class sfuiElement {
         return this.initialized;
     }
     enableTitle() {
+        this.titleShowing = true;
+    }
+    setAsButton() {
+        this.isButton = true;
         this.titleShowing = true;
     }
 }

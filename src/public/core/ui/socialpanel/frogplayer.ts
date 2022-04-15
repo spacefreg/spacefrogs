@@ -24,6 +24,7 @@ export default class FrogPlayer {
         this.frog.enableTitle();
         this.readyToPlayButton = new sfuiElement(this.origin, 'Ready to Play');
 
+
         this.setFrogPlayerNumber(playerNumber);
 
     }
@@ -48,7 +49,7 @@ export default class FrogPlayer {
     }
 
     public setFrogPlayerNumber(num: number): void {
-
+        console.log(`calling setFrogPlayerNumber`);
         this.fPlayerNumber = num;
         this.origin = new vec2(5, (this.fPlayerNumber * 45) - 30);
         this.origin.x += this.panelOrigin.x;
@@ -56,7 +57,15 @@ export default class FrogPlayer {
         this.frog.setOrigin(this.origin);
 
         const buttonPos: vec2 = new vec2(this.origin.x + 100, this.origin.y);
+
+        this.readyToPlayButton.setAsButton();
+        this.readyToPlayButton.setSize(new vec2(100, 30));
+
         this.readyToPlayButton.setOrigin(buttonPos);
+        this.readyToPlayButton.setBackgroundColor('#ffffff');
+        this.readyToPlayButton.setOutline(true);
+        this.readyToPlayButton.setBackgroundOpacity(0.13);
+
         
     }
 

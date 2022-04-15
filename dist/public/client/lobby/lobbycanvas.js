@@ -1,8 +1,8 @@
 import vec2 from '../../core/math/vec2.js';
 import GameWindow from '../../core/ui/gamewindow.js';
-import SocialPanel from '../../core/ui/leftpanel/socialpanel.js';
+import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
-import RightPanel from '../../core/ui/rightpanel/rightpanel.js';
+import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
 export default class LobbyCanvas {
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
     constructor(self, host, campaignName, lobbyPlayers) {
@@ -11,13 +11,12 @@ export default class LobbyCanvas {
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel');
         this.frogPanel = new FrogPanel(new vec2(1, 480), 'frog panel');
-        this.gamePanel = new RightPanel(new vec2(1040, 10), 'right panel');
+        this.gamePanel = new GamePanel(new vec2(1040, 10), 'right panel');
         this.addPlayer(self, lobbyPlayers);
         this.canvas.onmousedown = this.mouseDown.bind(this);
         this.fpsIndicator = '';
         this.timeFpsIndicatorLastUpdated = performance.now();
     }
-    ;
     update(dt) {
         if (performance.now() - this.timeFpsIndicatorLastUpdated > 250) {
             this.fpsIndicator = 'fps:' + Math.floor(((1 / dt) * 1000));

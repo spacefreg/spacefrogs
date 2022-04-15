@@ -5,9 +5,9 @@ import vec2 from '../../core/math/vec2.js';
 import GameWindow from '../../core/ui/gamewindow.js';
 
 import sfuiPanel from '../../core/ui/sfuipanel.js';
-import SocialPanel from '../../core/ui/leftpanel/socialpanel.js';
+import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
-import RightPanel from '../../core/ui/rightpanel/rightpanel.js';
+import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
 
 export default class LobbyCanvas {
     private canvas: HTMLCanvasElement;
@@ -20,7 +20,7 @@ export default class LobbyCanvas {
 
     private socialPanel: SocialPanel;
     private frogPanel: FrogPanel;
-    private gamePanel: RightPanel;;
+    private gamePanel: GamePanel;
 
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
     constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>) {
@@ -37,7 +37,7 @@ export default class LobbyCanvas {
 
         this.frogPanel = new FrogPanel(new vec2(1, 480), 'frog panel');
 
-        this.gamePanel = new RightPanel(new vec2(1040, 10), 'right panel');
+        this.gamePanel = new GamePanel(new vec2(1040, 10), 'right panel');
 
         this.addPlayer(self, lobbyPlayers);
 

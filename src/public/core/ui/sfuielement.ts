@@ -5,7 +5,9 @@ export default class sfuiElement {
     public ctx: CanvasRenderingContext2D;
     
     protected origin: vec2;
+    protected isButton: boolean = false;
     protected title: string;
+    protected titleOrigin: vec2;
     protected titleShowing: boolean = false;
 
     protected initialized: boolean = false;
@@ -19,7 +21,7 @@ export default class sfuiElement {
     protected hasOutline: boolean = false;
 
 
-    protected isButton: boolean = false;
+
 
     protected backgroundColor: string;
     protected opacity: number;
@@ -30,6 +32,7 @@ export default class sfuiElement {
 
         this.origin = origin;
         this.title = title;
+        this.titleOrigin = new vec2(0, 0);
         this.imageHTML = new Image();
         this.size = new vec2(0, 0);
         this.imageSize = new vec2(0, 0);
@@ -47,7 +50,12 @@ export default class sfuiElement {
 
     public render(): void {
         if (this.titleShowing) {
-            this.ctx.fillText(this.title, this.origin.x, this.origin.y);
+            if (this.isButton) {
+                this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
+            }
+            else {
+                this.ctx.fillText(this.title, this.origin.x, this.origin.y);
+            }
         }
         
         if (this.hasImage) {
@@ -77,6 +85,11 @@ export default class sfuiElement {
 
     public setOrigin(origin: vec2): void {
         this.origin = origin;
+
+        if (this.isButton) {
+            this.titleOrigin.x = this.origin.x + this.size.x / 2 - (75 / 2);
+            this.titleOrigin.y = this.origin.y + this.size.y / 2;
+        }
     }
 
     public getText(): string {
@@ -129,6 +142,11 @@ export default class sfuiElement {
     }
 
     public enableTitle(): void {
+        this.titleShowing = true;
+    }
+
+    public setAsButton(): void {
+        this.isButton = true;
         this.titleShowing = true;
     }
 }

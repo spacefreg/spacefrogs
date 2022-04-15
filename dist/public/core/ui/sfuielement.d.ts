@@ -3,7 +3,9 @@ export default class sfuiElement {
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     protected origin: vec2;
+    protected isButton: boolean;
     protected title: string;
+    protected titleOrigin: vec2;
     protected titleShowing: boolean;
     protected initialized: boolean;
     protected size: vec2;
@@ -11,7 +13,6 @@ export default class sfuiElement {
     protected imageHTML: HTMLImageElement;
     protected imageSize: vec2;
     protected hasOutline: boolean;
-    protected isButton: boolean;
     protected backgroundColor: string;
     protected opacity: number;
     constructor(origin: vec2, title: string);
@@ -31,4 +32,5 @@ export default class sfuiElement {
     protected onImageLoad(): void;
     isInitialized(): boolean;
     enableTitle(): void;
+    setAsButton(): void;
 }
