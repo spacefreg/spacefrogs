@@ -42,6 +42,7 @@ export default class LobbyCanvas {
         this.addPlayer(self, lobbyPlayers);
 
         this.canvas.onmousedown = this.mouseDown.bind(this);
+        this.canvas.onmousemove = this.mouseMove.bind(this);
 
 
         this.fpsIndicator = '';
@@ -72,6 +73,14 @@ export default class LobbyCanvas {
             evt.preventDefault();
             console.log(`${evt.clientX - this.canvas.offsetLeft}, ${evt.clientY - this.canvas.offsetTop}`);
         }
+    }
+
+    public mouseMove(evt: MouseEvent): void {
+        //(4/15/22) todo: add mouse move callback to all the panels and game window
+        const pos: vec2 = new vec2(evt.clientX - this.canvas.offsetLeft, evt.clientY - this.canvas.offsetTop);
+        this.socialPanel.mouseMove(pos);
+        this.frogPanel.mouseMove(pos);
+        this.gamePanel.mouseMove(pos);
     }
 
     public render(): void {

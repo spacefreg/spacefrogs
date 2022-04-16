@@ -19,7 +19,7 @@ export default class sfuiElement {
     protected imageSize: vec2;
     
     protected hasOutline: boolean = false;
-
+    protected isMouseHovering: boolean = false;
 
 
 
@@ -66,7 +66,12 @@ export default class sfuiElement {
             const oldFillStyle: string = <string>this.ctx.fillStyle;
 
             this.ctx.globalAlpha = this.opacity;
-            this.ctx.fillStyle = this.backgroundColor;
+            if (this.isMouseHovering && this.isButton) {
+                this.ctx.fillStyle = 'purple'
+            }
+            else {
+                this.ctx.fillStyle = this.backgroundColor;
+            }
             this.ctx.fillRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
 
             this.ctx.globalAlpha = oldAlpha;
@@ -85,11 +90,10 @@ export default class sfuiElement {
 
     public setOrigin(origin: vec2): void {
         this.origin = origin;
+    }
 
-        if (this.isButton) {
-            this.titleOrigin.x = this.origin.x + this.size.x / 2 - (75 / 2);
-            this.titleOrigin.y = this.origin.y + this.size.y / 2;
-        }
+    public setTitleOrigin(origin: vec2): void {
+        this.titleOrigin = origin;
     }
 
     public getText(): string {
@@ -148,5 +152,15 @@ export default class sfuiElement {
     public setAsButton(): void {
         this.isButton = true;
         this.titleShowing = true;
+    }
+
+    public mouseMove(mousePos: vec2): void {
+        if (mousePos.x >= this.origin.x && mousePos.x <= this.origin.x + this.getSize().x &&
+            mousePos.y >= this.origin.y && mousePos.y <= this.origin.y + this.getSize().y) {
+            this.isMouseHovering = true;
+        }
+        else {
+            this.isMouseHovering = false;
+        }
     }
 }

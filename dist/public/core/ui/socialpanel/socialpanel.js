@@ -5,7 +5,7 @@ export default class SocialPanel extends sfuiPanel {
     constructor(origin, title) {
         super(origin, title);
         this.frogPlayers = new Array();
-        this.setSize(new vec2(210, 500));
+        this.setSize(new vec2(210, 461));
         this.setBackgroundColor('#74a653');
         this.setOutline(true);
         this.setBackgroundOpacity(0.13);
@@ -18,6 +18,12 @@ export default class SocialPanel extends sfuiPanel {
             if (i == 0) {
                 this.frogPlayers[i].setHost();
             }
+        }
+    }
+    mouseMove(mousePos) {
+        super.mouseMove(mousePos);
+        for (let i = 0; i < this.frogPlayers.length; i++) {
+            this.frogPlayers[i].mouseMove(mousePos);
         }
     }
     update(dt) {

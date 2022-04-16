@@ -37,12 +37,17 @@ export default class FrogPlayer {
         this.origin.y += this.panelOrigin.y;
         this.frog.setOrigin(this.origin);
         const buttonPos = new vec2(this.origin.x + 100, this.origin.y);
+        const titleOrigin = new vec2(buttonPos.x + 14, buttonPos.y + 17);
         this.readyToPlayButton.setAsButton();
         this.readyToPlayButton.setSize(new vec2(100, 30));
         this.readyToPlayButton.setOrigin(buttonPos);
+        this.readyToPlayButton.setTitleOrigin(titleOrigin);
         this.readyToPlayButton.setBackgroundColor('#ffffff');
-        this.readyToPlayButton.setOutline(true);
         this.readyToPlayButton.setBackgroundOpacity(0.13);
+    }
+    mouseMove(mousePos) {
+        this.frog.mouseMove(mousePos);
+        this.readyToPlayButton.mouseMove(mousePos);
     }
     render() {
         this.frog.render();

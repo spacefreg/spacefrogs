@@ -13,6 +13,7 @@ export default class sfuiElement {
     protected imageHTML: HTMLImageElement;
     protected imageSize: vec2;
     protected hasOutline: boolean;
+    protected isMouseHovering: boolean;
     protected backgroundColor: string;
     protected opacity: number;
     constructor(origin: vec2, title: string);
@@ -20,6 +21,7 @@ export default class sfuiElement {
     render(): void;
     getOrigin(): vec2;
     setOrigin(origin: vec2): void;
+    setTitleOrigin(origin: vec2): void;
     getText(): string;
     setText(text: string): void;
     setSize(size: vec2): void;
@@ -33,4 +35,5 @@ export default class sfuiElement {
     isInitialized(): boolean;
     enableTitle(): void;
     setAsButton(): void;
+    mouseMove(mousePos: vec2): void;
 }

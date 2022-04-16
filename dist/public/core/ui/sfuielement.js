@@ -6,6 +6,7 @@ export default class sfuiElement {
         this.initialized = false;
         this.hasImage = false;
         this.hasOutline = false;
+        this.isMouseHovering = false;
         this.canvas = document.getElementById('sf-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.origin = origin;
@@ -38,7 +39,12 @@ export default class sfuiElement {
             const oldAlpha = this.ctx.globalAlpha;
             const oldFillStyle = this.ctx.fillStyle;
             this.ctx.globalAlpha = this.opacity;
-            this.ctx.fillStyle = this.backgroundColor;
+            if (this.isMouseHovering && this.isButton) {
+                this.ctx.fillStyle = 'purple';
+            }
+            else {
+                this.ctx.fillStyle = this.backgroundColor;
+            }
             this.ctx.fillRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
             this.ctx.globalAlpha = oldAlpha;
             this.ctx.fillStyle = oldFillStyle;
@@ -53,10 +59,9 @@ export default class sfuiElement {
     }
     setOrigin(origin) {
         this.origin = origin;
-        if (this.isButton) {
-            this.titleOrigin.x = this.origin.x + this.size.x / 2 - (75 / 2);
-            this.titleOrigin.y = this.origin.y + this.size.y / 2;
-        }
+    }
+    setTitleOrigin(origin) {
+        this.titleOrigin = origin;
     }
     getText() {
         return this.title;
@@ -101,5 +106,14 @@ export default class sfuiElement {
     setAsButton() {
         this.isButton = true;
         this.titleShowing = true;
+    }
+    mouseMove(mousePos) {
+        if (mousePos.x >= this.origin.x && mousePos.x <= this.origin.x + this.getSize().x &&
+            mousePos.y >= this.origin.y && mousePos.y <= this.origin.y + this.getSize().y) {
+            this.isMouseHovering = true;
+        }
+        else {
+            this.isMouseHovering = false;
+        }
     }
 }

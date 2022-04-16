@@ -1,3 +1,4 @@
+import { createContext } from 'vm';
 import vec2 from '../../math/vec2.js';
 import sfuiElement from '../sfuielement.js';
 
@@ -15,7 +16,7 @@ export default class FrogPlayer {
 
     constructor(name: string, playerNumber: number, panelOrigin: vec2) {
         this.name = name;
-        this.fPlayerNumber = playerNumber
+        this.fPlayerNumber = playerNumber;
         this.origin = new vec2(0, 0);
         this.panelOrigin = panelOrigin;
         this.frog = new sfuiElement(this.origin, this.name);
@@ -57,16 +58,22 @@ export default class FrogPlayer {
         this.frog.setOrigin(this.origin);
 
         const buttonPos: vec2 = new vec2(this.origin.x + 100, this.origin.y);
+        const titleOrigin: vec2 = new vec2(buttonPos.x + 14, buttonPos.y + 17);
 
         this.readyToPlayButton.setAsButton();
         this.readyToPlayButton.setSize(new vec2(100, 30));
 
         this.readyToPlayButton.setOrigin(buttonPos);
+        this.readyToPlayButton.setTitleOrigin(titleOrigin);
         this.readyToPlayButton.setBackgroundColor('#ffffff');
-        this.readyToPlayButton.setOutline(true);
         this.readyToPlayButton.setBackgroundOpacity(0.13);
 
         
+    }
+
+    public mouseMove(mousePos: vec2): void {
+        this.frog.mouseMove(mousePos);
+        this.readyToPlayButton.mouseMove(mousePos);
     }
 
     public render(): void {

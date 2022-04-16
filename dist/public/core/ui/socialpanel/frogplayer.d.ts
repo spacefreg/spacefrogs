@@ -13,6 +13,7 @@ export default class FrogPlayer {
     getName(): string;
     getfPlayerNumber(): number;
     setFrogPlayerNumber(num: number): void;
+    mouseMove(mousePos: vec2): void;
     render(): void;
 }
 export declare function getFrogPlayerByNumber(num: number, players: Array<FrogPlayer>): FrogPlayer;

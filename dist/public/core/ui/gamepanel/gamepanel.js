@@ -1,6 +1,6 @@
 import vec2 from '../../math/vec2.js';
 import sfuiPanel from '../sfuipanel.js';
-export default class RightPanel extends sfuiPanel {
+export default class GamePanel extends sfuiPanel {
     constructor(origin, title) {
         super(origin, title);
         this.setSize(new vec2(315, 748));
