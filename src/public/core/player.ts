@@ -20,10 +20,6 @@ export default class Player {
         this.isHost = true;
     }
 
-    public getPlayerNumber(): number {
-        return this.playerNumber;
-    }
-
     //(3/27/22) only the server should probably be using this
     public setPlayerNumber(num: number): void {
         this.playerNumber = num;

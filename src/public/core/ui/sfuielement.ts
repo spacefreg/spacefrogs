@@ -6,6 +6,7 @@ export default class sfuiElement {
     
     protected origin: vec2;
     protected isButton: boolean = false;
+    protected active: boolean = false;
     protected title: string;
     protected titleOrigin: vec2;
     protected titleShowing: boolean = false;
@@ -145,6 +146,10 @@ export default class sfuiElement {
         return this.initialized;
     }
 
+    public isActive(): boolean {
+        return this.active;
+    }
+
     public enableTitle(): void {
         this.titleShowing = true;
     }
@@ -166,7 +171,8 @@ export default class sfuiElement {
 
     public mouseDown(mousePos: vec2): void {
         if (this.isMouseHovering && this.isButton) {
-            console.log(`${this.title} clicked`);
+            this.active = !this.active;
+            console.log(`${this.title} button active: ${this.active}`);
         }
     }
 }

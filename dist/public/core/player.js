@@ -10,9 +10,6 @@ export default class Player {
     setHost() {
         this.isHost = true;
     }
-    getPlayerNumber() {
-        return this.playerNumber;
-    }
     //(3/27/22) only the server should probably be using this
     setPlayerNumber(num) {
         this.playerNumber = num;

@@ -10,6 +10,7 @@ export default class LobbyClient {
         this.lCanvas = new LobbyCanvas(this.selfPlayer, this.hostPlayer, this.campaignName, this.lobbyPlayers);
         this.dt = 0;
         this.timeOfLastUpdate = 0;
+        console.log(`SELF PLAYER: ${this.selfPlayer.name}, ${this.selfPlayer.playerNumber}`);
         this.loop();
         //(3/27/22) socket callbacks
         this.playerDropped();

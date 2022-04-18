@@ -1,4 +1,3 @@
-import { createContext } from 'vm';
 import vec2 from '../../math/vec2.js';
 import sfuiElement from '../sfuielement.js';
 
@@ -11,11 +10,15 @@ export default class FrogPlayer {
     private origin: vec2;
 
     private readyToPlayButton: sfuiElement;
+    private readyIndicator: sfuiElement;
 
     private isHost: boolean = false;
+    private isPlayer: boolean = false;
 
-    constructor(name: string, playerNumber: number, panelOrigin: vec2) {
+    constructor(name: string, playerNumber: number, panelOrigin: vec2, isPlayer: boolean) {
         this.name = name;
+        console.log(`${name}: isPlayer: ${isPlayer}`);
+        this.isPlayer = isPlayer;
         this.fPlayerNumber = playerNumber;
         this.origin = new vec2(0, 0);
         this.panelOrigin = panelOrigin;
@@ -28,6 +31,9 @@ export default class FrogPlayer {
 
         this.setFrogPlayerNumber(playerNumber);
 
+        const indicatorOrigin: vec2 = new vec2(this.origin.x + 68, this.origin.y);
+        this.readyIndicator = new sfuiElement(indicatorOrigin, 'Ready Indicator');
+        this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
     }
 
     public setHost(): void {
@@ -68,7 +74,6 @@ export default class FrogPlayer {
         this.readyToPlayButton.setBackgroundColor('#ffffff');
         this.readyToPlayButton.setBackgroundOpacity(0.13);
 
-        
     }
 
     public mouseMove(mousePos: vec2): void {
@@ -77,12 +82,23 @@ export default class FrogPlayer {
     }
 
     public mouseDown(mousePos: vec2): void {
-        this.frog.mouseDown(mousePos);
-        this.readyToPlayButton.mouseDown(mousePos);
+        if (this.isPlayer) {
+            this.frog.mouseDown(mousePos);
+            this.readyToPlayButton.mouseDown(mousePos);
+        }
+
+
+        if (this.readyToPlayButton.isActive()) {
+            this.readyIndicator.setImage('../../res/images/ui/frogplayerready.png');
+        }
+        else {
+            this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
+        }
     }
 
     public render(): void {
         this.frog.render();
+        this.readyIndicator.render();
         this.readyToPlayButton.render();
     }
 }
@@ -94,5 +110,5 @@ export function getFrogPlayerByNumber(num: number, players: Array<FrogPlayer>): 
         }
     }
     //(3/27/22) gremlin is the 'player not found' player
-    return new FrogPlayer('gremlin', 0, new vec2(0, 0));
+    return new FrogPlayer('gremlin', 0, new vec2(0, 0), false);
 }

@@ -116,7 +116,15 @@ socket.on('sfNewOrLoadGame', () => {
 
 socket.on('sfLobbyWelcome', (msg: sfLobbyWelcome) => {
     createGameHTML();
+
+
     const selfPlayer: Player = new Player(socket.id, playerName);
+
+    for (let i = 0; i < msg.playerList.length; i++) {
+        if (msg.playerList[i].id == socket.id) {
+            selfPlayer.setPlayerNumber(i + 1);
+        }
+    }
     const hostPlayer: Player = getPlayerByID(msg.playerHostID, msg.playerList);
     const lc = new LobbyClient(socket, selfPlayer, hostPlayer, msg.campaignName, msg.playerList);
     

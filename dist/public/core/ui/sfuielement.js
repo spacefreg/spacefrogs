@@ -2,6 +2,7 @@ import vec2 from '../math/vec2.js';
 export default class sfuiElement {
     constructor(origin, title) {
         this.isButton = false;
+        this.active = false;
         this.titleShowing = false;
         this.initialized = false;
         this.hasImage = false;
@@ -100,6 +101,9 @@ export default class sfuiElement {
     isInitialized() {
         return this.initialized;
     }
+    isActive() {
+        return this.active;
+    }
     enableTitle() {
         this.titleShowing = true;
     }
@@ -118,7 +122,8 @@ export default class sfuiElement {
     }
     mouseDown(mousePos) {
         if (this.isMouseHovering && this.isButton) {
-            console.log(`${this.title} clicked`);
+            this.active = !this.active;
+            console.log(`${this.title} button active: ${this.active}`);
         }
     }
 }

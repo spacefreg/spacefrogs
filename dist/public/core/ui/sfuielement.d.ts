@@ -4,6 +4,7 @@ export default class sfuiElement {
     ctx: CanvasRenderingContext2D;
     protected origin: vec2;
     protected isButton: boolean;
+    protected active: boolean;
     protected title: string;
     protected titleOrigin: vec2;
     protected titleShowing: boolean;
@@ -33,6 +34,7 @@ export default class sfuiElement {
     setOutline(bool: boolean): void;
     protected onImageLoad(): void;
     isInitialized(): boolean;
+    isActive(): boolean;
     enableTitle(): void;
     setAsButton(): void;
     mouseMove(mousePos: vec2): void;

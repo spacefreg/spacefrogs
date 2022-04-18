@@ -1,9 +1,12 @@
 import vec2 from '../../math/vec2.js';
 import sfuiElement from '../sfuielement.js';
 export default class FrogPlayer {
-    constructor(name, playerNumber, panelOrigin) {
+    constructor(name, playerNumber, panelOrigin, isPlayer) {
         this.isHost = false;
+        this.isPlayer = false;
         this.name = name;
+        console.log(`${name}: isPlayer: ${isPlayer}`);
+        this.isPlayer = isPlayer;
         this.fPlayerNumber = playerNumber;
         this.origin = new vec2(0, 0);
         this.panelOrigin = panelOrigin;
@@ -13,6 +16,9 @@ export default class FrogPlayer {
         this.frog.enableTitle();
         this.readyToPlayButton = new sfuiElement(this.origin, 'Ready to Play');
         this.setFrogPlayerNumber(playerNumber);
+        const indicatorOrigin = new vec2(this.origin.x + 68, this.origin.y);
+        this.readyIndicator = new sfuiElement(indicatorOrigin, 'Ready Indicator');
+        this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
     }
     setHost() {
         this.isHost = true;
@@ -50,11 +56,20 @@ export default class FrogPlayer {
         this.readyToPlayButton.mouseMove(mousePos);
     }
     mouseDown(mousePos) {
-        this.frog.mouseDown(mousePos);
-        this.readyToPlayButton.mouseDown(mousePos);
+        if (this.isPlayer) {
+            this.frog.mouseDown(mousePos);
+            this.readyToPlayButton.mouseDown(mousePos);
+        }
+        if (this.readyToPlayButton.isActive()) {
+            this.readyIndicator.setImage('../../res/images/ui/frogplayerready.png');
+        }
+        else {
+            this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
+        }
     }
     render() {
         this.frog.render();
+        this.readyIndicator.render();
         this.readyToPlayButton.render();
     }
 }
@@ -65,5 +80,5 @@ export function getFrogPlayerByNumber(num, players) {
         }
     }
     //(3/27/22) gremlin is the 'player not found' player
-    return new FrogPlayer('gremlin', 0, new vec2(0, 0));
+    return new FrogPlayer('gremlin', 0, new vec2(0, 0), false);
 }
