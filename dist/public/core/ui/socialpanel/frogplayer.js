@@ -49,6 +49,10 @@ export default class FrogPlayer {
         this.frog.mouseMove(mousePos);
         this.readyToPlayButton.mouseMove(mousePos);
     }
+    mouseDown(mousePos) {
+        this.frog.mouseDown(mousePos);
+        this.readyToPlayButton.mouseDown(mousePos);
+    }
     render() {
         this.frog.render();
         this.readyToPlayButton.render();

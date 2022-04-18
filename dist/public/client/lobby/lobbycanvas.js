@@ -35,7 +35,11 @@ export default class LobbyCanvas {
     mouseDown(evt) {
         if (evt.clientX >= this.canvas.offsetLeft && evt.clientX <= this.canvas.offsetLeft + this.canvas.width && evt.clientY >= this.canvas.offsetTop && evt.clientY <= this.canvas.offsetTop + this.canvas.height) {
             evt.preventDefault();
+            const pos = new vec2(evt.clientX - this.canvas.offsetLeft, evt.clientY - this.canvas.offsetTop);
             console.log(`${evt.clientX - this.canvas.offsetLeft}, ${evt.clientY - this.canvas.offsetTop}`);
+            this.socialPanel.mouseDown(pos);
+            this.frogPanel.mouseDown(pos);
+            this.gamePanel.mouseDown(pos);
         }
     }
     mouseMove(evt) {

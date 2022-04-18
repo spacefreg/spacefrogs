@@ -14,6 +14,7 @@ export default class FrogPlayer {
     getfPlayerNumber(): number;
     setFrogPlayerNumber(num: number): void;
     mouseMove(mousePos: vec2): void;
+    mouseDown(mousePos: vec2): void;
     render(): void;
 }
 export declare function getFrogPlayerByNumber(num: number, players: Array<FrogPlayer>): FrogPlayer;

@@ -163,4 +163,10 @@ export default class sfuiElement {
             this.isMouseHovering = false;
         }
     }
+
+    public mouseDown(mousePos: vec2): void {
+        if (this.isMouseHovering && this.isButton) {
+            console.log(`${this.title} clicked`);
+        }
+    }
 }

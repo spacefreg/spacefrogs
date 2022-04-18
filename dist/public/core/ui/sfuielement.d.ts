@@ -36,4 +36,5 @@ export default class sfuiElement {
     enableTitle(): void;
     setAsButton(): void;
     mouseMove(mousePos: vec2): void;
+    mouseDown(mousePos: vec2): void;
 }

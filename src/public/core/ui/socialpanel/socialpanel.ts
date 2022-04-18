@@ -38,6 +38,14 @@ export default class SocialPanel extends sfuiPanel {
         }
     }
 
+    public mouseDown(mousePos: vec2): void {
+        super.mouseDown(mousePos);
+
+        for (let i = 0; i < this.frogPlayers.length; i++) {
+            this.frogPlayers[i].mouseDown(mousePos);
+        }
+    }
+
     public update(dt: number): void {
         super.update(dt);
     }

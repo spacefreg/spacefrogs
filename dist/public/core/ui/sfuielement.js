@@ -116,4 +116,9 @@ export default class sfuiElement {
             this.isMouseHovering = false;
         }
     }
+    mouseDown(mousePos) {
+        if (this.isMouseHovering && this.isButton) {
+            console.log(`${this.title} clicked`);
+        }
+    }
 }

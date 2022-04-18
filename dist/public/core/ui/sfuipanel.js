@@ -17,6 +17,12 @@ export default class sfuiPanel extends sfuiElement {
             this.elements[i].mouseMove(mousePos);
         }
     }
+    mouseDown(mousePos) {
+        super.mouseDown(mousePos);
+        for (let i = 0; i < this.elements.length; i++) {
+            this.elements[i].mouseDown(mousePos);
+        }
+    }
     update(dt) {
         super.update(dt);
     }

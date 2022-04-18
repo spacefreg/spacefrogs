@@ -5,6 +5,7 @@ export default class sfuiPanel extends sfuiElement {
     constructor(origin: vec2, title: string);
     adduiElement(origin: vec2, title: string): void;
     mouseMove(mousePos: vec2): void;
+    mouseDown(mousePos: vec2): void;
     update(dt: number): void;
     render(): void;
 }

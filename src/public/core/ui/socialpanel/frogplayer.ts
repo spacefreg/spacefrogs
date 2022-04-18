@@ -76,6 +76,11 @@ export default class FrogPlayer {
         this.readyToPlayButton.mouseMove(mousePos);
     }
 
+    public mouseDown(mousePos: vec2): void {
+        this.frog.mouseDown(mousePos);
+        this.readyToPlayButton.mouseDown(mousePos);
+    }
+
     public render(): void {
         this.frog.render();
         this.readyToPlayButton.render();

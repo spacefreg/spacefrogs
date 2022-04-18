@@ -23,6 +23,13 @@ export default class sfuiPanel extends sfuiElement {
         }
     }
 
+    public mouseDown(mousePos: vec2): void {
+        super.mouseDown(mousePos);
+        for (let i: number = 0; i < this.elements.length; i++) {
+            this.elements[i].mouseDown(mousePos);
+        }
+    }
+
     public update(dt: number): void {
         super.update(dt);
     }
