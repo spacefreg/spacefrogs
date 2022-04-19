@@ -8,6 +8,7 @@ export default class sfuiElement {
     protected title: string;
     protected titleOrigin: vec2;
     protected titleShowing: boolean;
+    protected titleFontSize: number;
     protected initialized: boolean;
     protected size: vec2;
     protected hasImage: boolean;
@@ -25,6 +26,7 @@ export default class sfuiElement {
     setTitleOrigin(origin: vec2): void;
     getText(): string;
     setText(text: string): void;
+    setFontSize(size: number): void;
     getTextWidth(): number;
     setSize(size: vec2): void;
     getSize(): vec2;

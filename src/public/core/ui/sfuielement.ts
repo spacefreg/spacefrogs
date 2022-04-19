@@ -10,6 +10,7 @@ export default class sfuiElement {
     protected title: string;
     protected titleOrigin: vec2;
     protected titleShowing: boolean = false;
+    protected titleFontSize: number = 12;
 
     protected initialized: boolean = false;
     
@@ -50,6 +51,8 @@ export default class sfuiElement {
     }
 
     public render(): void {
+        const oldFont = this.ctx.font;
+        this.ctx.font = `${this.titleFontSize}px Arial`;
         if (this.titleShowing) {
             if (this.isButton) {
                 this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
@@ -82,6 +85,8 @@ export default class sfuiElement {
         if (this.hasOutline) {
             this.ctx.strokeRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
         }
+
+        this.ctx.font = oldFont;
     }
 
     //(3/28/22) getters
@@ -103,6 +108,10 @@ export default class sfuiElement {
 
     public setText(text: string): void {
         this.title = text;
+    }
+
+    public setFontSize(size: number): void {
+        this.titleFontSize = size;
     }
 
     public getTextWidth(): number {
