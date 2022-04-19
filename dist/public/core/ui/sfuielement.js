@@ -70,6 +70,9 @@ export default class sfuiElement {
     setText(text) {
         this.title = text;
     }
+    getTextWidth() {
+        return this.ctx.measureText(this.title).width;
+    }
     setSize(size) {
         this.size = size;
     }

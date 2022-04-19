@@ -11,7 +11,7 @@ export default class LobbyCanvas {
         this.socket = socket;
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id, this.socket);
-        this.frogPanel = new FrogPanel(new vec2(1, 480), 'frog panel');
+        this.frogPanel = new FrogPanel(new vec2(1, 480), self.name);
         this.gamePanel = new GamePanel(new vec2(1040, 10), 'right panel');
         this.addPlayer(self, lobbyPlayers);
         this.canvas.onmousedown = this.mouseDown.bind(this);

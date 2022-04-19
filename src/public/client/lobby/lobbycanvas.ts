@@ -40,7 +40,7 @@ export default class LobbyCanvas {
 
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id, this.socket);
 
-        this.frogPanel = new FrogPanel(new vec2(1, 480), 'frog panel');
+        this.frogPanel = new FrogPanel(new vec2(1, 480), self.name);
 
         this.gamePanel = new GamePanel(new vec2(1040, 10), 'right panel');
 

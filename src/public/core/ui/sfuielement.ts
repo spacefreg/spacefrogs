@@ -105,6 +105,10 @@ export default class sfuiElement {
         this.title = text;
     }
 
+    public getTextWidth(): number {
+        return this.ctx.measureText(this.title).width;
+    }
+
     public setSize(size: vec2) {
         this.size = size;
     }

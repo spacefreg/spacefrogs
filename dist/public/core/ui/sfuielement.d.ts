@@ -25,6 +25,7 @@ export default class sfuiElement {
     setTitleOrigin(origin: vec2): void;
     getText(): string;
     setText(text: string): void;
+    getTextWidth(): number;
     setSize(size: vec2): void;
     getSize(): vec2;
     getImageSize(): vec2;
