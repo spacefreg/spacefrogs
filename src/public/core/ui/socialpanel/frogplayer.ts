@@ -13,9 +13,10 @@ export default class FrogPlayer {
     private frog: sfuiElement;
     private panelOrigin: vec2;
     private origin: vec2;
-
+    
     private readyToPlayButton: sfuiElement;
     private readyIndicator: sfuiElement;
+    private playerIndicator: sfuiElement;
 
     private isHost: boolean = false;
     private isPlayer: boolean = false;
@@ -35,11 +36,20 @@ export default class FrogPlayer {
         this.readyToPlayButton = new sfuiElement(this.origin, 'Ready to Play');
 
 
+        this.playerIndicator = new sfuiElement(this.origin, 'Player Indicator');
+
+        if (this.isPlayer) {
+            this.playerIndicator.setImage('../../res/images/frogs/playerindicator.png');
+        }
+
         this.setFrogPlayerNumber(playerNumber);
 
-        const indicatorOrigin: vec2 = new vec2(this.origin.x + 68, this.origin.y);
-        this.readyIndicator = new sfuiElement(indicatorOrigin, 'Ready Indicator');
+        const readyOrigin: vec2 = new vec2(this.origin.x + 68, this.origin.y);
+        this.readyIndicator = new sfuiElement(readyOrigin, 'Ready Indicator');
         this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
+
+
+
     }
 
     public setHost(): void {
@@ -84,6 +94,8 @@ export default class FrogPlayer {
         this.readyToPlayButton.setBackgroundColor('#ffffff');
         this.readyToPlayButton.setBackgroundOpacity(0.13);
 
+
+        this.playerIndicator.setOrigin(new vec2(this.origin.x + 40, this.origin.y + 10));
     }
 
     public mouseMove(mousePos: vec2): void {
@@ -124,6 +136,7 @@ export default class FrogPlayer {
         this.frog.render();
         this.readyIndicator.render();
         this.readyToPlayButton.render();
+        this.playerIndicator.render();
     }
 }
 

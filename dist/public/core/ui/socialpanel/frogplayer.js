@@ -16,9 +16,13 @@ export default class FrogPlayer {
         this.frog.setText(this.name);
         this.frog.enableTitle();
         this.readyToPlayButton = new sfuiElement(this.origin, 'Ready to Play');
+        this.playerIndicator = new sfuiElement(this.origin, 'Player Indicator');
+        if (this.isPlayer) {
+            this.playerIndicator.setImage('../../res/images/frogs/playerindicator.png');
+        }
         this.setFrogPlayerNumber(playerNumber);
-        const indicatorOrigin = new vec2(this.origin.x + 68, this.origin.y);
-        this.readyIndicator = new sfuiElement(indicatorOrigin, 'Ready Indicator');
+        const readyOrigin = new vec2(this.origin.x + 68, this.origin.y);
+        this.readyIndicator = new sfuiElement(readyOrigin, 'Ready Indicator');
         this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
     }
     setHost() {
@@ -54,6 +58,7 @@ export default class FrogPlayer {
         this.readyToPlayButton.setTitleOrigin(titleOrigin);
         this.readyToPlayButton.setBackgroundColor('#ffffff');
         this.readyToPlayButton.setBackgroundOpacity(0.13);
+        this.playerIndicator.setOrigin(new vec2(this.origin.x + 40, this.origin.y + 10));
     }
     mouseMove(mousePos) {
         this.frog.mouseMove(mousePos);
@@ -86,6 +91,7 @@ export default class FrogPlayer {
         this.frog.render();
         this.readyIndicator.render();
         this.readyToPlayButton.render();
+        this.playerIndicator.render();
     }
 }
 export function getFrogPlayerByNumber(num, players) {

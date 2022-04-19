@@ -39,9 +39,8 @@ export default class SocialPanel extends sfuiPanel {
     }
     mouseMove(mousePos) {
         super.mouseMove(mousePos);
-        for (let i = 0; i < this.frogPlayers.length; i++) {
-            this.frogPlayers[i].mouseMove(mousePos);
-        }
+        const fp = getFrogPlayerByID(this.selfID, this.frogPlayers);
+        fp.mouseMove(mousePos);
     }
     mouseDown(mousePos) {
         super.mouseDown(mousePos);

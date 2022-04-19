@@ -10,6 +10,7 @@ export default class FrogPlayer {
     private origin;
     private readyToPlayButton;
     private readyIndicator;
+    private playerIndicator;
     private isHost;
     private isPlayer;
     constructor(name: string, id: string, playerNumber: number, panelOrigin: vec2, isPlayer: boolean, socket: io);
