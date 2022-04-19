@@ -1,9 +1,14 @@
+//@ts-ignore
+import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
+
 import vec2 from '../../math/vec2.js';
 import sfuiElement from '../sfuielement.js';
 
 
 export default class FrogPlayer {
     private name: string;
+    private id: string;
+    private socket: io;
     private fPlayerNumber: number;
     private frog: sfuiElement;
     private panelOrigin: vec2;
@@ -15,9 +20,10 @@ export default class FrogPlayer {
     private isHost: boolean = false;
     private isPlayer: boolean = false;
 
-    constructor(name: string, playerNumber: number, panelOrigin: vec2, isPlayer: boolean) {
+    constructor(name: string, id: string, playerNumber: number, panelOrigin: vec2, isPlayer: boolean, socket: io) {
         this.name = name;
-        console.log(`${name}: isPlayer: ${isPlayer}`);
+        this.id = id;
+        this.socket = socket;
         this.isPlayer = isPlayer;
         this.fPlayerNumber = playerNumber;
         this.origin = new vec2(0, 0);
@@ -55,6 +61,10 @@ export default class FrogPlayer {
         return n;
     }
 
+    public getID(): string {
+        return this.id;
+    }
+
     public setFrogPlayerNumber(num: number): void {
         console.log(`calling setFrogPlayerNumber`);
         this.fPlayerNumber = num;
@@ -83,17 +93,31 @@ export default class FrogPlayer {
 
     public mouseDown(mousePos: vec2): void {
         if (this.isPlayer) {
-            this.frog.mouseDown(mousePos);
-            this.readyToPlayButton.mouseDown(mousePos);
-        }
+            const oldActiveState: boolean = this.readyToPlayButton.isActive();
+                this.frog.mouseDown(mousePos);
+                this.readyToPlayButton.mouseDown(mousePos);
+            
 
+            if (this.readyToPlayButton.isActive() && !oldActiveState) {
+                console.log(`emitting ready`);
+                this.socket.emit('sfcPlayerReady');
+            }
+            else if (!this.readyToPlayButton.isActive() && oldActiveState) {
+                console.log(`emitting not ready`);
+                this.socket.emit('sfcPlayerNotReady');
+            }
+    }
+    }
 
-        if (this.readyToPlayButton.isActive()) {
-            this.readyIndicator.setImage('../../res/images/ui/frogplayerready.png');
-        }
-        else {
-            this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
-        }
+    public readyPlayer(): void {
+        this.readyIndicator.setImage('../../res/images/ui/frogplayerready.png');
+    }
+
+    public unreadyPlayer(): void {
+        this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
+    }
+
+    public update(dt: number): void {
     }
 
     public render(): void {
@@ -110,5 +134,15 @@ export function getFrogPlayerByNumber(num: number, players: Array<FrogPlayer>): 
         }
     }
     //(3/27/22) gremlin is the 'player not found' player
-    return new FrogPlayer('gremlin', 0, new vec2(0, 0), false);
+    return new FrogPlayer('gremlin', '', 0, new vec2(0, 0), false, null);
+}
+
+export function getFrogPlayerByID(id: string, frogPlayers: Array<FrogPlayer>): FrogPlayer {
+    for (let i = 0; i < frogPlayers.length; i++) {
+        if (frogPlayers[i].getID() == id) {
+            return frogPlayers[i];
+        }
+    }
+    //(4/18/22) gremlin is the 'player not found' player
+    return new FrogPlayer('gremlin', '', 0, new vec2(0, 0), false, null);
 }

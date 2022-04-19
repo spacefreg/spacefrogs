@@ -31,9 +31,14 @@ class Server {
             socket.on('sfcNewUser', (msg) => {
                 this.sfcNewUser(msg);
             });
-            ;
             socket.on('sfcCreateCampaign', (msg) => {
                 this.sfcCreateCampaign(msg);
+            });
+            socket.on('sfcPlayerReady', () => {
+                this.io.emit('sfPlayerReady', socket.id);
+            });
+            socket.on('sfcPlayerNotReady', () => {
+                this.io.emit('sfPlayerNotReady', socket.id);
             });
             socket.on('disconnect', () => {
                 this.receptionGuests.delete(socket.id);

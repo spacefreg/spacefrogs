@@ -5,11 +5,12 @@ import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
 import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
 export default class LobbyCanvas {
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
-    constructor(self, host, campaignName, lobbyPlayers) {
+    constructor(self, host, campaignName, lobbyPlayers, socket) {
         this.canvas = document.getElementById('sf-canvas');
         this.ctx = this.canvas.getContext('2d');
+        this.socket = socket;
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
-        this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id);
+        this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id, this.socket);
         this.frogPanel = new FrogPanel(new vec2(1, 480), 'frog panel');
         this.gamePanel = new GamePanel(new vec2(1040, 10), 'right panel');
         this.addPlayer(self, lobbyPlayers);

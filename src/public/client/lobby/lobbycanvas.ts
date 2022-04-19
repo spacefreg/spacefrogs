@@ -1,10 +1,12 @@
+//@ts-ignore
+import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
+
 import Player from '../../core/player.js';
 
 import vec2 from '../../core/math/vec2.js';
 
 import GameWindow from '../../core/ui/gamewindow.js';
 
-import sfuiPanel from '../../core/ui/sfuipanel.js';
 import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
 import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
@@ -12,6 +14,8 @@ import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
 export default class LobbyCanvas {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
+
+    private socket: io;
     
     private gameWindow: GameWindow;
 
@@ -23,17 +27,18 @@ export default class LobbyCanvas {
     private gamePanel: GamePanel;
 
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
-    constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>) {
+    constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>, socket: io) {
         this.canvas = <HTMLCanvasElement>document.getElementById('sf-canvas');
         this.ctx = <CanvasRenderingContext2D>this.canvas.getContext('2d');
 
+        this.socket = socket;
 
 
 
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
 
 
-        this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id);
+        this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id, this.socket);
 
         this.frogPanel = new FrogPanel(new vec2(1, 480), 'frog panel');
 

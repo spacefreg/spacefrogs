@@ -1,11 +1,12 @@
 import vec2 from '../../math/vec2.js';
 import sfuiElement from '../sfuielement.js';
 export default class FrogPlayer {
-    constructor(name, playerNumber, panelOrigin, isPlayer) {
+    constructor(name, id, playerNumber, panelOrigin, isPlayer, socket) {
         this.isHost = false;
         this.isPlayer = false;
         this.name = name;
-        console.log(`${name}: isPlayer: ${isPlayer}`);
+        this.id = id;
+        this.socket = socket;
         this.isPlayer = isPlayer;
         this.fPlayerNumber = playerNumber;
         this.origin = new vec2(0, 0);
@@ -35,6 +36,9 @@ export default class FrogPlayer {
         const n = this.fPlayerNumber;
         return n;
     }
+    getID() {
+        return this.id;
+    }
     setFrogPlayerNumber(num) {
         console.log(`calling setFrogPlayerNumber`);
         this.fPlayerNumber = num;
@@ -57,15 +61,26 @@ export default class FrogPlayer {
     }
     mouseDown(mousePos) {
         if (this.isPlayer) {
+            const oldActiveState = this.readyToPlayButton.isActive();
             this.frog.mouseDown(mousePos);
             this.readyToPlayButton.mouseDown(mousePos);
+            if (this.readyToPlayButton.isActive() && !oldActiveState) {
+                console.log(`emitting ready`);
+                this.socket.emit('sfcPlayerReady');
+            }
+            else if (!this.readyToPlayButton.isActive() && oldActiveState) {
+                console.log(`emitting not ready`);
+                this.socket.emit('sfcPlayerNotReady');
+            }
         }
-        if (this.readyToPlayButton.isActive()) {
-            this.readyIndicator.setImage('../../res/images/ui/frogplayerready.png');
-        }
-        else {
-            this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
-        }
+    }
+    readyPlayer() {
+        this.readyIndicator.setImage('../../res/images/ui/frogplayerready.png');
+    }
+    unreadyPlayer() {
+        this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
+    }
+    update(dt) {
     }
     render() {
         this.frog.render();
@@ -80,5 +95,14 @@ export function getFrogPlayerByNumber(num, players) {
         }
     }
     //(3/27/22) gremlin is the 'player not found' player
-    return new FrogPlayer('gremlin', 0, new vec2(0, 0), false);
+    return new FrogPlayer('gremlin', '', 0, new vec2(0, 0), false, null);
+}
+export function getFrogPlayerByID(id, frogPlayers) {
+    for (let i = 0; i < frogPlayers.length; i++) {
+        if (frogPlayers[i].getID() == id) {
+            return frogPlayers[i];
+        }
+    }
+    //(4/18/22) gremlin is the 'player not found' player
+    return new FrogPlayer('gremlin', '', 0, new vec2(0, 0), false, null);
 }

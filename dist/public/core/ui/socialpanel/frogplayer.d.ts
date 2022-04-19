@@ -1,6 +1,9 @@
+import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
 import vec2 from '../../math/vec2.js';
 export default class FrogPlayer {
     private name;
+    private id;
+    private socket;
     private fPlayerNumber;
     private frog;
     private panelOrigin;
@@ -9,14 +12,19 @@ export default class FrogPlayer {
     private readyIndicator;
     private isHost;
     private isPlayer;
-    constructor(name: string, playerNumber: number, panelOrigin: vec2, isPlayer: boolean);
+    constructor(name: string, id: string, playerNumber: number, panelOrigin: vec2, isPlayer: boolean, socket: io);
     setHost(): void;
     getHost(): boolean;
     getName(): string;
     getfPlayerNumber(): number;
+    getID(): string;
     setFrogPlayerNumber(num: number): void;
     mouseMove(mousePos: vec2): void;
     mouseDown(mousePos: vec2): void;
+    readyPlayer(): void;
+    unreadyPlayer(): void;
+    update(dt: number): void;
     render(): void;
 }
 export declare function getFrogPlayerByNumber(num: number, players: Array<FrogPlayer>): FrogPlayer;
+export declare function getFrogPlayerByID(id: string, frogPlayers: Array<FrogPlayer>): FrogPlayer;

@@ -172,7 +172,7 @@ export default class sfuiElement {
     public mouseDown(mousePos: vec2): void {
         if (this.isMouseHovering && this.isButton) {
             this.active = !this.active;
-            console.log(`${this.title} button active: ${this.active}`);
+            //console.log(`${this.title} button active: ${this.active}`);
         }
     }
 }
