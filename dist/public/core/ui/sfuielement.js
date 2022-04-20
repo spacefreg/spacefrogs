@@ -2,6 +2,7 @@ import vec2 from '../math/vec2.js';
 export default class sfuiElement {
     constructor(origin, title) {
         this.isButton = false;
+        this.isTooltip = false;
         this.active = false;
         this.titleShowing = false;
         this.titleFontSize = 12;
@@ -17,7 +18,7 @@ export default class sfuiElement {
         this.imageHTML = new Image();
         this.size = new vec2(0, 0);
         this.imageSize = new vec2(0, 0);
-        this.backgroundColor = '#5d4178';
+        this.backgroundColor = '#271E4C';
         this.opacity = .3;
     }
     //(3/27/22) for passive elements like animations
@@ -25,17 +26,8 @@ export default class sfuiElement {
         this.imageSize.x = this.imageHTML.width;
         this.imageSize.y = this.imageHTML.height;
     }
+    //(4/19/22) please clean this up someday soon
     render() {
-        const oldFont = this.ctx.font;
-        this.ctx.font = `${this.titleFontSize}px Arial`;
-        if (this.titleShowing) {
-            if (this.isButton) {
-                this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
-            }
-            else {
-                this.ctx.fillText(this.title, this.origin.x, this.origin.y);
-            }
-        }
         if (this.hasImage) {
             this.ctx.drawImage(this.imageHTML, this.origin.x, this.origin.y);
         }
@@ -56,9 +48,22 @@ export default class sfuiElement {
         if (this.hasOutline) {
             this.ctx.strokeRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
         }
+        const oldFont = this.ctx.font;
+        this.ctx.font = `${this.titleFontSize}px Arial`;
+        if (this.titleShowing) {
+            if (this.isButton) {
+                this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
+            }
+            else {
+                this.ctx.fillText(this.title, this.origin.x, this.origin.y);
+            }
+        }
+        else if (this.isTooltip) {
+            //console.log(`tooltip draw: ${this.title}`);
+            this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
+        }
         this.ctx.font = oldFont;
     }
-    //(3/28/22) getters
     getOrigin() {
         return this.origin;
     }
@@ -73,6 +78,14 @@ export default class sfuiElement {
     }
     setText(text) {
         this.title = text;
+        if (this.isTooltip) {
+            this.size.x = this.getTextWidth();
+            this.size.y = this.titleFontSize;
+            this.origin.x = this.origin.x - this.size.x / 2;
+            this.origin.y -= 12;
+            this.titleOrigin.x = this.origin.x;
+            this.titleOrigin.y = this.origin.y + 10;
+        }
     }
     setFontSize(size) {
         this.titleFontSize = size;
@@ -117,6 +130,11 @@ export default class sfuiElement {
     enableTitle() {
         this.titleShowing = true;
     }
+    setAsTooltip() {
+        this.isTooltip = true;
+        this.size.x = this.getTextWidth();
+        this.size.y = this.titleFontSize;
+    }
     setAsButton() {
         this.isButton = true;
         this.titleShowing = true;
@@ -135,5 +153,11 @@ export default class sfuiElement {
             this.active = !this.active;
             //console.log(`${this.title} button active: ${this.active}`);
         }
+    }
+    isHovering() {
+        return this.isMouseHovering;
+    }
+    setHovering(bool) {
+        this.isMouseHovering = bool;
     }
 }

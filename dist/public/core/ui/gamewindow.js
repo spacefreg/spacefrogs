@@ -9,6 +9,7 @@ import Mercury from '../planets/mercury.js';
 export default class GameWindow extends sfuiElement {
     constructor(origin, size) {
         super(origin, 'Game Window');
+        this.currentPlanetHover = '';
         this.setSize(size);
         this.setOutline(true);
         this.backgroundColor = '';
@@ -19,6 +20,11 @@ export default class GameWindow extends sfuiElement {
         this.mars = new Mars('Mars', 'Sun', 0, 355);
         this.venus = new Venus('Venus', 'Sun', 0, 180);
         this.mercury = new Mercury('Mercury', 'Sun', 0, 120);
+        this.currentMousePos = new vec2(0, 0);
+        this.planetHoverElement = new sfuiElement(new vec2(0, 0), 'Planet Hover');
+        this.planetHoverElement.setAsTooltip();
+        this.planetHoverElement.setBackgroundOpacity(1);
+        this.planetHoverElement.setOutline(true);
     }
     update(dt) {
         this.sun.update(dt);
@@ -46,9 +52,42 @@ export default class GameWindow extends sfuiElement {
         this.mars.render();
         this.venus.render();
         this.mercury.render();
+        if (this.currentPlanetHover != '') {
+            this.planetHoverElement.render();
+        }
     }
     getCenter() {
         const center = new vec2(this.origin.x + this.size.x / 2, this.origin.y + this.size.y / 2);
         return center;
+    }
+    mouseMove(mousePos) {
+        super.mouseMove(mousePos);
+        if (this.isMouseHovering) {
+            this.currentMousePos = mousePos;
+            //(4/19/22) I hate this entire thing 
+            let hoverCandidate = '';
+            this.currentPlanetHover = '';
+            hoverCandidate = this.sun.mouseMove(mousePos);
+            if (hoverCandidate == '') {
+                hoverCandidate = this.earth.mouseMove(mousePos);
+            }
+            if (hoverCandidate == '') {
+                hoverCandidate = this.moon.mouseMove(mousePos);
+            }
+            if (hoverCandidate == '') {
+                hoverCandidate = this.mars.mouseMove(mousePos);
+            }
+            if (hoverCandidate == '') {
+                hoverCandidate = this.venus.mouseMove(mousePos);
+            }
+            if (hoverCandidate == '') {
+                hoverCandidate = this.mercury.mouseMove(mousePos);
+            }
+            this.currentPlanetHover = hoverCandidate;
+            if (this.currentPlanetHover != '') {
+                this.planetHoverElement.setOrigin(this.currentMousePos);
+                this.planetHoverElement.setText(this.currentPlanetHover);
+            }
+        }
     }
 }

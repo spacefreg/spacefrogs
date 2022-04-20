@@ -50,4 +50,16 @@ export default class Planet {
             this.initialized = true;
         }
     }
+
+    public mouseMove(mousePos: vec2): string {
+        if (mousePos.x >= this.planetElement.getOrigin().x && mousePos.x <= this.planetElement.getOrigin().x + this.planetElement.getImageSize().x &&
+            mousePos.y >= this.planetElement.getOrigin().y && mousePos.y <= this.planetElement.getOrigin().y + this.planetElement.getImageSize().y) {
+            this.planetElement.setHovering(true);
+            return this.name;
+        }
+        else {
+            this.planetElement.setHovering(false);
+            return '';
+        }
+    }
 }

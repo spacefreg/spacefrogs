@@ -20,22 +20,18 @@ export default class SocialPanel extends sfuiPanel {
 
         this.selfID = selfID;
         this.frogPlayers = new Array<FrogPlayer>();
-        this.setSize(new vec2(210, 461));
-        this.setBackgroundColor('#74a653');
+        this.setSize(new vec2(210, 458));
         this.setOutline(true);
         this.setBackgroundOpacity(0.13);
 
         this.socket.on('sfPlayerReady', (id: string) => {
             const p = getFrogPlayerByID(id, this.frogPlayers);
             p.readyPlayer();
-            //console.log(`${this.name}: ${id} is ready`);
         });
 
         this.socket.on('sfPlayerNotReady', (id: string) => {
             const p = getFrogPlayerByID(id, this.frogPlayers);
             p.unreadyPlayer();
-            //this.unreadyPlayer();
-            //console.log(`${this.name}: ${id} is not ready`);
         });
     }
 

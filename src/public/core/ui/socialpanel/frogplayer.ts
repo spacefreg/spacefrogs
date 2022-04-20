@@ -111,11 +111,9 @@ export default class FrogPlayer {
             
 
             if (this.readyToPlayButton.isActive() && !oldActiveState) {
-                console.log(`emitting ready`);
                 this.socket.emit('sfcPlayerReady');
             }
             else if (!this.readyToPlayButton.isActive() && oldActiveState) {
-                console.log(`emitting not ready`);
                 this.socket.emit('sfcPlayerNotReady');
             }
     }

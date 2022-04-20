@@ -70,11 +70,9 @@ export default class FrogPlayer {
             this.frog.mouseDown(mousePos);
             this.readyToPlayButton.mouseDown(mousePos);
             if (this.readyToPlayButton.isActive() && !oldActiveState) {
-                console.log(`emitting ready`);
                 this.socket.emit('sfcPlayerReady');
             }
             else if (!this.readyToPlayButton.isActive() && oldActiveState) {
-                console.log(`emitting not ready`);
                 this.socket.emit('sfcPlayerNotReady');
             }
         }

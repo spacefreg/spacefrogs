@@ -6,6 +6,7 @@ export default class sfuiElement {
     
     protected origin: vec2;
     protected isButton: boolean = false;
+    protected isTooltip: boolean = false;
     protected active: boolean = false;
     protected title: string;
     protected titleOrigin: vec2;
@@ -39,7 +40,7 @@ export default class sfuiElement {
         this.size = new vec2(0, 0);
         this.imageSize = new vec2(0, 0);
 
-        this.backgroundColor = '#5d4178';
+        this.backgroundColor = '#271E4C';
         this.opacity = .3;
     }
 
@@ -50,17 +51,8 @@ export default class sfuiElement {
         this.imageSize.y = this.imageHTML.height;
     }
 
+    //(4/19/22) please clean this up someday soon
     public render(): void {
-        const oldFont = this.ctx.font;
-        this.ctx.font = `${this.titleFontSize}px Arial`;
-        if (this.titleShowing) {
-            if (this.isButton) {
-                this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
-            }
-            else {
-                this.ctx.fillText(this.title, this.origin.x, this.origin.y);
-            }
-        }
         
         if (this.hasImage) {
             this.ctx.drawImage(this.imageHTML, this.origin.x, this.origin.y);
@@ -86,10 +78,25 @@ export default class sfuiElement {
             this.ctx.strokeRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
         }
 
+        const oldFont = this.ctx.font;
+        this.ctx.font = `${this.titleFontSize}px Arial`;
+
+        if (this.titleShowing) {
+            if (this.isButton) {
+                this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
+            }
+            else {
+                this.ctx.fillText(this.title, this.origin.x, this.origin.y);
+            }
+        }
+        else if (this.isTooltip) {
+            //console.log(`tooltip draw: ${this.title}`);
+            this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
+        }
+
         this.ctx.font = oldFont;
     }
 
-    //(3/28/22) getters
     public getOrigin(): vec2 {
         return this.origin;
     }
@@ -108,6 +115,16 @@ export default class sfuiElement {
 
     public setText(text: string): void {
         this.title = text;
+
+        if (this.isTooltip) {
+            this.size.x = this.getTextWidth();
+            this.size.y = this.titleFontSize;
+
+            this.origin.x = this.origin.x - this.size.x / 2;
+            this.origin.y -= 12;
+            this.titleOrigin.x = this.origin.x;
+            this.titleOrigin.y = this.origin.y + 10;
+        }
     }
 
     public setFontSize(size: number): void {
@@ -167,6 +184,13 @@ export default class sfuiElement {
         this.titleShowing = true;
     }
 
+    public setAsTooltip(): void {
+        this.isTooltip = true;
+
+        this.size.x = this.getTextWidth();
+        this.size.y = this.titleFontSize;
+    }
+
     public setAsButton(): void {
         this.isButton = true;
         this.titleShowing = true;
@@ -187,5 +211,13 @@ export default class sfuiElement {
             this.active = !this.active;
             //console.log(`${this.title} button active: ${this.active}`);
         }
+    }
+
+    public isHovering(): boolean {
+        return this.isMouseHovering;
+    }
+
+    public setHovering(bool: boolean): void {
+        this.isMouseHovering = bool;
     }
 }

@@ -5,7 +5,6 @@ export default class GamePanel extends sfuiPanel {
     constructor(origin: vec2, title: string) {
         super(origin, title);
         this.setSize(new vec2(315, 748));
-        this.setBackgroundColor('#74a653');
         this.setOutline(true);
         this.setBackgroundOpacity(0.13);
     }

@@ -13,4 +13,5 @@ export default class Planet {
     render(): void;
     receiveParentCenter(center: vec2): void;
     private initLocation;
+    mouseMove(mousePos: vec2): string;
 }

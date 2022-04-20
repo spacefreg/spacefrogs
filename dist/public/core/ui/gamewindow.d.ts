@@ -7,8 +7,12 @@ export default class GameWindow extends sfuiElement {
     private mars;
     private venus;
     private mercury;
+    private currentPlanetHover;
+    private planetHoverElement;
+    private currentMousePos;
     constructor(origin: vec2, size: vec2);
     update(dt: number): void;
     render(): void;
     getCenter(): vec2;
+    mouseMove(mousePos: vec2): void;
 }

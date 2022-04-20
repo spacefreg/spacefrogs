@@ -49,6 +49,7 @@ export default class LobbyCanvas {
         this.socialPanel.mouseMove(pos);
         this.frogPanel.mouseMove(pos);
         this.gamePanel.mouseMove(pos);
+        this.gameWindow.mouseMove(pos);
     }
     render() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
