@@ -10,7 +10,7 @@ export default class LobbyCountrySelection extends sfuiElement {
         this.prompt.setFontSize(18);
         this.prompt.setBackgroundOpacity(0);
         this.prompt.setText('Select your society of space frogs');
-        this.prompt.setTitleOrigin(new vec2(this.origin.x + 10, 100));
+        this.prompt.setTitleOrigin(new vec2(this.origin.x + 10, this.origin.y - 10));
     }
     render() {
         super.render();

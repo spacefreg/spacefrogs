@@ -12,7 +12,7 @@ export default class GamePanel extends sfuiPanel {
         this.setOutline(true);
         this.setBackgroundOpacity(0.13);
 
-        this.countrySelect = new LobbyCountrySelection(new vec2(this.origin.x + 10, this.origin.y + 100), 'Select Country');
+        this.countrySelect = new LobbyCountrySelection(new vec2(this.origin.x + 10, this.origin.y + 275), 'Select Country');
     }
 
     public update(dt: number): void {
