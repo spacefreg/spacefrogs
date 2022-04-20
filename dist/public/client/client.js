@@ -40,6 +40,7 @@ function createGameHTML() {
     canvas.id = 'sf-canvas';
     canvas.width = 1366;
     canvas.height = 768;
+    canvas.oncontextmenu = () => false;
     document.body.append(canvas);
 }
 function receiveUserInvite() {

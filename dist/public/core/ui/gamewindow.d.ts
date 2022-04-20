@@ -15,4 +15,5 @@ export default class GameWindow extends sfuiElement {
     render(): void;
     getCenter(): vec2;
     mouseMove(mousePos: vec2): void;
+    mouseDown(): string;
 }

@@ -37,11 +37,8 @@ export default class LobbyCanvas {
 
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
 
-
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id, this.socket);
-
         this.frogPanel = new FrogPanel(new vec2(1, 480), self.name);
-
         this.gamePanel = new GamePanel(new vec2(1040, 10), 'right panel');
 
         this.addPlayer(self, lobbyPlayers);
@@ -76,11 +73,17 @@ export default class LobbyCanvas {
     public mouseDown(evt: MouseEvent): void {
         if (evt.clientX >=this.canvas.offsetLeft && evt.clientX <= this.canvas.offsetLeft + this.canvas.width && evt.clientY >= this.canvas.offsetTop && evt.clientY <= this.canvas.offsetTop + this.canvas.height) {
             evt.preventDefault();
+            
             const pos: vec2 = new vec2(evt.clientX - this.canvas.offsetLeft, evt.clientY - this.canvas.offsetTop);
-            //console.log(`${evt.clientX - this.canvas.offsetLeft}, ${evt.clientY - this.canvas.offsetTop}`);
+
             this.socialPanel.mouseDown(pos);
             this.frogPanel.mouseDown(pos);
             this.gamePanel.mouseDown(pos);
+
+            const selectionCandidate: string = this.gameWindow.mouseDown();
+            if (selectionCandidate) {
+                this.gamePanel.gameWindowSelection(selectionCandidate);
+            }
         }
     }
 

@@ -128,4 +128,8 @@ export default class GameWindow extends sfuiElement {
             }
         }
     }
+
+    public mouseDown(): string {
+        return this.currentPlanetHover;
+    }
 }

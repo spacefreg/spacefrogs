@@ -90,4 +90,7 @@ export default class GameWindow extends sfuiElement {
             }
         }
     }
+    mouseDown() {
+        return this.currentPlanetHover;
+    }
 }

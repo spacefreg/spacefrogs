@@ -132,8 +132,6 @@ export default class sfuiElement {
     }
     setAsTooltip() {
         this.isTooltip = true;
-        this.size.x = this.getTextWidth();
-        this.size.y = this.titleFontSize;
     }
     setAsButton() {
         this.isButton = true;
@@ -151,7 +149,6 @@ export default class sfuiElement {
     mouseDown(mousePos) {
         if (this.isMouseHovering && this.isButton) {
             this.active = !this.active;
-            //console.log(`${this.title} button active: ${this.active}`);
         }
     }
     isHovering() {
