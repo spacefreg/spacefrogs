@@ -54,15 +54,24 @@ export default class SocialPanel extends sfuiPanel {
     public mouseMove(mousePos: vec2): void {
         super.mouseMove(mousePos);
 
-        const fp = getFrogPlayerByID(this.selfID, this.frogPlayers);
-        fp.mouseMove(mousePos);
+        const self: FrogPlayer = getFrogPlayerByID(this.selfID, this.frogPlayers);
+        self.mouseMove(mousePos);
     }
 
     public mouseDown(mousePos: vec2): void {
         super.mouseDown(mousePos);
 
+        const self: FrogPlayer = getFrogPlayerByID(this.selfID, this.frogPlayers);
+        if (self.getCountry() != '') {
+            self.mouseDown(mousePos);
+        }
+    }
+
+    public setFrogPlayerCountry(name: string, country: string): void {
         for (let i = 0; i < this.frogPlayers.length; i++) {
-            this.frogPlayers[i].mouseDown(mousePos);
+            if (this.frogPlayers[i].getName() == name) {
+                this.frogPlayers[i].setCountry(country);
+            }
         }
     }
 

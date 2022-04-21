@@ -10,6 +10,7 @@ export default class FrogPlayer {
         this.isPlayer = isPlayer;
         this.fPlayerNumber = playerNumber;
         this.origin = new vec2(0, 0);
+        this.country = '';
         this.panelOrigin = panelOrigin;
         this.frog = new sfuiElement(this.origin, this.name);
         this.frog.setImage('../../res/images/frogs/spaceapu-lobby.png');
@@ -39,6 +40,12 @@ export default class FrogPlayer {
     getfPlayerNumber() {
         const n = this.fPlayerNumber;
         return n;
+    }
+    setCountry(name) {
+        this.country = name;
+    }
+    getCountry() {
+        return this.country;
     }
     getID() {
         return this.id;

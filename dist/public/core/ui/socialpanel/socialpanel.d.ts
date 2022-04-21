@@ -10,6 +10,7 @@ export default class SocialPanel extends sfuiPanel {
     frogPlayerChanged(player: Player, players: Array<Player>): void;
     mouseMove(mousePos: vec2): void;
     mouseDown(mousePos: vec2): void;
+    setFrogPlayerCountry(name: string, country: string): void;
     update(dt: number): void;
     render(): void;
 }

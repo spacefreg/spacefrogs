@@ -8,6 +8,7 @@ export default class FrogPlayer {
     private frog;
     private panelOrigin;
     private origin;
+    private country;
     private readyToPlayButton;
     private readyIndicator;
     private playerIndicator;
@@ -18,6 +19,8 @@ export default class FrogPlayer {
     getHost(): boolean;
     getName(): string;
     getfPlayerNumber(): number;
+    setCountry(name: string): void;
+    getCountry(): string;
     getID(): string;
     setFrogPlayerNumber(num: number): void;
     mouseMove(mousePos: vec2): void;

@@ -54,9 +54,9 @@ export default class LobbyCanvas {
         if (evt.clientX >= this.canvas.offsetLeft && evt.clientX <= this.canvas.offsetLeft + this.canvas.width && evt.clientY >= this.canvas.offsetTop && evt.clientY <= this.canvas.offsetTop + this.canvas.height) {
             evt.preventDefault();
             const pos = new vec2(evt.clientX - this.canvas.offsetLeft, evt.clientY - this.canvas.offsetTop);
+            const selectionCandidate = this.gamePanel.mouseDown(pos);
             this.socialPanel.mouseDown(pos);
             this.frogPanel.mouseDown(pos);
-            const selectionCandidate = this.gamePanel.mouseDown(pos);
             if (selectionCandidate != '') {
                 this.socket.emit('sfcSelectionRequest', selectionCandidate);
             }
@@ -119,5 +119,6 @@ export default class LobbyCanvas {
         newestPlayerSelection.setOrigin(new vec2(flagSelectionOrigin.x + selectionOffset.x, flagSelectionOrigin.y + selectionOffset.y));
         newestPlayerSelection.setOutlineOrigin(new vec2(newestPlayerSelection.getOrigin().x - 43, newestPlayerSelection.getOrigin().y - 85));
         newestPlayerSelection.setText(p.name);
+        this.socialPanel.setFrogPlayerCountry(p.name, p.country);
     }
 }

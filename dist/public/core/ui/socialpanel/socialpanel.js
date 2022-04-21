@@ -35,13 +35,21 @@ export default class SocialPanel extends sfuiPanel {
     }
     mouseMove(mousePos) {
         super.mouseMove(mousePos);
-        const fp = getFrogPlayerByID(this.selfID, this.frogPlayers);
-        fp.mouseMove(mousePos);
+        const self = getFrogPlayerByID(this.selfID, this.frogPlayers);
+        self.mouseMove(mousePos);
     }
     mouseDown(mousePos) {
         super.mouseDown(mousePos);
+        const self = getFrogPlayerByID(this.selfID, this.frogPlayers);
+        if (self.getCountry() != '') {
+            self.mouseDown(mousePos);
+        }
+    }
+    setFrogPlayerCountry(name, country) {
         for (let i = 0; i < this.frogPlayers.length; i++) {
-            this.frogPlayers[i].mouseDown(mousePos);
+            if (this.frogPlayers[i].getName() == name) {
+                this.frogPlayers[i].setCountry(country);
+            }
         }
     }
     update(dt) {
