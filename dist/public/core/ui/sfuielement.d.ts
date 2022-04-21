@@ -13,6 +13,8 @@ export default class sfuiElement {
     protected titleFontSize: number;
     protected initialized: boolean;
     protected size: vec2;
+    protected outlineSize: vec2;
+    protected outlineOrigin: vec2;
     protected hasImage: boolean;
     protected imageHTML: HTMLImageElement;
     protected imageSize: vec2;
@@ -29,6 +31,8 @@ export default class sfuiElement {
     getText(): string;
     setText(text: string): void;
     setFontSize(size: number): void;
+    setOutlineSize(size: vec2): void;
+    setOutlineOrigin(origin: vec2): void;
     getTextWidth(): number;
     setSize(size: vec2): void;
     getSize(): vec2;

@@ -3,12 +3,14 @@ import GameWindow from '../../core/ui/gamewindow.js';
 import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
 import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
+import sfuiElement from '../../core/ui/sfuielement.js';
 export default class LobbyCanvas {
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
     constructor(self, host, campaignName, lobbyPlayers, socket) {
         this.canvas = document.getElementById('sf-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.socket = socket;
+        this.playerSelections = new Map();
         this.socket.on('sfPlayerCountrySelection', (p) => {
             this.sfPlayerCountrySelection(p);
         });
@@ -31,10 +33,22 @@ export default class LobbyCanvas {
     }
     addPlayer(playerarg, lobbyPlayers) {
         this.socialPanel.frogPlayerChanged(playerarg, lobbyPlayers);
+        for (let i = 0; i < lobbyPlayers.length; i++) {
+            if (lobbyPlayers[i].country != '') {
+                console.log(`player ${lobbyPlayers[i].name} has country: ${lobbyPlayers[i].country}`);
+                this.sfPlayerCountrySelection(lobbyPlayers[i]);
+            }
+            else {
+                console.log(`player ${lobbyPlayers[i].name} has no country`);
+            }
+        }
     }
     dropPlayer(player, lobbyPlayers) {
         console.log(`dropped player: ${player.name}`);
         this.socialPanel.frogPlayerChanged(player, lobbyPlayers);
+        if (this.playerSelections.has(player.name)) {
+            this.playerSelections.delete(player.name);
+        }
     }
     mouseDown(evt) {
         if (evt.clientX >= this.canvas.offsetLeft && evt.clientX <= this.canvas.offsetLeft + this.canvas.width && evt.clientY >= this.canvas.offsetTop && evt.clientY <= this.canvas.offsetTop + this.canvas.height) {
@@ -64,10 +78,46 @@ export default class LobbyCanvas {
         this.socialPanel.render();
         this.frogPanel.render();
         this.gamePanel.render();
+        for (const [k, v] of this.playerSelections) {
+            v.render();
+        }
         const fpsTextLength = this.ctx.measureText(this.fpsIndicator).width;
         this.ctx.fillText(this.fpsIndicator, this.canvas.width - fpsTextLength - 3, 10);
     }
     sfPlayerCountrySelection(p) {
+        //const player = getPlayerByID(p.id, this.);
         console.log(`player ${p.name} selected country: ${p.country}`);
+        let selectionOffset = new vec2(0, 100);
+        let flagSelectionOrigin = new vec2(this.gamePanel.getOrigin().x + 10, this.gamePanel.getOrigin().y + 275);
+        switch (p.country) {
+            case 'US':
+                selectionOffset.x = 58;
+                break;
+            case 'China':
+                selectionOffset.x = 142;
+                break;
+            case 'Russia':
+                selectionOffset.x = 226;
+                break;
+            case 'India':
+                selectionOffset.x = 100;
+                selectionOffset.y = 190;
+                break;
+            case 'Japan':
+                selectionOffset.x = 193;
+                selectionOffset.y = 190;
+                break;
+        }
+        this.playerSelections.set(p.name, new sfuiElement(new vec2(200, 200), p.name));
+        const newestPlayerSelection = this.playerSelections.get(p.name);
+        newestPlayerSelection.setSize(new vec2(100, 100));
+        //newestPlayerSelection.setBackgroundColor('red');
+        //newestPlayerSelection.setBackgroundOpacity(0.5);
+        newestPlayerSelection.setOutline(true);
+        newestPlayerSelection.setAsTooltip();
+        newestPlayerSelection.setOutlineSize(new vec2(85, 90));
+        newestPlayerSelection.setOrigin(new vec2(flagSelectionOrigin.x + selectionOffset.x, flagSelectionOrigin.y + selectionOffset.y));
+        newestPlayerSelection.setOutlineOrigin(new vec2(newestPlayerSelection.getOrigin().x - 43, newestPlayerSelection.getOrigin().y - 85));
+        newestPlayerSelection.setText(p.name);
     }
 }

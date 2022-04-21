@@ -79,6 +79,12 @@ class Server {
             socket.on('sfcSelectionRequest', (selectionCandidate: string) => {
                 //console.log(`${socket.id} sent sfcSelectionRequest: ${selectionCandidate}`);
                 const player = getPlayerByID(socket.id, this.gameLobby.lobbyPlayers);
+                for (let i = 0; i < this.gameLobby.lobbyPlayers.length; i++) {
+                    if (this.gameLobby.lobbyPlayers[i].country == selectionCandidate) {
+                        console.log(`request for country that's already selected`);
+                        return;
+                    }
+                }
                 player.country = selectionCandidate;
                 this.io.emit('sfPlayerCountrySelection', player);
             });

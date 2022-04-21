@@ -10,6 +10,7 @@ export default class LobbyCanvas {
     private socialPanel;
     private frogPanel;
     private gamePanel;
+    private playerSelections;
     constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>, socket: io);
     update(dt: number): void;
     addPlayer(playerarg: Player, lobbyPlayers: Array<Player>): void;

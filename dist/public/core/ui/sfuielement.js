@@ -8,6 +8,8 @@ export default class sfuiElement {
         this.titleShowing = false;
         this.titleFontSize = 12;
         this.initialized = false;
+        this.outlineSize = new vec2(0, 0);
+        this.outlineOrigin = new vec2(0, 0);
         this.hasImage = false;
         this.hasOutline = false;
         this.isMouseHovering = false;
@@ -29,12 +31,17 @@ export default class sfuiElement {
     }
     //(4/19/22) please clean this up someday soon
     render() {
+        const oldAlpha = this.ctx.globalAlpha;
+        const oldFillStyle = this.ctx.fillStyle;
         if (this.hasImage) {
             this.ctx.drawImage(this.imageHTML, this.origin.x, this.origin.y);
+            if (this.isMouseHovering && this.isButton) {
+                this.ctx.globalAlpha = 0.33;
+                this.ctx.fillStyle = 'purple';
+                this.ctx.fillRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
+            }
         }
         if (this.backgroundColor) {
-            const oldAlpha = this.ctx.globalAlpha;
-            const oldFillStyle = this.ctx.fillStyle;
             this.ctx.globalAlpha = this.opacity;
             if (this.isMouseHovering && this.isButton) {
                 this.ctx.fillStyle = 'purple';
@@ -47,7 +54,12 @@ export default class sfuiElement {
             this.ctx.fillStyle = oldFillStyle;
         }
         if (this.hasOutline) {
-            this.ctx.strokeRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
+            if (this.outlineSize.x > 0) {
+                this.ctx.strokeRect(this.outlineOrigin.x, this.outlineOrigin.y, this.outlineSize.x, this.outlineSize.y);
+            }
+            else {
+                this.ctx.strokeRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
+            }
         }
         const oldFont = this.ctx.font;
         this.ctx.font = `${this.titleFontSize}px Arial`;
@@ -90,6 +102,12 @@ export default class sfuiElement {
     }
     setFontSize(size) {
         this.titleFontSize = size;
+    }
+    setOutlineSize(size) {
+        this.outlineSize = size;
+    }
+    setOutlineOrigin(origin) {
+        this.outlineOrigin = origin;
     }
     getTextWidth() {
         return this.ctx.measureText(this.title).width;

@@ -43,15 +43,14 @@ class Server {
             socket.on('sfcSelectionRequest', (selectionCandidate) => {
                 //console.log(`${socket.id} sent sfcSelectionRequest: ${selectionCandidate}`);
                 const player = getPlayerByID(socket.id, this.gameLobby.lobbyPlayers);
+                for (let i = 0; i < this.gameLobby.lobbyPlayers.length; i++) {
+                    if (this.gameLobby.lobbyPlayers[i].country == selectionCandidate) {
+                        console.log(`request for country that's already selected`);
+                        return;
+                    }
+                }
                 player.country = selectionCandidate;
                 this.io.emit('sfPlayerCountrySelection', player);
-                // for (let i = 0; i < this.players.length; i++) {
-                //     if (this.players[i].id == socket.id) {
-                //         this.players[i].country = selectionCandidate;
-                //         console.log(`emitting sfPlayerCountrySelection: ${selectionCandidate}`);
-                //         break;
-                //     }
-                // }
             });
             socket.on('disconnect', () => {
                 this.receptionGuests.delete(socket.id);

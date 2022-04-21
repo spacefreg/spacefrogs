@@ -17,6 +17,8 @@ export default class sfuiElement {
     protected initialized: boolean = false;
     
     protected size: vec2;
+    protected outlineSize: vec2 = new vec2(0, 0);
+    protected outlineOrigin: vec2 = new vec2(0, 0);
 
     protected hasImage: boolean = false;
     protected imageHTML: HTMLImageElement;
@@ -54,13 +56,21 @@ export default class sfuiElement {
 
     //(4/19/22) please clean this up someday soon
     public render(): void {
-        
+        const oldAlpha: number = this.ctx.globalAlpha;
+        const oldFillStyle: string = <string>this.ctx.fillStyle;
+
         if (this.hasImage) {
             this.ctx.drawImage(this.imageHTML, this.origin.x, this.origin.y);
+
+            if (this.isMouseHovering && this.isButton) {
+                this.ctx.globalAlpha = 0.33;
+                this.ctx.fillStyle = 'purple';
+                
+                this.ctx.fillRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
+            }
         }
         if (this.backgroundColor) {
-            const oldAlpha: number = this.ctx.globalAlpha;
-            const oldFillStyle: string = <string>this.ctx.fillStyle;
+
 
             this.ctx.globalAlpha = this.opacity;
             if (this.isMouseHovering && this.isButton) {
@@ -76,7 +86,12 @@ export default class sfuiElement {
         }
 
         if (this.hasOutline) {
-            this.ctx.strokeRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
+            if (this.outlineSize.x > 0) {
+                this.ctx.strokeRect(this.outlineOrigin.x, this.outlineOrigin.y, this.outlineSize.x, this.outlineSize.y);
+            }
+            else {
+                this.ctx.strokeRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
+            }
         }
 
         const oldFont = this.ctx.font;
@@ -130,6 +145,14 @@ export default class sfuiElement {
 
     public setFontSize(size: number): void {
         this.titleFontSize = size;
+    }
+
+    public setOutlineSize(size: vec2): void {
+        this.outlineSize = size;
+    }
+
+    public setOutlineOrigin(origin: vec2): void {
+        this.outlineOrigin = origin;
     }
 
     public getTextWidth(): number {
