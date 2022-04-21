@@ -1,6 +1,7 @@
 export default class Player {
     constructor(id, name) {
         this.isHost = false;
+        this.country = '';
         this.playerNumber = 0;
         console.log(`player constructor: name:${name}, id:${id}`);
         this.id = id;
@@ -13,6 +14,9 @@ export default class Player {
     //(3/27/22) only the server should probably be using this
     setPlayerNumber(num) {
         this.playerNumber = num;
+    }
+    setCountry(country) {
+        this.country = country;
     }
 }
 //(3/27/22) helper functions

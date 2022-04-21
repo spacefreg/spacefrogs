@@ -2,6 +2,7 @@ import vec2 from '../math/vec2.js';
 export default class sfuiElement {
     constructor(origin, title) {
         this.isButton = false;
+        this.hasToggle = false;
         this.isTooltip = false;
         this.active = false;
         this.titleShowing = false;
@@ -19,7 +20,7 @@ export default class sfuiElement {
         this.size = new vec2(0, 0);
         this.imageSize = new vec2(0, 0);
         this.backgroundColor = '#271E4C';
-        this.opacity = .3;
+        this.opacity = 0;
     }
     //(3/27/22) for passive elements like animations
     update(dt) {
@@ -120,6 +121,8 @@ export default class sfuiElement {
     }
     onImageLoad() {
         this.initialized = true;
+        this.size.x = this.imageHTML.width;
+        this.size.y = this.imageHTML.height;
     }
     isInitialized() {
         return this.initialized;
@@ -137,6 +140,9 @@ export default class sfuiElement {
         this.isButton = true;
         this.titleShowing = true;
     }
+    setAsToggle() {
+        this.hasToggle = true;
+    }
     mouseMove(mousePos) {
         if (mousePos.x >= this.origin.x && mousePos.x <= this.origin.x + this.getSize().x &&
             mousePos.y >= this.origin.y && mousePos.y <= this.origin.y + this.getSize().y) {
@@ -147,8 +153,16 @@ export default class sfuiElement {
         }
     }
     mouseDown(mousePos) {
-        if (this.isMouseHovering && this.isButton) {
-            this.active = !this.active;
+        if (this.isMouseHovering && this.hasToggle) {
+            this.toggleActive();
+        }
+        else if (this.isMouseHovering) {
+            this.active = true;
+        }
+        else {
+            if (!this.hasToggle) {
+                this.active = false;
+            }
         }
     }
     isHovering() {
@@ -156,5 +170,8 @@ export default class sfuiElement {
     }
     setHovering(bool) {
         this.isMouseHovering = bool;
+    }
+    toggleActive() {
+        this.active = !this.active;
     }
 }

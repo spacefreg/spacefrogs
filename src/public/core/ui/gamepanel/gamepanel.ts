@@ -4,7 +4,7 @@ import sfuiPanel from '../sfuipanel.js';
 
 export default class GamePanel extends sfuiPanel {
 
-    private countrySelect: LobbyCountrySelection;
+    private lobbyPrompt: LobbyCountrySelection;
 
     constructor(origin: vec2, title: string) {
         super(origin, title);
@@ -12,7 +12,7 @@ export default class GamePanel extends sfuiPanel {
         this.setOutline(true);
         this.setBackgroundOpacity(0.13);
 
-        this.countrySelect = new LobbyCountrySelection(new vec2(this.origin.x + 10, this.origin.y + 275), 'Select Country');
+        this.lobbyPrompt = new LobbyCountrySelection(new vec2(this.origin.x + 10, this.origin.y + 275), 'Select Country');
     }
 
     public update(dt: number): void {
@@ -21,7 +21,16 @@ export default class GamePanel extends sfuiPanel {
     
     public render(): void {
         super.render();
-        this.countrySelect.render();
+        this.lobbyPrompt.render();
+    }
+
+    public mouseMove(mousePos: vec2) {
+        super.mouseMove(mousePos);
+        this.lobbyPrompt.mouseMove(mousePos);
+    }
+
+    public mouseDown(mousePos: vec2): string {
+            return this.lobbyPrompt.mouseDown(mousePos);
     }
 
     public gameWindowSelection(selection: string): void {

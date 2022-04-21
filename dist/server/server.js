@@ -40,6 +40,19 @@ class Server {
             socket.on('sfcPlayerNotReady', () => {
                 this.io.emit('sfPlayerNotReady', socket.id);
             });
+            socket.on('sfcSelectionRequest', (selectionCandidate) => {
+                //console.log(`${socket.id} sent sfcSelectionRequest: ${selectionCandidate}`);
+                const player = getPlayerByID(socket.id, this.gameLobby.lobbyPlayers);
+                player.country = selectionCandidate;
+                this.io.emit('sfPlayerCountrySelection', player);
+                // for (let i = 0; i < this.players.length; i++) {
+                //     if (this.players[i].id == socket.id) {
+                //         this.players[i].country = selectionCandidate;
+                //         console.log(`emitting sfPlayerCountrySelection: ${selectionCandidate}`);
+                //         break;
+                //     }
+                // }
+            });
             socket.on('disconnect', () => {
                 this.receptionGuests.delete(socket.id);
                 if (this.gameLobby.isActive) {

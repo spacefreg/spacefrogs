@@ -53,6 +53,7 @@ export default class FrogPlayer {
         const buttonPos = new vec2(this.origin.x + 100, this.origin.y);
         const titleOrigin = new vec2(buttonPos.x + 14, buttonPos.y + 17);
         this.readyToPlayButton.setAsButton();
+        this.readyToPlayButton.setAsToggle();
         this.readyToPlayButton.setSize(new vec2(100, 30));
         this.readyToPlayButton.setOrigin(buttonPos);
         this.readyToPlayButton.setTitleOrigin(titleOrigin);

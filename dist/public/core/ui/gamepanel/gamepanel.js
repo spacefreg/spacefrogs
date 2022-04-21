@@ -7,14 +7,21 @@ export default class GamePanel extends sfuiPanel {
         this.setSize(new vec2(315, 748));
         this.setOutline(true);
         this.setBackgroundOpacity(0.13);
-        this.countrySelect = new LobbyCountrySelection(new vec2(this.origin.x + 10, this.origin.y + 275), 'Select Country');
+        this.lobbyPrompt = new LobbyCountrySelection(new vec2(this.origin.x + 10, this.origin.y + 275), 'Select Country');
     }
     update(dt) {
         super.update(dt);
     }
     render() {
         super.render();
-        this.countrySelect.render();
+        this.lobbyPrompt.render();
+    }
+    mouseMove(mousePos) {
+        super.mouseMove(mousePos);
+        this.lobbyPrompt.mouseMove(mousePos);
+    }
+    mouseDown(mousePos) {
+        return this.lobbyPrompt.mouseDown(mousePos);
     }
     gameWindowSelection(selection) {
         switch (selection) {

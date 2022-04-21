@@ -4,6 +4,7 @@ export default class sfuiElement {
     ctx: CanvasRenderingContext2D;
     protected origin: vec2;
     protected isButton: boolean;
+    protected hasToggle: boolean;
     protected isTooltip: boolean;
     protected active: boolean;
     protected title: string;
@@ -42,8 +43,10 @@ export default class sfuiElement {
     enableTitle(): void;
     setAsTooltip(): void;
     setAsButton(): void;
+    setAsToggle(): void;
     mouseMove(mousePos: vec2): void;
     mouseDown(mousePos: vec2): void;
     isHovering(): boolean;
     setHovering(bool: boolean): void;
+    toggleActive(): void;
 }

@@ -4,7 +4,7 @@ export default class Player {
     public isHost: boolean = false;
     
     public playerNumber: number;
-
+    public country: string = '';
     //(4/2/22) used to advance from the lobby to the game
     public isReady: boolean;
 
@@ -23,6 +23,10 @@ export default class Player {
     //(3/27/22) only the server should probably be using this
     public setPlayerNumber(num: number): void {
         this.playerNumber = num;
+    }
+
+    public setCountry(country: string): void {
+        this.country = country;
     }
 
 }

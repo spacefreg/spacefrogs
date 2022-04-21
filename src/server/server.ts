@@ -75,6 +75,13 @@ class Server {
             socket.on('sfcPlayerNotReady', () => {
                 this.io.emit('sfPlayerNotReady', socket.id);
             });
+            
+            socket.on('sfcSelectionRequest', (selectionCandidate: string) => {
+                //console.log(`${socket.id} sent sfcSelectionRequest: ${selectionCandidate}`);
+                const player = getPlayerByID(socket.id, this.gameLobby.lobbyPlayers);
+                player.country = selectionCandidate;
+                this.io.emit('sfPlayerCountrySelection', player);
+            });
 
             socket.on('disconnect', () => {
                 this.receptionGuests.delete(socket.id);

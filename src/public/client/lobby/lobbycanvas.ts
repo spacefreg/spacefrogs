@@ -33,6 +33,10 @@ export default class LobbyCanvas {
 
         this.socket = socket;
 
+        this.socket.on('sfPlayerCountrySelection', (p: Player) => {
+            this.sfPlayerCountrySelection(p);
+        });
+
 
 
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
@@ -78,11 +82,9 @@ export default class LobbyCanvas {
 
             this.socialPanel.mouseDown(pos);
             this.frogPanel.mouseDown(pos);
-            this.gamePanel.mouseDown(pos);
-
-            const selectionCandidate: string = this.gameWindow.mouseDown();
-            if (selectionCandidate) {
-                this.gamePanel.gameWindowSelection(selectionCandidate);
+            const selectionCandidate: string = this.gamePanel.mouseDown(pos);
+            if (selectionCandidate != '') {
+                this.socket.emit('sfcSelectionRequest', selectionCandidate);
             }
         }
     }
@@ -113,6 +115,10 @@ export default class LobbyCanvas {
 
         const fpsTextLength = this.ctx.measureText(this.fpsIndicator).width;
         this.ctx.fillText(this.fpsIndicator, this.canvas.width - fpsTextLength - 3, 10);
+    }
+
+    private sfPlayerCountrySelection(p: Player): void {
+        console.log(`player ${p.name} selected country: ${p.country}`);
     }
 
 }

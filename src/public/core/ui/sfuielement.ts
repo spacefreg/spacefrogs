@@ -6,6 +6,7 @@ export default class sfuiElement {
     
     protected origin: vec2;
     protected isButton: boolean = false;
+    protected hasToggle: boolean = false;
     protected isTooltip: boolean = false;
     protected active: boolean = false;
     protected title: string;
@@ -41,7 +42,7 @@ export default class sfuiElement {
         this.imageSize = new vec2(0, 0);
 
         this.backgroundColor = '#271E4C';
-        this.opacity = .3;
+        this.opacity = 0;
     }
 
 
@@ -170,6 +171,8 @@ export default class sfuiElement {
 
     protected onImageLoad(): void {
         this.initialized = true;
+        this.size.x = this.imageHTML.width;
+        this.size.y = this.imageHTML.height;
     }
 
     public isInitialized(): boolean {
@@ -192,6 +195,10 @@ export default class sfuiElement {
         this.isButton = true;
         this.titleShowing = true;
     }
+    
+    public setAsToggle(): void {
+        this.hasToggle = true;
+    }
 
     public mouseMove(mousePos: vec2): void {
         if (mousePos.x >= this.origin.x && mousePos.x <= this.origin.x + this.getSize().x &&
@@ -204,9 +211,18 @@ export default class sfuiElement {
     }
 
     public mouseDown(mousePos: vec2): void {
-        if (this.isMouseHovering && this.isButton) {
-            this.active = !this.active;
+        if (this.isMouseHovering && this.hasToggle) {
+            this.toggleActive();
         }
+        else if (this.isMouseHovering) {
+           this.active = true; 
+        }
+        else 
+        {
+            if (!this.hasToggle) {
+                this.active = false;
+            }
+        } 
     }
 
     public isHovering(): boolean {
@@ -215,5 +231,9 @@ export default class sfuiElement {
 
     public setHovering(bool: boolean): void {
         this.isMouseHovering = bool;
+    }
+
+    public toggleActive(): void {
+        this.active = !this.active;
     }
 }

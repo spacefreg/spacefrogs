@@ -9,6 +9,9 @@ export default class LobbyCanvas {
         this.canvas = document.getElementById('sf-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.socket = socket;
+        this.socket.on('sfPlayerCountrySelection', (p) => {
+            this.sfPlayerCountrySelection(p);
+        });
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id, this.socket);
         this.frogPanel = new FrogPanel(new vec2(1, 480), self.name);
@@ -39,10 +42,9 @@ export default class LobbyCanvas {
             const pos = new vec2(evt.clientX - this.canvas.offsetLeft, evt.clientY - this.canvas.offsetTop);
             this.socialPanel.mouseDown(pos);
             this.frogPanel.mouseDown(pos);
-            this.gamePanel.mouseDown(pos);
-            const selectionCandidate = this.gameWindow.mouseDown();
-            if (selectionCandidate) {
-                this.gamePanel.gameWindowSelection(selectionCandidate);
+            const selectionCandidate = this.gamePanel.mouseDown(pos);
+            if (selectionCandidate != '') {
+                this.socket.emit('sfcSelectionRequest', selectionCandidate);
             }
         }
     }
@@ -64,5 +66,8 @@ export default class LobbyCanvas {
         this.gamePanel.render();
         const fpsTextLength = this.ctx.measureText(this.fpsIndicator).width;
         this.ctx.fillText(this.fpsIndicator, this.canvas.width - fpsTextLength - 3, 10);
+    }
+    sfPlayerCountrySelection(p) {
+        console.log(`player ${p.name} selected country: ${p.country}`);
     }
 }

@@ -17,4 +17,5 @@ export default class LobbyCanvas {
     mouseDown(evt: MouseEvent): void;
     mouseMove(evt: MouseEvent): void;
     render(): void;
+    private sfPlayerCountrySelection;
 }
