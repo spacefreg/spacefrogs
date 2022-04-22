@@ -70,10 +70,26 @@ class Server {
 
             socket.on('sfcPlayerReady', () => {
                 this.io.emit('sfPlayerReady', socket.id);
+                const player = getPlayerByID(socket.id, this.gameLobby.lobbyPlayers);
+                player.isReady = true;
+                let readyToStart: boolean = true; 
+                for (let i = 0; i < this.gameLobby.lobbyPlayers.length; i++) {
+                    if (this.gameLobby.lobbyPlayers[i].isReady == false) {
+                        console.log(`${this.gameLobby.lobbyPlayers[i].name} is not ready`);
+                        readyToStart = false;
+                        break;
+                    }
+                }
+                if (readyToStart) {
+                    this.io.emit('sfAllowStartCampaign');
+                    console.log(`all players are ready to start`);
+                }
             });
 
             socket.on('sfcPlayerNotReady', () => {
                 this.io.emit('sfPlayerNotReady', socket.id);
+                const player = getPlayerByID(socket.id, this.gameLobby.lobbyPlayers);
+                player.isReady = false;
             });
             
             socket.on('sfcSelectionRequest', (selectionCandidate: string) => {

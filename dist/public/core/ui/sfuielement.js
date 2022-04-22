@@ -13,6 +13,7 @@ export default class sfuiElement {
         this.hasImage = false;
         this.hasOutline = false;
         this.isMouseHovering = false;
+        this.isHidden = false;
         this.canvas = document.getElementById('sf-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.origin = origin;
@@ -33,49 +34,51 @@ export default class sfuiElement {
     render() {
         const oldAlpha = this.ctx.globalAlpha;
         const oldFillStyle = this.ctx.fillStyle;
-        if (this.hasImage) {
-            this.ctx.drawImage(this.imageHTML, this.origin.x, this.origin.y);
-            if (this.isMouseHovering && this.isButton) {
-                this.ctx.globalAlpha = 0.33;
-                this.ctx.fillStyle = 'purple';
+        if (!this.isHidden) {
+            if (this.hasImage) {
+                this.ctx.drawImage(this.imageHTML, this.origin.x, this.origin.y);
+                if (this.isMouseHovering && this.isButton) {
+                    this.ctx.globalAlpha = 0.33;
+                    this.ctx.fillStyle = 'purple';
+                    this.ctx.fillRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
+                }
+            }
+            if (this.backgroundColor) {
+                this.ctx.globalAlpha = this.opacity;
+                if (this.isMouseHovering && this.isButton) {
+                    this.ctx.fillStyle = 'purple';
+                }
+                else {
+                    this.ctx.fillStyle = this.backgroundColor;
+                }
                 this.ctx.fillRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
+                this.ctx.globalAlpha = oldAlpha;
+                this.ctx.fillStyle = oldFillStyle;
             }
-        }
-        if (this.backgroundColor) {
-            this.ctx.globalAlpha = this.opacity;
-            if (this.isMouseHovering && this.isButton) {
-                this.ctx.fillStyle = 'purple';
+            if (this.hasOutline) {
+                if (this.outlineSize.x > 0) {
+                    this.ctx.strokeRect(this.outlineOrigin.x, this.outlineOrigin.y, this.outlineSize.x, this.outlineSize.y);
+                }
+                else {
+                    this.ctx.strokeRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
+                }
             }
-            else {
-                this.ctx.fillStyle = this.backgroundColor;
+            const oldFont = this.ctx.font;
+            this.ctx.font = `${this.titleFontSize}px Arial`;
+            if (this.titleShowing) {
+                if (this.isButton) {
+                    this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
+                }
+                else {
+                    this.ctx.fillText(this.title, this.origin.x, this.origin.y);
+                }
             }
-            this.ctx.fillRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
-            this.ctx.globalAlpha = oldAlpha;
-            this.ctx.fillStyle = oldFillStyle;
-        }
-        if (this.hasOutline) {
-            if (this.outlineSize.x > 0) {
-                this.ctx.strokeRect(this.outlineOrigin.x, this.outlineOrigin.y, this.outlineSize.x, this.outlineSize.y);
-            }
-            else {
-                this.ctx.strokeRect(this.origin.x, this.origin.y, this.size.x, this.size.y);
-            }
-        }
-        const oldFont = this.ctx.font;
-        this.ctx.font = `${this.titleFontSize}px Arial`;
-        if (this.titleShowing) {
-            if (this.isButton) {
+            else if (this.isTooltip) {
+                //console.log(`tooltip draw: ${this.title}`);
                 this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
             }
-            else {
-                this.ctx.fillText(this.title, this.origin.x, this.origin.y);
-            }
+            this.ctx.font = oldFont;
         }
-        else if (this.isTooltip) {
-            //console.log(`tooltip draw: ${this.title}`);
-            this.ctx.fillText(this.title, this.titleOrigin.x, this.titleOrigin.y);
-        }
-        this.ctx.font = oldFont;
     }
     getOrigin() {
         return this.origin;
@@ -171,15 +174,17 @@ export default class sfuiElement {
         }
     }
     mouseDown(mousePos) {
-        if (this.isMouseHovering && this.hasToggle) {
-            this.toggleActive();
-        }
-        else if (this.isMouseHovering) {
-            this.active = true;
-        }
-        else {
-            if (!this.hasToggle) {
-                this.active = false;
+        if (!this.isHidden) {
+            if (this.isMouseHovering && this.hasToggle) {
+                this.toggleActive();
+            }
+            else if (this.isMouseHovering) {
+                this.active = true;
+            }
+            else {
+                if (!this.hasToggle) {
+                    this.active = false;
+                }
             }
         }
     }
@@ -188,6 +193,12 @@ export default class sfuiElement {
     }
     setHovering(bool) {
         this.isMouseHovering = bool;
+    }
+    hide() {
+        this.isHidden = true;
+    }
+    show() {
+        this.isHidden = false;
     }
     toggleActive() {
         this.active = !this.active;

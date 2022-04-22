@@ -11,6 +11,7 @@ import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
 import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
 import sfuiElement from '../../core/ui/sfuielement.js';
+import { getFrogPlayerByID } from '../../core/ui/socialpanel/frogplayer.js';
 
 export default class LobbyCanvas {
     private canvas: HTMLCanvasElement;
@@ -29,6 +30,13 @@ export default class LobbyCanvas {
 
     private playerSelections: Map<string, sfuiElement>;
 
+    private startCampaignButton: sfuiElement;
+
+    private isSelfHost: boolean = false;
+
+    //(4/21/22) for host only, used to constrain the start campaign button functionality
+    private isReadyToStart: boolean = false;
+
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
     constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>, socket: io) {
         this.canvas = <HTMLCanvasElement>document.getElementById('sf-canvas');
@@ -39,6 +47,16 @@ export default class LobbyCanvas {
         this.playerSelections = new Map<string, sfuiElement>();
         this.socket.on('sfPlayerCountrySelection', (p: Player) => {
             this.sfPlayerCountrySelection(p);
+        });
+
+        this.socket.on('sfAllowStartCampaign', (id: string) => {
+            if (this.isSelfHost) {
+                this.startCampaignButton.show();
+            }
+        });
+
+        this.socket.on('sfPlayerNotReady', (id: string) => {
+            this.sfPlayerNotReady(id);
         });
 
 
@@ -53,6 +71,18 @@ export default class LobbyCanvas {
 
         this.canvas.onmousedown = this.mouseDown.bind(this);
         this.canvas.onmousemove = this.mouseMove.bind(this);
+
+
+        this.startCampaignButton = new sfuiElement(new vec2(233, 37), 'Start');
+        this.startCampaignButton.enableTitle();
+        this.startCampaignButton.setAsButton();
+        this.startCampaignButton.setFontSize(18);
+        this.startCampaignButton.setTitleOrigin(new vec2(236, 57));
+        this.startCampaignButton.setText('Start Campaign');
+        this.startCampaignButton.setBackgroundColor('#4d4d4d');
+        this.startCampaignButton.setBackgroundOpacity(.7);
+        this.startCampaignButton.setSize(new vec2(134, 25));
+        this.startCampaignButton.hide();
 
 
         this.fpsIndicator = '';
@@ -80,6 +110,15 @@ export default class LobbyCanvas {
             {
                 console.log(`player ${lobbyPlayers[i].name} has no country`);
             }
+
+            if (this.startCampaignButton) {
+                this.startCampaignButton.hide();
+            }
+        }
+
+        const self: Player = getPlayerByID(this.socket.id, lobbyPlayers);
+        if (self.isHost) {
+            this.isSelfHost = true;
         }
     }
 
@@ -89,6 +128,12 @@ export default class LobbyCanvas {
         if (this.playerSelections.has(player.name)) {
             this.playerSelections.delete(player.name);
         }
+
+        const self: Player = getPlayerByID(this.socket.id, lobbyPlayers);
+        if (self.isHost) {
+            this.isSelfHost = true;
+        }
+        this.startCampaignButton.hide();
     }
 
     public mouseDown(evt: MouseEvent): void {
@@ -103,6 +148,18 @@ export default class LobbyCanvas {
             if (selectionCandidate != '' ) {
                 this.socket.emit('sfcSelectionRequest', selectionCandidate);
             }
+
+            this.startCampaignButton.mouseDown(pos);
+
+            if (this.startCampaignButton.isActive() ) {
+                for (let i = 0; i < this.socialPanel.frogPlayers.length; i++) {
+                    if (this.socialPanel.frogPlayers[i].isReady()) {
+                        console.log(`starting campaign`);
+                    }
+                }
+            }
+
+
         }
     }
 
@@ -113,6 +170,8 @@ export default class LobbyCanvas {
         this.frogPanel.mouseMove(pos);
         this.gamePanel.mouseMove(pos);
         this.gameWindow.mouseMove(pos);
+
+        this.startCampaignButton.mouseMove(pos);
     }
 
     public render(): void {
@@ -135,6 +194,8 @@ export default class LobbyCanvas {
             v.render();
         }
 
+
+        this.startCampaignButton.render();
 
         const fpsTextLength = this.ctx.measureText(this.fpsIndicator).width;
         this.ctx.fillText(this.fpsIndicator, this.canvas.width - fpsTextLength - 3, 10);
@@ -177,4 +238,11 @@ export default class LobbyCanvas {
         this.socialPanel.setFrogPlayerCountry(p.name, p.country);
     }
 
+    private sfPlayerReady(id: string): void {
+        
+    }
+
+    private sfPlayerNotReady(id: string): void {
+     this.startCampaignButton.hide();   
+    }
 }

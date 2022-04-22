@@ -6,6 +6,8 @@ export default class Lobby {
     public lobbyPlayers: Array<Player>
     public lobbyHostID: string;
 
+    public readyToStartCampaign: boolean = false;
+
     constructor() {
         this.campaignName = '';
         this.lobbyHostID = '';
@@ -32,6 +34,18 @@ export default class Lobby {
 
         return this.lobbyPlayers[newIndex];
     }
+
+    public dropPlayerFromLobby(id: string): void {
+        console.log(`lobby: dropping player from lobby. id: ${id}`);
+        for (let i = 0; i < this.lobbyPlayers.length; i++) {
+            if (this.lobbyPlayers[i].id === id) {
+                this.lobbyPlayers.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+
     public deactivate(): void {
         console.log('lobby: deactivating');
         this.isActive = false;

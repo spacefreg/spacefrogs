@@ -11,6 +11,9 @@ export default class LobbyCanvas {
     private frogPanel;
     private gamePanel;
     private playerSelections;
+    private startCampaignButton;
+    private isSelfHost;
+    private isReadyToStart;
     constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>, socket: io);
     update(dt: number): void;
     addPlayer(playerarg: Player, lobbyPlayers: Array<Player>): void;
@@ -19,4 +22,6 @@ export default class LobbyCanvas {
     mouseMove(evt: MouseEvent): void;
     render(): void;
     private sfPlayerCountrySelection;
+    private sfPlayerReady;
+    private sfPlayerNotReady;
 }

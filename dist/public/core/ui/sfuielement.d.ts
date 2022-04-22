@@ -20,6 +20,7 @@ export default class sfuiElement {
     protected imageSize: vec2;
     protected hasOutline: boolean;
     protected isMouseHovering: boolean;
+    protected isHidden: boolean;
     protected backgroundColor: string;
     protected opacity: number;
     constructor(origin: vec2, title: string);
@@ -52,5 +53,7 @@ export default class sfuiElement {
     mouseDown(mousePos: vec2): void;
     isHovering(): boolean;
     setHovering(bool: boolean): void;
+    hide(): void;
+    show(): void;
     toggleActive(): void;
 }

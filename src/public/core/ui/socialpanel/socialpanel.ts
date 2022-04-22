@@ -9,7 +9,7 @@ import Player, { getPlayerByID } from '../../player.js';
 
 export default class SocialPanel extends sfuiPanel {
 
-    private frogPlayers: Array<FrogPlayer>;
+    public frogPlayers: Array<FrogPlayer>;
     private socket: io;
     private selfID: string;
 
@@ -73,6 +73,10 @@ export default class SocialPanel extends sfuiPanel {
                 this.frogPlayers[i].setCountry(country);
             }
         }
+    } 
+
+    public getHost(): FrogPlayer {
+        return this.frogPlayers[0];
     }
 
     public update(dt: number): void {

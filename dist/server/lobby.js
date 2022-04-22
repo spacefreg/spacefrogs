@@ -2,6 +2,7 @@ import Player from '../public/core/player.js';
 export default class Lobby {
     constructor() {
         this.isActive = false;
+        this.readyToStartCampaign = false;
         this.campaignName = '';
         this.lobbyHostID = '';
         this.lobbyPlayers = new Array();
@@ -21,6 +22,15 @@ export default class Lobby {
         const newIndex = this.lobbyPlayers.length - 1;
         this.lobbyPlayers[newIndex].setPlayerNumber(this.lobbyPlayers.length);
         return this.lobbyPlayers[newIndex];
+    }
+    dropPlayerFromLobby(id) {
+        console.log(`lobby: dropping player from lobby. id: ${id}`);
+        for (let i = 0; i < this.lobbyPlayers.length; i++) {
+            if (this.lobbyPlayers[i].id === id) {
+                this.lobbyPlayers.splice(i, 1);
+                break;
+            }
+        }
     }
     deactivate() {
         console.log('lobby: deactivating');

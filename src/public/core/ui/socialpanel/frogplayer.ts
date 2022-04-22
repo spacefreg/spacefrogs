@@ -129,7 +129,7 @@ export default class FrogPlayer {
             else if (!this.readyToPlayButton.isActive() && oldActiveState) {
                 this.socket.emit('sfcPlayerNotReady');
             }
-    }
+        }
     }
 
     public readyPlayer(): void {
@@ -138,6 +138,10 @@ export default class FrogPlayer {
 
     public unreadyPlayer(): void {
         this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
+    }
+
+    public isReady(): boolean {
+        return this.readyToPlayButton.isActive();
     }
 
     public update(dt: number): void {

@@ -91,6 +91,9 @@ export default class FrogPlayer {
     unreadyPlayer() {
         this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
     }
+    isReady() {
+        return this.readyToPlayButton.isActive();
+    }
     update(dt) {
     }
     render() {

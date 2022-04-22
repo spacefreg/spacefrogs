@@ -27,6 +27,7 @@ export default class FrogPlayer {
     mouseDown(mousePos: vec2): void;
     readyPlayer(): void;
     unreadyPlayer(): void;
+    isReady(): boolean;
     update(dt: number): void;
     render(): void;
 }

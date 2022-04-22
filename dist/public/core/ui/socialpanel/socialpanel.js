@@ -52,6 +52,9 @@ export default class SocialPanel extends sfuiPanel {
             }
         }
     }
+    getHost() {
+        return this.frogPlayers[0];
+    }
     update(dt) {
         super.update(dt);
     }
