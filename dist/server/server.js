@@ -34,6 +34,10 @@ class Server {
             socket.on('sfcCreateCampaign', (msg) => {
                 this.sfcCreateCampaign(msg);
             });
+            socket.on('sfcStartCampaign', () => {
+                console.log(`${socket.id} sent sfcStartCampaign`);
+                this.io.emit('sfStartCampaign');
+            });
             socket.on('sfcPlayerReady', () => {
                 this.io.emit('sfPlayerReady', socket.id);
                 const player = getPlayerByID(socket.id, this.gameLobby.lobbyPlayers);

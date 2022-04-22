@@ -26,6 +26,10 @@ export default class LobbyCanvas {
         this.socket.on('sfPlayerNotReady', (id) => {
             this.sfPlayerNotReady(id);
         });
+        this.socket.on('sfStartCampaign', () => {
+            console.log(`starting campaign: ${campaignName}`);
+            this.socialPanel.show();
+        });
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id, this.socket);
         this.frogPanel = new FrogPanel(new vec2(1, 480), self.name);
@@ -97,7 +101,12 @@ export default class LobbyCanvas {
             if (this.startCampaignButton.isActive()) {
                 for (let i = 0; i < this.socialPanel.frogPlayers.length; i++) {
                     if (this.socialPanel.frogPlayers[i].isReady()) {
-                        console.log(`starting campaign`);
+                        this.socket.emit('sfcStartCampaign');
+                        this.startCampaignButton.hide();
+                        this.startCampaignButton.toggleActive();
+                        this.startCampaignButton.setSize(new vec2(0, 0));
+                        this.startCampaignButton.setOrigin(new vec2(-100, -100));
+                        this.socialPanel.hide();
                     }
                 }
             }

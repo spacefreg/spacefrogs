@@ -30,6 +30,8 @@ export default class FrogPlayer {
     isReady(): boolean;
     update(dt: number): void;
     render(): void;
+    hide(): void;
+    show(): void;
 }
 export declare function getFrogPlayerByNumber(num: number, players: Array<FrogPlayer>): FrogPlayer;
 export declare function getFrogPlayerByID(id: string, frogPlayers: Array<FrogPlayer>): FrogPlayer;

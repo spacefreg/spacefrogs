@@ -102,6 +102,18 @@ export default class FrogPlayer {
         this.readyToPlayButton.render();
         this.playerIndicator.render();
     }
+    hide() {
+        this.frog.hide();
+        this.readyIndicator.hide();
+        this.readyToPlayButton.hide();
+        this.playerIndicator.hide();
+    }
+    show() {
+        this.frog.show();
+        this.readyIndicator.show();
+        this.readyToPlayButton.show();
+        this.playerIndicator.show();
+    }
 }
 export function getFrogPlayerByNumber(num, players) {
     for (let i = 0; i < players.length; i++) {

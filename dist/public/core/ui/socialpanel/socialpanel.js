@@ -55,6 +55,16 @@ export default class SocialPanel extends sfuiPanel {
     getHost() {
         return this.frogPlayers[0];
     }
+    hide() {
+        for (let i = 0; i < this.frogPlayers.length; i++) {
+            this.frogPlayers[i].hide();
+        }
+    }
+    show() {
+        for (let i = 0; i < this.frogPlayers.length; i++) {
+            this.frogPlayers[i].show();
+        }
+    }
     update(dt) {
         super.update(dt);
     }
