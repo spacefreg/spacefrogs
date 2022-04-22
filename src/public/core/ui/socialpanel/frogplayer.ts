@@ -15,12 +15,14 @@ export default class FrogPlayer {
     private origin: vec2;
     private country: string;
     
-    private readyToPlayButton: sfuiElement;
-    private readyIndicator: sfuiElement;
     private playerIndicator: sfuiElement;
-
+    
     private isHost: boolean = false;
     private isPlayer: boolean = false;
+
+    //(4/21/22) lobby-only fields
+    private readyToPlayButton: sfuiElement;
+    private readyIndicator: sfuiElement;
 
     constructor(name: string, id: string, playerNumber: number, panelOrigin: vec2, isPlayer: boolean, socket: io) {
         this.name = name;

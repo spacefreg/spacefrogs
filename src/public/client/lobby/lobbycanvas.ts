@@ -74,7 +74,6 @@ export default class LobbyCanvas {
 
         for (let i = 0; i < lobbyPlayers.length; i++) {
             if (lobbyPlayers[i].country != '') {
-                console.log(`player ${lobbyPlayers[i].name} has country: ${lobbyPlayers[i].country}`);
                 this.sfPlayerCountrySelection(lobbyPlayers[i]);
             }
             else 
@@ -101,7 +100,7 @@ export default class LobbyCanvas {
             const selectionCandidate: string = this.gamePanel.mouseDown(pos);
             this.socialPanel.mouseDown(pos);
             this.frogPanel.mouseDown(pos);
-            if (selectionCandidate != '') {
+            if (selectionCandidate != '' ) {
                 this.socket.emit('sfcSelectionRequest', selectionCandidate);
             }
         }
@@ -154,10 +153,10 @@ export default class LobbyCanvas {
                 selectionOffset.x = 142;
                 break;
             case 'Russia':
-                selectionOffset.x = 226;
+                selectionOffset.x = 227;
                 break;
             case 'India':
-                selectionOffset.x = 100;
+                selectionOffset.x = 103;
                 selectionOffset.y = 190;
                 break;
             case 'Japan':
@@ -168,8 +167,6 @@ export default class LobbyCanvas {
         this.playerSelections.set(p.name, new sfuiElement(new vec2(200, 200), p.name));
         const newestPlayerSelection = this.playerSelections.get(p.name)!;
         newestPlayerSelection.setSize(new vec2(100, 100));
-        //newestPlayerSelection.setBackgroundColor('red');
-        //newestPlayerSelection.setBackgroundOpacity(0.5);
         newestPlayerSelection.setOutline(true);
         newestPlayerSelection.setAsTooltip();
         newestPlayerSelection.setOutlineSize(new vec2(85, 90));

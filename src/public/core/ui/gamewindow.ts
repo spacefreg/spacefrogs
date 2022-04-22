@@ -21,6 +21,8 @@ export default class GameWindow extends sfuiElement {
     private planetHoverElement: sfuiElement;
     private currentMousePos: vec2;
 
+    private dateElement: sfuiElement;
+
     constructor(origin: vec2, size: vec2) {
         super(origin, 'Game Window');
         this.setSize(size);
@@ -40,6 +42,13 @@ export default class GameWindow extends sfuiElement {
         this.planetHoverElement.setAsTooltip();
         this.planetHoverElement.setBackgroundOpacity(1);
         this.planetHoverElement.setOutline(true);
+
+        this.dateElement = new sfuiElement(new vec2(this.origin.x, this.origin.y), 'January 1st, 2030');
+        this.dateElement.setBackgroundOpacity(.66);
+        this.dateElement.setAsTooltip();
+        this.dateElement.setFontSize(16);
+        this.dateElement.setTitleOrigin(new vec2(this.origin.x + 4, this.origin.y + 19));
+        this.dateElement.setSize(new vec2(138, 25));
     }
 
     public update(dt: number): void {
@@ -81,6 +90,8 @@ export default class GameWindow extends sfuiElement {
         if (this.currentPlanetHover != '') {
             this.planetHoverElement.render();
         }
+
+        this.dateElement.render();
     }
 
     public getCenter(): vec2 {

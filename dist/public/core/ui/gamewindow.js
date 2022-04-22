@@ -25,6 +25,12 @@ export default class GameWindow extends sfuiElement {
         this.planetHoverElement.setAsTooltip();
         this.planetHoverElement.setBackgroundOpacity(1);
         this.planetHoverElement.setOutline(true);
+        this.dateElement = new sfuiElement(new vec2(this.origin.x, this.origin.y), 'January 1st, 2030');
+        this.dateElement.setBackgroundOpacity(.66);
+        this.dateElement.setAsTooltip();
+        this.dateElement.setFontSize(16);
+        this.dateElement.setTitleOrigin(new vec2(this.origin.x + 4, this.origin.y + 19));
+        this.dateElement.setSize(new vec2(138, 25));
     }
     update(dt) {
         this.sun.update(dt);
@@ -55,6 +61,7 @@ export default class GameWindow extends sfuiElement {
         if (this.currentPlanetHover != '') {
             this.planetHoverElement.render();
         }
+        this.dateElement.render();
     }
     getCenter() {
         const center = new vec2(this.origin.x + this.size.x / 2, this.origin.y + this.size.y / 2);

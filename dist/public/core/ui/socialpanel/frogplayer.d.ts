@@ -9,11 +9,11 @@ export default class FrogPlayer {
     private panelOrigin;
     private origin;
     private country;
-    private readyToPlayButton;
-    private readyIndicator;
     private playerIndicator;
     private isHost;
     private isPlayer;
+    private readyToPlayButton;
+    private readyIndicator;
     constructor(name: string, id: string, playerNumber: number, panelOrigin: vec2, isPlayer: boolean, socket: io);
     setHost(): void;
     getHost(): boolean;
