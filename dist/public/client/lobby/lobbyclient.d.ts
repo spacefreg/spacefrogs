@@ -9,6 +9,7 @@ export default class LobbyClient {
     private lCanvas;
     private dt;
     private timeOfLastUpdate;
+    private isRunning;
     constructor(socket: io, self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>);
     playerJoined(): void;
     playerDropped(): void;

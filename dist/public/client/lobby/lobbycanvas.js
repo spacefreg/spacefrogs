@@ -8,9 +8,8 @@ import sfuiElement from '../../core/ui/sfuielement.js';
 export default class LobbyCanvas {
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
     constructor(self, host, campaignName, lobbyPlayers, socket) {
+        this.isRunning = true;
         this.isSelfHost = false;
-        //(4/21/22) for host only, used to constrain the start campaign button functionality
-        this.isReadyToStart = false;
         this.canvas = document.getElementById('sf-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.socket = socket;
@@ -26,9 +25,9 @@ export default class LobbyCanvas {
         this.socket.on('sfPlayerNotReady', (id) => {
             this.sfPlayerNotReady(id);
         });
-        this.socket.on('sfStartCampaign', () => {
+        this.socket.on('sfStartCampaign', (msg) => {
             console.log(`starting campaign: ${campaignName}`);
-            this.socialPanel.show();
+            //this.socialPanel.show();
         });
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id, this.socket);
@@ -88,25 +87,27 @@ export default class LobbyCanvas {
         this.startCampaignButton.hide();
     }
     mouseDown(evt) {
-        if (evt.clientX >= this.canvas.offsetLeft && evt.clientX <= this.canvas.offsetLeft + this.canvas.width && evt.clientY >= this.canvas.offsetTop && evt.clientY <= this.canvas.offsetTop + this.canvas.height) {
-            evt.preventDefault();
-            const pos = new vec2(evt.clientX - this.canvas.offsetLeft, evt.clientY - this.canvas.offsetTop);
-            const selectionCandidate = this.gamePanel.mouseDown(pos);
-            this.socialPanel.mouseDown(pos);
-            this.frogPanel.mouseDown(pos);
-            if (selectionCandidate != '') {
-                this.socket.emit('sfcSelectionRequest', selectionCandidate);
-            }
-            this.startCampaignButton.mouseDown(pos);
-            if (this.startCampaignButton.isActive()) {
-                for (let i = 0; i < this.socialPanel.frogPlayers.length; i++) {
-                    if (this.socialPanel.frogPlayers[i].isReady()) {
-                        this.socket.emit('sfcStartCampaign');
-                        this.startCampaignButton.hide();
-                        this.startCampaignButton.toggleActive();
-                        this.startCampaignButton.setSize(new vec2(0, 0));
-                        this.startCampaignButton.setOrigin(new vec2(-100, -100));
-                        this.socialPanel.hide();
+        if (this.isRunning) {
+            if (evt.clientX >= this.canvas.offsetLeft && evt.clientX <= this.canvas.offsetLeft + this.canvas.width && evt.clientY >= this.canvas.offsetTop && evt.clientY <= this.canvas.offsetTop + this.canvas.height) {
+                evt.preventDefault();
+                const pos = new vec2(evt.clientX - this.canvas.offsetLeft, evt.clientY - this.canvas.offsetTop);
+                const selectionCandidate = this.gamePanel.mouseDown(pos);
+                this.socialPanel.mouseDown(pos);
+                this.frogPanel.mouseDown(pos);
+                if (selectionCandidate != '') {
+                    this.socket.emit('sfcSelectionRequest', selectionCandidate);
+                }
+                this.startCampaignButton.mouseDown(pos);
+                if (this.startCampaignButton.isActive()) {
+                    for (let i = 0; i < this.socialPanel.frogPlayers.length; i++) {
+                        if (this.socialPanel.frogPlayers[i].isReady()) {
+                            this.socket.emit('sfcStartCampaign');
+                            this.startCampaignButton.hide();
+                            this.startCampaignButton.toggleActive();
+                            this.startCampaignButton.setSize(new vec2(0, 0));
+                            this.startCampaignButton.setOrigin(new vec2(-100, -100));
+                            this.socialPanel.hide();
+                        }
                     }
                 }
             }
@@ -175,5 +176,10 @@ export default class LobbyCanvas {
     }
     sfPlayerNotReady(id) {
         this.startCampaignButton.hide();
+    }
+    kill() {
+        this.playerSelections.clear();
+        this.socialPanel.hide();
+        this.socialPanel.setSize(new vec2(0, 0));
     }
 }

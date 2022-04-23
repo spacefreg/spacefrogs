@@ -12,6 +12,8 @@ import sfLobbyWelcome from '../core/messages/server/sflobbywelcome.js';
 import LobbyClient from './lobby/lobbyclient.js';
 import Player, { getPlayerByID } from '../core/player.js';
 
+import sfStartCampaign from '../core/messages/server/sfstartcampaign.js';
+
 
 //(3/25/22) begin space bouncer code
 //(3/25/22) the space bouncer has to get the user's name (or be told the user is anonymous)
@@ -72,17 +74,17 @@ function receiveUserInvite() {
 
     const requestToJoinPrompt: HTMLParagraphElement = document.createElement('p');
     requestToJoinPrompt.id = 'request-to-join-prompt';
-    requestToJoinPrompt.textContent = 'There is a game in progress. Do you wish to join?';
+    requestToJoinPrompt.textContent = 'There is a game in progress. Do you wish to spectate?';
     requestToJoinDiv.appendChild(requestToJoinPrompt);
 
     const requestToJoinButton: HTMLButtonElement = document.createElement('button');
     requestToJoinButton.id = 'request-to-join-button';
-    requestToJoinButton.textContent = 'Request to Join';
+    requestToJoinButton.textContent = 'Watch';
     requestToJoinDiv.appendChild(requestToJoinButton);
 }
 
 socket.on('sfNewUserInvite', () => {
-    console.log('a game is in progress. would you like to join?');
+    console.log('a game is in progress. do you wish to spectate?');
     spaceBouncer.remove();
 
     receiveUserInvite();
@@ -150,4 +152,11 @@ socket.on('sfLobbyAlreadyExists', (msg: sfLobbyWelcome) => {
     
     const hostName: string = getPlayerByID(msg.playerHostID, msg.playerList).name;
     console.log(`joined lobby: ${msg.campaignName} hosted by ${hostName} (${msg.playerList.length} players)`);
+});
+
+socket.on('sfStartCampaign', (msg: sfStartCampaign) => {
+    console.log(`client: start campaign`);
+    console.log(`campaign length: ${msg.playerList.length}`);
+    console.log(`${msg.playerList[0].name} is host`);
+    //(4/22/22) creating the gameclient goes here
 });

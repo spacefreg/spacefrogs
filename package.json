@@ -6,9 +6,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/martiangremlin/spacefrogs.git"
+    "url": "git+https://github.com/spacefreg/spacefrogs.git"
   },
-  "homepage": "https://github.com/martiangremlin/spacefrogs#readme",
+  "homepage": "https://github.com/spacefreg/spacefrogs#readme",
   "dependencies": {
     "express": "^4.17.2",
     "socket.io": "^4.4.1"

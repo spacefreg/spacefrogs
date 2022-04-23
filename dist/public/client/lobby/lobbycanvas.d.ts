@@ -1,8 +1,9 @@
 import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
 import Player from '../../core/player.js';
 export default class LobbyCanvas {
+    isRunning: boolean;
     private canvas;
-    private ctx;
+    ctx: CanvasRenderingContext2D;
     private socket;
     private gameWindow;
     private fpsIndicator;
@@ -13,7 +14,6 @@ export default class LobbyCanvas {
     private playerSelections;
     private startCampaignButton;
     private isSelfHost;
-    private isReadyToStart;
     constructor(self: Player, host: Player, campaignName: string, lobbyPlayers: Array<Player>, socket: io);
     update(dt: number): void;
     addPlayer(playerarg: Player, lobbyPlayers: Array<Player>): void;
@@ -24,4 +24,5 @@ export default class LobbyCanvas {
     private sfPlayerCountrySelection;
     private sfPlayerReady;
     private sfPlayerNotReady;
+    kill(): void;
 }

@@ -5,6 +5,7 @@ import express from 'express';
 import http from 'http';
 import * as socketIO from 'socket.io';
 import sfLobbyWelcome from '../public/core/messages/server/sflobbywelcome.js';
+import sfStartCampaign from '../public/core/messages/server/sfstartcampaign.js';
 import { getPlayerByID } from '../public/core/player.js';
 import Lobby from './lobby.js';
 const __filename = fileURLToPath(import.meta.url);
@@ -36,7 +37,10 @@ class Server {
             });
             socket.on('sfcStartCampaign', () => {
                 console.log(`${socket.id} sent sfcStartCampaign`);
-                this.io.emit('sfStartCampaign');
+                const startCampaignMessage = new sfStartCampaign(this.gameLobby.campaignName, this.gameLobby.lobbyPlayers);
+                this.io.emit('sfStartCampaign', startCampaignMessage);
+                this.gameLobby.deactivate();
+                this.gameRunning = true;
             });
             socket.on('sfcPlayerReady', () => {
                 this.io.emit('sfPlayerReady', socket.id);

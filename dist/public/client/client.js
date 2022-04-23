@@ -48,15 +48,15 @@ function receiveUserInvite() {
     document.body.appendChild(requestToJoinDiv);
     const requestToJoinPrompt = document.createElement('p');
     requestToJoinPrompt.id = 'request-to-join-prompt';
-    requestToJoinPrompt.textContent = 'There is a game in progress. Do you wish to join?';
+    requestToJoinPrompt.textContent = 'There is a game in progress. Do you wish to spectate?';
     requestToJoinDiv.appendChild(requestToJoinPrompt);
     const requestToJoinButton = document.createElement('button');
     requestToJoinButton.id = 'request-to-join-button';
-    requestToJoinButton.textContent = 'Request to Join';
+    requestToJoinButton.textContent = 'Watch';
     requestToJoinDiv.appendChild(requestToJoinButton);
 }
 socket.on('sfNewUserInvite', () => {
-    console.log('a game is in progress. would you like to join?');
+    console.log('a game is in progress. do you wish to spectate?');
     spaceBouncer.remove();
     receiveUserInvite();
 });
@@ -106,4 +106,10 @@ socket.on('sfLobbyAlreadyExists', (msg) => {
     const lc = new LobbyClient(socket, selfPlayer, hostPlayer, msg.campaignName, msg.playerList);
     const hostName = getPlayerByID(msg.playerHostID, msg.playerList).name;
     console.log(`joined lobby: ${msg.campaignName} hosted by ${hostName} (${msg.playerList.length} players)`);
+});
+socket.on('sfStartCampaign', (msg) => {
+    console.log(`client: start campaign`);
+    console.log(`campaign length: ${msg.playerList.length}`);
+    console.log(`${msg.playerList[0].name} is host`);
+    //(4/22/22) creating the gameclient goes here
 });
