@@ -42,6 +42,7 @@ class Server {
                     this.players[i].setCountry(this.gameLobby.lobbyPlayers[i].country);
                     this.players[i].setPlayerNumber(i + 1);
                 }
+                this.players[0].setHost();
                 const startCampaignMessage = new sfStartCampaign(this.gameLobby.campaignName, this.players);
                 this.io.emit('sfStartCampaign', startCampaignMessage);
                 this.gameLobby.deactivate();
@@ -86,37 +87,48 @@ class Server {
                 this.receptionGuests.delete(socket.id);
                 if (this.gameLobby.isActive) {
                     const lobbyPlayer = getPlayerByID(socket.id, this.gameLobby.lobbyPlayers);
-                    this.gameLobby.lobbyPlayers.splice(this.gameLobby.lobbyPlayers.indexOf(lobbyPlayer), 1);
-                    console.log(`player ${lobbyPlayer.name} (${lobbyPlayer.id}) left lobby. size: ${this.gameLobby.lobbyPlayers.length}`);
-                    if (this.gameLobby.lobbyPlayers.length == 0) {
-                        this.gameLobby.deactivate();
-                    }
-                    else {
-                        if (lobbyPlayer.isHost) {
-                            console.log(`host left lobby.`);
-                            this.playerHostID = this.gameLobby.lobbyPlayers[0].id;
-                            this.gameLobby.lobbyPlayers[0].setHost();
-                            console.log(`new host: ${this.gameLobby.lobbyPlayers[0].name}`);
+                    if (lobbyPlayer.name != 'gremlin') {
+                        console.log(`anonymous disconnection. ID: ${socket.id}`);
+                        this.gameLobby.lobbyPlayers.splice(this.gameLobby.lobbyPlayers.indexOf(lobbyPlayer), 1);
+                        console.log(`player ${lobbyPlayer.name} (${lobbyPlayer.id}) left lobby. size: ${this.gameLobby.lobbyPlayers.length}`);
+                        if (this.gameLobby.lobbyPlayers.length == 0) {
+                            this.gameLobby.deactivate();
                         }
-                        for (let i = 0; i < this.gameLobby.lobbyPlayers.length; i++) {
-                            this.gameLobby.lobbyPlayers[i].setPlayerNumber(i + 1);
+                        else {
+                            if (lobbyPlayer.isHost) {
+                                console.log(`host left lobby.`);
+                                this.playerHostID = this.gameLobby.lobbyPlayers[0].id;
+                                this.gameLobby.lobbyPlayers[0].setHost();
+                                console.log(`new host: ${this.gameLobby.lobbyPlayers[0].name}`);
+                            }
+                            for (let i = 0; i < this.gameLobby.lobbyPlayers.length; i++) {
+                                this.gameLobby.lobbyPlayers[i].setPlayerNumber(i + 1);
+                            }
+                            this.io.emit('sfLobbyPlayerDropped', socket.id, this.gameLobby.lobbyPlayers);
                         }
-                        this.io.emit('sfLobbyPlayerDropped', socket.id, this.gameLobby.lobbyPlayers);
                     }
                 }
                 else if (this.gameRunning) {
                     const player = getPlayerByID(socket.id, this.players);
-                    this.players.splice(this.players.indexOf(player), 1);
-                    if (this.players.length == 0) {
-                        console.log(`game ended`);
-                        this.gameRunning = false;
-                        return;
+                    if (player.name != 'gremlin') {
+                        this.players.splice(this.players.indexOf(player), 1);
+                        if (this.players.length == 0) {
+                            console.log(`game ended`);
+                            this.gameRunning = false;
+                            return;
+                        }
+                        console.log(`player ${player.name} (${player.id}) left game. size: ${this.players.length}`);
+                        if (player.isHost) {
+                            console.log(`host left game.`);
+                            this.playerHostID = this.players[0].id;
+                            this.players[0].setHost();
+                            console.log(`new host: ${this.players[0].name}`);
+                        }
+                        for (let i = 0; i < this.players.length; i++) {
+                            this.players[i].setPlayerNumber(i + 1);
+                        }
+                        this.io.emit('sfGamePlayerDropped', socket.id, this.players);
                     }
-                    console.log(`player ${player.name} (${player.id}) left game. size: ${this.players.length}`);
-                    for (let i = 0; i < this.players.length; i++) {
-                        this.players[i].setPlayerNumber(i + 1);
-                    }
-                    this.io.emit('sfGamePlayerDropped', socket.id, this.players);
                 }
             });
         });
