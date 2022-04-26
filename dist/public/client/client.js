@@ -7,6 +7,7 @@ import sfcNewUser from '../core/messages/client/sfcnewuser.js';
 import sfcCreateCampaign from '../core/messages/client/sfccreatecampaign.js';
 import LobbyClient from './lobby/lobbyclient.js';
 import Player, { getPlayerByID } from '../core/player.js';
+import GameClient from './game/gameclient.js';
 //(3/25/22) begin space bouncer code
 //(3/25/22) the space bouncer has to get the user's name (or be told the user is anonymous)
 const spaceBouncer = document.getElementById('spacebouncer');
@@ -112,4 +113,5 @@ socket.on('sfStartCampaign', (msg) => {
     console.log(`campaign length: ${msg.playerList.length}`);
     console.log(`${msg.playerList[0].name} is host`);
     //(4/22/22) creating the gameclient goes here
+    const gc = new GameClient(socket, msg.campaignName, msg.playerList);
 });

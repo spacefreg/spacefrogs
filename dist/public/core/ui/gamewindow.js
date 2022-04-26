@@ -59,6 +59,7 @@ export default class GameWindow extends sfuiElement {
         this.venus.render();
         this.mercury.render();
         if (this.currentPlanetHover != '') {
+            console.log(`rendering current player hover: ${this.currentPlanetHover}`);
             this.planetHoverElement.render();
         }
         this.dateElement.render();

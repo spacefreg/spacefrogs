@@ -32,6 +32,7 @@ export default class FrogPlayer {
     render(): void;
     hide(): void;
     show(): void;
+    disableLobbyButton(): void;
 }
 export declare function getFrogPlayerByNumber(num: number, players: Array<FrogPlayer>): FrogPlayer;
 export declare function getFrogPlayerByID(id: string, frogPlayers: Array<FrogPlayer>): FrogPlayer;

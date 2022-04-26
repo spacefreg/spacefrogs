@@ -70,11 +70,18 @@ class Server {
             });
 
             socket.on('sfcStartCampaign', () => {
-                console.log(`${socket.id} sent sfcStartCampaign`);
-                const startCampaignMessage = new sfStartCampaign(this.gameLobby.campaignName, this.gameLobby.lobbyPlayers);
+                console.log(`${socket.id} sent sfcStartCampaign. length: ${this.gameLobby.lobbyPlayers.length}`);
+                for (let i = 0; i < this.gameLobby.lobbyPlayers.length; i++) {
+                    this.players.push(new Player(this.gameLobby.lobbyPlayers[i].id, this.gameLobby.lobbyPlayers[i].name));
+                    this.players[i].setCountry(this.gameLobby.lobbyPlayers[i].country);
+                    this.players[i].setPlayerNumber(i + 1);
+                }
+
+                const startCampaignMessage = new sfStartCampaign(this.gameLobby.campaignName, this.players);
                 this.io.emit('sfStartCampaign', startCampaignMessage);
                 this.gameLobby.deactivate();
                 this.gameRunning = true;
+                console.log(`game started: ${this.gameLobby.campaignName}`);
             });
 
             socket.on('sfcPlayerReady', () => {
@@ -141,6 +148,22 @@ class Server {
 
                         this.io.emit('sfLobbyPlayerDropped', socket.id, this.gameLobby.lobbyPlayers);
                     }
+                }
+                else if (this.gameRunning) {
+                    const player = getPlayerByID(socket.id, this.players);
+                    this.players.splice(this.players.indexOf(player), 1);
+
+                    if (this.players.length == 0) {
+                        console.log(`game ended`);
+                        this.gameRunning = false;
+                        return;
+                    }
+                    console.log(`player ${player.name} (${player.id}) left game. size: ${this.players.length}`);
+
+                    for (let i = 0; i < this.players.length; i++) {
+                        this.players[i].setPlayerNumber(i + 1);
+                    }
+                    this.io.emit('sfGamePlayerDropped', socket.id, this.players);
                 }
             });
         });

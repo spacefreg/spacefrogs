@@ -196,6 +196,7 @@ export default class sfuiElement {
     }
     hide() {
         this.isHidden = true;
+        this.active = false;
     }
     show() {
         this.isHidden = false;

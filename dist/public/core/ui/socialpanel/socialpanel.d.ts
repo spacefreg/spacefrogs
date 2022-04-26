@@ -7,6 +7,7 @@ export default class SocialPanel extends sfuiPanel {
     frogPlayers: Array<FrogPlayer>;
     private socket;
     private selfID;
+    private inGame;
     constructor(origin: vec2, title: string, selfID: string, socket: io);
     frogPlayerChanged(player: Player, players: Array<Player>): void;
     mouseMove(mousePos: vec2): void;
@@ -15,6 +16,7 @@ export default class SocialPanel extends sfuiPanel {
     getHost(): FrogPlayer;
     hide(): void;
     show(): void;
+    setInGame(): void;
     update(dt: number): void;
     render(): void;
 }

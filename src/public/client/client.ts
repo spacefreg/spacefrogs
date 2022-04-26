@@ -13,6 +13,7 @@ import LobbyClient from './lobby/lobbyclient.js';
 import Player, { getPlayerByID } from '../core/player.js';
 
 import sfStartCampaign from '../core/messages/server/sfstartcampaign.js';
+import GameClient from './game/gameclient.js';
 
 
 //(3/25/22) begin space bouncer code
@@ -159,4 +160,5 @@ socket.on('sfStartCampaign', (msg: sfStartCampaign) => {
     console.log(`campaign length: ${msg.playerList.length}`);
     console.log(`${msg.playerList[0].name} is host`);
     //(4/22/22) creating the gameclient goes here
+    const gc = new GameClient(socket, msg.campaignName, msg.playerList);
 });

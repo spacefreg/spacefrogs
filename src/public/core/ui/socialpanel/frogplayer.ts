@@ -51,9 +51,6 @@ export default class FrogPlayer {
         const readyOrigin: vec2 = new vec2(this.origin.x + 68, this.origin.y);
         this.readyIndicator = new sfuiElement(readyOrigin, 'Ready Indicator');
         this.readyIndicator.setImage('../../res/images/ui/frogplayernotready.png');
-
-
-
     }
 
     public setHost(): void {
@@ -88,7 +85,7 @@ export default class FrogPlayer {
     }
 
     public setFrogPlayerNumber(num: number): void {
-        console.log(`calling setFrogPlayerNumber`);
+        //console.log(`calling setFrogPlayerNumber`);
         this.fPlayerNumber = num;
         this.origin = new vec2(5, (this.fPlayerNumber * 45) - 30);
         this.origin.x += this.panelOrigin.x;
@@ -166,6 +163,12 @@ export default class FrogPlayer {
         this.readyIndicator.show();
         this.readyToPlayButton.show();
         this.playerIndicator.show();
+    }
+
+    public disableLobbyButton(): void {
+        this.readyToPlayButton.hide();
+        this.readyIndicator.hide();
+        this.readyToPlayButton.setSize(new vec2(0, 0));
     }
 }
 

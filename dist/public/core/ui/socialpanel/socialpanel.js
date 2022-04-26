@@ -4,6 +4,7 @@ import FrogPlayer, { getFrogPlayerByID } from './frogplayer.js';
 export default class SocialPanel extends sfuiPanel {
     constructor(origin, title, selfID, socket) {
         super(origin, title);
+        this.inGame = false;
         this.socket = socket;
         this.selfID = selfID;
         this.frogPlayers = new Array();
@@ -28,6 +29,9 @@ export default class SocialPanel extends sfuiPanel {
                 isPlayer = true;
             }
             this.frogPlayers.push(new FrogPlayer(players[i].name, players[i].id, players[i].playerNumber, this.origin, isPlayer, this.socket));
+            if (this.inGame) {
+                this.frogPlayers[this.frogPlayers.length - 1].disableLobbyButton();
+            }
             if (i == 0) {
                 this.frogPlayers[i].setHost();
             }
@@ -64,6 +68,9 @@ export default class SocialPanel extends sfuiPanel {
         for (let i = 0; i < this.frogPlayers.length; i++) {
             this.frogPlayers[i].show();
         }
+    }
+    setInGame() {
+        this.inGame = true;
     }
     update(dt) {
         super.update(dt);

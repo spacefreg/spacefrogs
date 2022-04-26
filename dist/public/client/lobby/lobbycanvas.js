@@ -133,6 +133,7 @@ export default class LobbyCanvas {
         for (const [k, v] of this.playerSelections) {
             v.render();
         }
+        //console.log(`rendering lobby canvas`);
         this.startCampaignButton.render();
         const fpsTextLength = this.ctx.measureText(this.fpsIndicator).width;
         this.ctx.fillText(this.fpsIndicator, this.canvas.width - fpsTextLength - 3, 10);

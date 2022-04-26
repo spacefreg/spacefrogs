@@ -13,6 +13,8 @@ export default class SocialPanel extends sfuiPanel {
     private socket: io;
     private selfID: string;
 
+    private inGame: boolean = false;
+
     constructor(origin: vec2, title: string, selfID: string, socket: io) {
         super(origin, title);
 
@@ -44,6 +46,10 @@ export default class SocialPanel extends sfuiPanel {
                 isPlayer = true;
             }
             this.frogPlayers.push(new FrogPlayer(players[i].name, players[i].id, players[i].playerNumber, this.origin, isPlayer, this.socket));
+
+            if (this.inGame) {
+                this.frogPlayers[this.frogPlayers.length - 1].disableLobbyButton();
+            }
 
             if (i == 0) {
                 this.frogPlayers[i].setHost();
@@ -89,6 +95,10 @@ export default class SocialPanel extends sfuiPanel {
         for (let i = 0; i < this.frogPlayers.length; i++) {
             this.frogPlayers[i].show();
         }
+    }
+
+    public setInGame(): void {
+        this.inGame = true;
     }
 
     public update(dt: number): void {

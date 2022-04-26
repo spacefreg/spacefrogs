@@ -11,7 +11,6 @@ import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
 import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
 import sfuiElement from '../../core/ui/sfuielement.js';
-import { getFrogPlayerByID } from '../../core/ui/socialpanel/frogplayer.js';
 
 import sfStartCampaign from '../../core/messages/server/sfstartcampaign.js';
 
@@ -207,6 +206,8 @@ export default class LobbyCanvas {
         for (const [k, v] of this.playerSelections) {
             v.render();
         }
+
+        //console.log(`rendering lobby canvas`);
 
 
         this.startCampaignButton.render();
