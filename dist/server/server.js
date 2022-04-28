@@ -8,6 +8,7 @@ import sfLobbyWelcome from '../public/core/messages/server/sflobbywelcome.js';
 import sfStartCampaign from '../public/core/messages/server/sfstartcampaign.js';
 import Player, { getPlayerByID } from '../public/core/player.js';
 import Lobby from './lobby.js';
+import GameSession from './game/gamesession.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const distPath = path.dirname(__dirname);
@@ -19,6 +20,7 @@ class Server {
         expressApp.use(express.static(path.join(distPath, 'public')));
         this.httpServer = new http.Server(expressApp);
         this.io = new socketIO.Server(this.httpServer);
+        this.gameSession = new GameSession(this.io);
         this.tickRateMs = 50;
         this.receptionGuests = new Map();
         this.players = new Array();
@@ -48,6 +50,7 @@ class Server {
                 this.gameLobby.deactivate();
                 this.gameRunning = true;
                 console.log(`game started: ${this.gameLobby.campaignName}`);
+                this.gameSession.start(startCampaignMessage);
             });
             socket.on('sfcPlayerReady', () => {
                 this.io.emit('sfPlayerReady', socket.id);
@@ -113,8 +116,8 @@ class Server {
                     if (player.name != 'gremlin') {
                         this.players.splice(this.players.indexOf(player), 1);
                         if (this.players.length == 0) {
-                            console.log(`game ended`);
                             this.gameRunning = false;
+                            this.gameSession.end();
                             return;
                         }
                         console.log(`player ${player.name} (${player.id}) left game. size: ${this.players.length}`);

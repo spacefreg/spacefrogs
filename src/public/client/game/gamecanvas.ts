@@ -33,6 +33,7 @@ export default class GameCanvas {
 
 
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
+        this.gameWindow.setInGame();
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', this.socket.id, this.socket);
         this.socialPanel.setInGame();
         this.frogPanel = new FrogPanel(new vec2(1, 480), selfPlayer.name);
@@ -41,6 +42,8 @@ export default class GameCanvas {
 
         //this.canvas.onmousedown = this.mouseDown.bind(this);
         this.canvas.onmousemove = this.mouseMove.bind(this);
+
+        document.onkeydown = this.keyDown.bind(this);
     }
 
     public addPlayer(p: Player, players: Array<Player>): void {
@@ -59,6 +62,17 @@ export default class GameCanvas {
         this.frogPanel.mouseMove(pos);
         //this.gamePanel.mouseMove(pos);
         this.gameWindow.mouseMove(pos);
+    }
+
+    public keyDown(evt: KeyboardEvent): void {
+        switch (evt.code) {
+            case 'Space':
+                if (this.socialPanel.getHost().getID() == this.selfID) {
+                    this.socket.emit('sfcTogglePause');
+                    console.log(`host if he real`);
+                }
+                break;
+        }
     }
 
     public update(dt: number): void {

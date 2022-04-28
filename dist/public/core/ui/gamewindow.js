@@ -9,6 +9,7 @@ import Mercury from '../planets/mercury.js';
 export default class GameWindow extends sfuiElement {
     constructor(origin, size) {
         super(origin, 'Game Window');
+        this.inGame = false;
         this.currentPlanetHover = '';
         this.setSize(size);
         this.setOutline(true);
@@ -100,5 +101,8 @@ export default class GameWindow extends sfuiElement {
     }
     mouseDown() {
         return this.currentPlanetHover;
+    }
+    setInGame() {
+        this.inGame = true;
     }
 }

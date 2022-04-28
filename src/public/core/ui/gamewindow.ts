@@ -10,6 +10,8 @@ import Mercury from '../planets/mercury.js';
 
 export default class GameWindow extends sfuiElement {
 
+    public inGame: boolean = false;
+
     private sun: Sun;
     private earth: Earth;
     private moon: Moon;
@@ -22,6 +24,7 @@ export default class GameWindow extends sfuiElement {
     private currentMousePos: vec2;
 
     private dateElement: sfuiElement;
+
 
     constructor(origin: vec2, size: vec2) {
         super(origin, 'Game Window');
@@ -143,5 +146,9 @@ export default class GameWindow extends sfuiElement {
 
     public mouseDown(): string {
         return this.currentPlanetHover;
+    }
+
+    public setInGame(): void {
+        this.inGame = true;
     }
 }

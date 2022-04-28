@@ -1,6 +1,7 @@
 import vec2 from '../math/vec2.js';
 import sfuiElement from './sfuielement.js';
 export default class GameWindow extends sfuiElement {
+    inGame: boolean;
     private sun;
     private earth;
     private moon;
@@ -17,4 +18,5 @@ export default class GameWindow extends sfuiElement {
     getCenter(): vec2;
     mouseMove(mousePos: vec2): void;
     mouseDown(): string;
+    setInGame(): void;
 }

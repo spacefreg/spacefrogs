@@ -12,12 +12,14 @@ export default class GameCanvas {
         const selfPlayer = getPlayerByID(this.socket.id, players);
         this.selfID = this.socket.id;
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
+        this.gameWindow.setInGame();
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', this.socket.id, this.socket);
         this.socialPanel.setInGame();
         this.frogPanel = new FrogPanel(new vec2(1, 480), selfPlayer.name);
         this.addPlayer(selfPlayer, players);
         //this.canvas.onmousedown = this.mouseDown.bind(this);
         this.canvas.onmousemove = this.mouseMove.bind(this);
+        document.onkeydown = this.keyDown.bind(this);
     }
     addPlayer(p, players) {
         this.socialPanel.frogPlayerChanged(p, players);
@@ -33,6 +35,17 @@ export default class GameCanvas {
         this.frogPanel.mouseMove(pos);
         //this.gamePanel.mouseMove(pos);
         this.gameWindow.mouseMove(pos);
+    }
+    keyDown(evt) {
+        //if (this.gameWindow.inGame) {
+        switch (evt.code) {
+            case 'Space':
+                if (this.socialPanel.getHost().getID() == this.selfID) {
+                    console.log(`host if he real`);
+                }
+                break;
+        }
+        // }
     }
     update(dt) {
         this.gameWindow.update(dt);
