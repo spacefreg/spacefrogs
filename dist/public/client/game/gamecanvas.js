@@ -37,15 +37,14 @@ export default class GameCanvas {
         this.gameWindow.mouseMove(pos);
     }
     keyDown(evt) {
-        //if (this.gameWindow.inGame) {
         switch (evt.code) {
             case 'Space':
                 if (this.socialPanel.getHost().getID() == this.selfID) {
+                    this.socket.emit('sfcTogglePause');
                     console.log(`host if he real`);
                 }
                 break;
         }
-        // }
     }
     update(dt) {
         this.gameWindow.update(dt);

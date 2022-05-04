@@ -86,6 +86,9 @@ class Server {
                 player.country = selectionCandidate;
                 this.io.emit('sfPlayerCountrySelection', player);
             });
+            socket.on('sfcTogglePause', () => {
+                this.gameSession.togglePause();
+            });
             socket.on('disconnect', () => {
                 this.receptionGuests.delete(socket.id);
                 if (this.gameLobby.isActive) {

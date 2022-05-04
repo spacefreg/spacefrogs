@@ -31,6 +31,12 @@ export default class GameClient {
             // this.lCanvas.ctx.clearRect(0, 0, 1366, 768);
         });
 
+        this.socket.on('sfNewDate', (date: number) => {
+            console.log(`new date: ${date}`);
+        });
+
+        this.socket.on()
+
         this.dt = 0;
         this.timeOfLastUpdate = 0;
 

@@ -91,7 +91,6 @@ export default class GameWindow extends sfuiElement {
         this.mercury.render();
 
         if (this.currentPlanetHover != '') {
-            console.log(`rendering current player hover: ${this.currentPlanetHover}`);
             this.planetHoverElement.render();
         }
 

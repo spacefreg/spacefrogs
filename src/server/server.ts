@@ -127,6 +127,10 @@ class Server {
                 this.io.emit('sfPlayerCountrySelection', player);
             });
 
+            socket.on('sfcTogglePause', () => {
+                this.gameSession.togglePause();
+            });
+
             socket.on('disconnect', () => {
                 this.receptionGuests.delete(socket.id);
 

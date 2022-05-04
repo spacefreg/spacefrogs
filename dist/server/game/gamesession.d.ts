@@ -6,8 +6,10 @@ export default class GameSession {
     private gamePlayers;
     private isRunning;
     private gClock;
+    private currentDate;
     constructor(io: socketIO.Server);
     start(campaignInfo: sfStartCampaign): void;
+    togglePause(): void;
     end(): void;
     private loop;
 }

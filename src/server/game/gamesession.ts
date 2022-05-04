@@ -13,11 +13,12 @@ export default class GameSession {
     private isRunning: boolean = false;
 
     private gClock: GameClock;
+    private currentDate: number;
 
     constructor(io: socketIO.Server) {
         this.io = io;
         this.gClock = new GameClock();
-        console.log(`SERVER: gamesession constructor`);
+        this.currentDate = 0;
     }
 
     public start(campaignInfo: sfStartCampaign): void {
@@ -28,6 +29,10 @@ export default class GameSession {
 
         this.loop();
     }
+
+    public togglePause(): void {
+        this.gClock.togglePause();
+    }
     
     public end(): void {
         console.log(`SERVER: game session end`);
@@ -37,13 +42,21 @@ export default class GameSession {
     private loop(): void {
         const interval = setInterval(() => {
             if (!this.isRunning) {
-                console.log(`stopping game`);
                 clearInterval(interval);
             }
             else {
                 this.gClock.update(100);
+                
+                if (this.currentDate != this.gClock.getDate()) {
+                    this.currentDate = this.gClock.getDate();
+                    this.io.emit('sfNewDate', this.currentDate);
+                }
+                //(5/4/22) if the game is running and enough time has passed, emit a message to advance one day
+                
             }
         }, 100);
     }
+
+    
 
 }

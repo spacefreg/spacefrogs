@@ -13,6 +13,10 @@ export default class GameClient {
             // this.lCanvas.isRunning = false;
             // this.lCanvas.ctx.clearRect(0, 0, 1366, 768);
         });
+        this.socket.on('sfNewDate', (date) => {
+            console.log(`new date: ${date}`);
+        });
+        this.socket.on();
         this.dt = 0;
         this.timeOfLastUpdate = 0;
         console.log(`game client constructor. self player: ${this.selfPlayer.name}`);
