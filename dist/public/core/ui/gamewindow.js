@@ -17,11 +17,11 @@ export default class GameWindow extends sfuiElement {
         this.backgroundColor = '';
         let systemOrigin = new vec2(this.origin.x + this.size.x / 2, this.origin.y + this.size.y / 2);
         this.sun = new Sun(systemOrigin);
-        this.earth = new Earth('Earth', 'Sun', 0, 260);
-        this.moon = new Moon('Moon', 'Earth', 0, 30);
-        this.mars = new Mars('Mars', 'Sun', 0, 355);
-        this.venus = new Venus('Venus', 'Sun', 0, 180);
-        this.mercury = new Mercury('Mercury', 'Sun', 0, 120);
+        this.earth = new Earth('Earth', 'Sun', 0, 260, 365);
+        this.moon = new Moon('Moon', 'Earth', 0, 30, 27);
+        this.mars = new Mars('Mars', 'Sun', 0, 355, 687);
+        this.venus = new Venus('Venus', 'Sun', 0, 180, 225);
+        this.mercury = new Mercury('Mercury', 'Sun', 0, 120, 88);
         this.currentMousePos = new vec2(0, 0);
         this.planetHoverElement = new sfuiElement(new vec2(0, 0), 'Planet Hover');
         this.planetHoverElement.setAsTooltip();
@@ -44,6 +44,9 @@ export default class GameWindow extends sfuiElement {
         earthCenter.y += this.earth.planetElement.getImageSize().y / 2;
         this.moon.receiveParentCenter(earthCenter);
         this.moon.update(dt);
+        //  let moonCenter: vec2 = new vec2(this.moon.planetElement.getOrigin().x, this.moon.planetElement.getOrigin().y);
+        //  moonCenter.x += this.moon.planetElement.getImageSize().x / 2;
+        //  moonCenter.y += this.moon.planetElement.getImageSize().y / 2;
         this.mars.receiveParentCenter(systemOrigin);
         this.mars.update(dt);
         this.venus.receiveParentCenter(systemOrigin);
@@ -94,6 +97,11 @@ export default class GameWindow extends sfuiElement {
     goTomorrow(date) {
         this.dateElement.setText(dateToString(date));
         this.dateElement.setOrigin(new vec2(300, 40));
+        this.mercury.orbitTick();
+        this.venus.orbitTick();
+        this.earth.orbitTick();
+        this.moon.orbitTick();
+        this.mars.orbitTick();
     }
     render() {
         super.render();

@@ -7,19 +7,21 @@ export default class Planet {
     public parentCenter: vec2;
     public theta: number;
     public distanceFromParent: number;
+    public orbitalPeriod: number;
 
     public planetElement: sfuiElement;
 
     protected initialized: boolean = false;
 
     
-    constructor(name: string, parentName: string, theta: number, distanceFromParent: number) {
+    constructor(name: string, parentName: string, theta: number, distanceFromParent: number, orbitalPeriod: number) {
         this.name = name;
         this.parentName = parentName;
         this.theta = theta;
         this.distanceFromParent = distanceFromParent;
         this.planetElement = new sfuiElement(new vec2(0, 0), this.name);
         this.parentCenter = new vec2(0, 0);
+        this.orbitalPeriod = orbitalPeriod;
     }
 
     public update(dt: number) {
@@ -61,5 +63,13 @@ export default class Planet {
             this.planetElement.setHovering(false);
             return '';
         }
+    }
+
+    public orbitTick(): void {
+        this.theta += 360 / this.orbitalPeriod;
+        const pos: vec2 = new vec2(this.parentCenter.x + this.distanceFromParent * Math.cos((this.theta * (Math.PI/180))), this.parentCenter.y + this.distanceFromParent * Math.sin((this.theta * (Math.PI/180))));
+        pos.x -= this.planetElement.getImageSize().x / 2;
+        pos.y -= this.planetElement.getImageSize().y / 2;
+        this.planetElement.setOrigin(pos);
     }
 }

@@ -6,12 +6,14 @@ export default class Planet {
     parentCenter: vec2;
     theta: number;
     distanceFromParent: number;
+    orbitalPeriod: number;
     planetElement: sfuiElement;
     protected initialized: boolean;
-    constructor(name: string, parentName: string, theta: number, distanceFromParent: number);
+    constructor(name: string, parentName: string, theta: number, distanceFromParent: number, orbitalPeriod: number);
     update(dt: number): void;
     render(): void;
     receiveParentCenter(center: vec2): void;
     private initLocation;
     mouseMove(mousePos: vec2): string;
+    orbitTick(): void;
 }

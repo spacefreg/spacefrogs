@@ -1,7 +1,7 @@
 import vec2 from '../math/vec2.js';
 import sfuiElement from '../ui/sfuielement.js';
 export default class Planet {
-    constructor(name, parentName, theta, distanceFromParent) {
+    constructor(name, parentName, theta, distanceFromParent, orbitalPeriod) {
         this.initialized = false;
         this.name = name;
         this.parentName = parentName;
@@ -9,6 +9,7 @@ export default class Planet {
         this.distanceFromParent = distanceFromParent;
         this.planetElement = new sfuiElement(new vec2(0, 0), this.name);
         this.parentCenter = new vec2(0, 0);
+        this.orbitalPeriod = orbitalPeriod;
     }
     update(dt) {
         //(4/6/22) bootleg init function at the beginning of update
@@ -43,5 +44,12 @@ export default class Planet {
             this.planetElement.setHovering(false);
             return '';
         }
+    }
+    orbitTick() {
+        this.theta += 360 / this.orbitalPeriod;
+        const pos = new vec2(this.parentCenter.x + this.distanceFromParent * Math.cos((this.theta * (Math.PI / 180))), this.parentCenter.y + this.distanceFromParent * Math.sin((this.theta * (Math.PI / 180))));
+        pos.x -= this.planetElement.getImageSize().x / 2;
+        pos.y -= this.planetElement.getImageSize().y / 2;
+        this.planetElement.setOrigin(pos);
     }
 }

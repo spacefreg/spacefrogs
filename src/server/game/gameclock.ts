@@ -1,7 +1,7 @@
 import sfDate, { addOneDay, dateToString } from '../../public/core/math/sfdate.js';
 
 export default class GameClock {
-    private isPaused: boolean = false;
+    private isPaused: boolean = true;
     private gameDate: sfDate;
 
     private timeSinceLastDateAdvance: number;
@@ -15,7 +15,7 @@ export default class GameClock {
 
         if (!this.isPaused) {
             this.timeSinceLastDateAdvance += dt;
-            if (this.timeSinceLastDateAdvance > 250) {
+            if (this.timeSinceLastDateAdvance > 100) {
                 this.timeSinceLastDateAdvance = 0;
                 this.gameDate = addOneDay(this.gameDate);
             }
