@@ -8,6 +8,7 @@ import GameWindow from '../../core/ui/gamewindow.js';
 
 import Player, { getPlayerByID } from '../../core/player.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
+import sfDate from '../../core/math/sfdate.js';
 
 
 export default class GameCanvas {
@@ -69,10 +70,14 @@ export default class GameCanvas {
             case 'Space':
                 if (this.socialPanel.getHost().getID() == this.selfID) {
                     this.socket.emit('sfcTogglePause');
-                    console.log(`host if he real`);
                 }
                 break;
         }
+    }
+
+    public goTomorrow(date: sfDate): void {
+        this.gameWindow.goTomorrow(date);
+        
     }
 
     public update(dt: number): void {

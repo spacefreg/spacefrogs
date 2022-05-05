@@ -1,4 +1,5 @@
 import * as socketIO from 'socket.io';
+import sfDate, { dateEquals, dateToString, setDate } from '../../public/core/math/sfdate.js';
 
 import sfStartCampaign from '../../public/core/messages/server/sfstartcampaign.js';
 
@@ -13,12 +14,12 @@ export default class GameSession {
     private isRunning: boolean = false;
 
     private gClock: GameClock;
-    private currentDate: number;
+    private currentDate: sfDate;
 
     constructor(io: socketIO.Server) {
         this.io = io;
         this.gClock = new GameClock();
-        this.currentDate = 0;
+        this.currentDate = new sfDate(2030, 1, 1);
     }
 
     public start(campaignInfo: sfStartCampaign): void {
@@ -47,9 +48,13 @@ export default class GameSession {
             else {
                 this.gClock.update(100);
                 
-                if (this.currentDate != this.gClock.getDate()) {
-                    this.currentDate = this.gClock.getDate();
-                    this.io.emit('sfNewDate', this.currentDate);
+                if (!dateEquals(this.currentDate, this.gClock.getDate())) {
+                    let y = this.gClock.getDate().year;
+                    let m = this.gClock.getDate().month;
+                    let d = this.gClock.getDate().day;
+                    this.currentDate = setDate(this.currentDate, y, m, d);
+                    console.log(`current date: ${dateToString(this.currentDate)}`);
+                    this.io.emit('sfGoTomorrow', this.currentDate);
                 }
                 //(5/4/22) if the game is running and enough time has passed, emit a message to advance one day
                 

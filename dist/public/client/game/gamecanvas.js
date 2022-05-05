@@ -41,10 +41,12 @@ export default class GameCanvas {
             case 'Space':
                 if (this.socialPanel.getHost().getID() == this.selfID) {
                     this.socket.emit('sfcTogglePause');
-                    console.log(`host if he real`);
                 }
                 break;
         }
+    }
+    goTomorrow(date) {
+        this.gameWindow.goTomorrow(date);
     }
     update(dt) {
         this.gameWindow.update(dt);

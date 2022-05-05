@@ -6,6 +6,7 @@ import Moon from '../planets/moon.js';
 import Mars from '../planets/mars.js';
 import Venus from '../planets/venus.js';
 import Mercury from '../planets/mercury.js';
+import { dateToString } from '../math/sfdate.js';
 export default class GameWindow extends sfuiElement {
     constructor(origin, size) {
         super(origin, 'Game Window');
@@ -50,20 +51,6 @@ export default class GameWindow extends sfuiElement {
         this.mercury.receiveParentCenter(systemOrigin);
         this.mercury.update(dt);
     }
-    render() {
-        super.render();
-        this.ctx.strokeStyle = '#5f4c73';
-        this.sun.render();
-        this.earth.render();
-        this.moon.render();
-        this.mars.render();
-        this.venus.render();
-        this.mercury.render();
-        if (this.currentPlanetHover != '') {
-            this.planetHoverElement.render();
-        }
-        this.dateElement.render();
-    }
     getCenter() {
         const center = new vec2(this.origin.x + this.size.x / 2, this.origin.y + this.size.y / 2);
         return center;
@@ -103,5 +90,23 @@ export default class GameWindow extends sfuiElement {
     }
     setInGame() {
         this.inGame = true;
+    }
+    goTomorrow(date) {
+        this.dateElement.setText(dateToString(date));
+        this.dateElement.setOrigin(new vec2(300, 40));
+    }
+    render() {
+        super.render();
+        this.ctx.strokeStyle = '#5f4c73';
+        this.sun.render();
+        this.earth.render();
+        this.moon.render();
+        this.mars.render();
+        this.venus.render();
+        this.mercury.render();
+        if (this.currentPlanetHover != '') {
+            this.planetHoverElement.render();
+        }
+        this.dateElement.render();
     }
 }

@@ -15,4 +15,5 @@ export default class GameClient {
     private render;
     playerJoined(): void;
     playerDropped(): void;
+    private goTomorrow;
 }

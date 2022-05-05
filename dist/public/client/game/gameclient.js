@@ -1,5 +1,6 @@
 import { getPlayerByID } from '../../core/player.js';
 import GameCanvas from './gamecanvas.js';
+import { dateToString } from '../../core/math/sfdate.js';
 export default class GameClient {
     constructor(socket, campaignName, gamePlayers) {
         this.isRunning = true;
@@ -13,10 +14,6 @@ export default class GameClient {
             // this.lCanvas.isRunning = false;
             // this.lCanvas.ctx.clearRect(0, 0, 1366, 768);
         });
-        this.socket.on('sfNewDate', (date) => {
-            console.log(`new date: ${date}`);
-        });
-        this.socket.on();
         this.dt = 0;
         this.timeOfLastUpdate = 0;
         console.log(`game client constructor. self player: ${this.selfPlayer.name}`);
@@ -24,6 +21,7 @@ export default class GameClient {
         //(3/27/22) socket callbacks
         this.playerDropped();
         this.playerJoined();
+        this.goTomorrow();
     }
     loop() {
         if (this.isRunning) {
@@ -69,5 +67,13 @@ export default class GameClient {
                 this.gCanvas.dropPlayer(droppedPlayer, this.gamePlayers);
             });
         }
+    }
+    goTomorrow() {
+        this.socket.on('sfGoTomorrow', (date) => {
+            //console.log(`new date: ${dateToString(date)}`);
+            const s = dateToString(date);
+            console.log(s);
+            this.gCanvas.goTomorrow(date);
+        });
     }
 }

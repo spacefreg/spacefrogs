@@ -4,6 +4,7 @@ import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
 import Player, { getPlayerByID } from '../../core/player.js';
 
 import GameCanvas from './gamecanvas.js';
+import sfDate, { dateToString } from '../../core/math/sfdate.js';
 
 export default class GameClient {
     private socket: io;
@@ -31,11 +32,8 @@ export default class GameClient {
             // this.lCanvas.ctx.clearRect(0, 0, 1366, 768);
         });
 
-        this.socket.on('sfNewDate', (date: number) => {
-            console.log(`new date: ${date}`);
-        });
 
-        this.socket.on()
+
 
         this.dt = 0;
         this.timeOfLastUpdate = 0;
@@ -47,6 +45,7 @@ export default class GameClient {
         //(3/27/22) socket callbacks
         this.playerDropped();
         this.playerJoined();
+        this.goTomorrow();
     }
 
     private loop(): void {
@@ -99,5 +98,14 @@ export default class GameClient {
                 this.gCanvas.dropPlayer(droppedPlayer, this.gamePlayers);
             });
         }
+    }
+
+    private goTomorrow(): void {
+        this.socket.on('sfGoTomorrow', (date: sfDate) => {
+            //console.log(`new date: ${dateToString(date)}`);
+            const s = dateToString(date);
+            console.log(s);
+            this.gCanvas.goTomorrow(date);
+        });
     }
 }

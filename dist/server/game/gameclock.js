@@ -1,16 +1,16 @@
+import sfDate, { addOneDay } from '../../public/core/math/sfdate.js';
 export default class GameClock {
     constructor() {
         this.isPaused = false;
-        this.gameDate = 0;
+        this.gameDate = new sfDate(2030, 1, 1);
         this.timeSinceLastDateAdvance = 0;
     }
     update(dt) {
         if (!this.isPaused) {
             this.timeSinceLastDateAdvance += dt;
-            if (this.timeSinceLastDateAdvance > 500) {
+            if (this.timeSinceLastDateAdvance > 250) {
                 this.timeSinceLastDateAdvance = 0;
-                this.gameDate++;
-                console.log(`game date: ${this.gameDate}`);
+                this.gameDate = addOneDay(this.gameDate);
             }
         }
     }
