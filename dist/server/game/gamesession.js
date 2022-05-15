@@ -1,4 +1,4 @@
-import sfDate, { dateEquals, dateToString, setDate } from '../../public/core/math/sfdate.js';
+import sfDate, { dateEquals, dateToString, setDate } from '../../public/core/utils/sfdate.js';
 import GameClock from './gameclock.js';
 export default class GameSession {
     constructor(io) {

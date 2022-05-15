@@ -1,4 +1,4 @@
-import vec2 from '../math/vec2.js';
+import vec2 from '../utils/vec2.js';
 import sfuiElement from './sfuielement.js';
 import Sun from '../planets/sun.js';
 import Earth from '../planets/earth.js';
@@ -6,7 +6,8 @@ import Moon from '../planets/moon.js';
 import Mars from '../planets/mars.js';
 import Venus from '../planets/venus.js';
 import Mercury from '../planets/mercury.js';
-import { dateToString } from '../math/sfdate.js';
+import { dateToString } from '../utils/sfdate.js';
+import sfText from './sftext.js';
 export default class GameWindow extends sfuiElement {
     constructor(origin, size) {
         super(origin, 'Game Window');
@@ -33,6 +34,7 @@ export default class GameWindow extends sfuiElement {
         this.dateElement.setFontSize(16);
         this.dateElement.setTitleOrigin(new vec2(this.origin.x + 4, this.origin.y + 19));
         this.dateElement.setSize(new vec2(138, 25));
+        this.dateText = new sfText('January 1st, 2030', new vec2(this.origin.x + 4, this.origin.y + 19), 16, 'Arial');
     }
     update(dt) {
         this.sun.update(dt);
@@ -95,13 +97,19 @@ export default class GameWindow extends sfuiElement {
         this.inGame = true;
     }
     goTomorrow(date) {
-        this.dateElement.setText(dateToString(date));
-        this.dateElement.setOrigin(new vec2(300, 40));
+        if (this.isMouseHovering) {
+            this.mouseMove(this.currentMousePos);
+        }
+        // this.dateElement.setText(dateToString(date));
+        // this.dateElement.setOrigin(new vec2(300, 40));
+        this.dateText.setText(dateToString(date));
         this.mercury.orbitTick();
         this.venus.orbitTick();
         this.earth.orbitTick();
         this.moon.orbitTick();
         this.mars.orbitTick();
+    }
+    updateHover() {
     }
     render() {
         super.render();
@@ -115,6 +123,7 @@ export default class GameWindow extends sfuiElement {
         if (this.currentPlanetHover != '') {
             this.planetHoverElement.render();
         }
-        this.dateElement.render();
+        //this.dateElement.render();
+        this.dateText.render();
     }
 }

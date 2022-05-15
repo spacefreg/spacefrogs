@@ -3,6 +3,7 @@
 //@ts-ignore
 import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
 const socket = io();
+import { canvas } from '../core/utils/ctx.js';
 import sfcNewUser from '../core/messages/client/sfcnewuser.js';
 import sfcCreateCampaign from '../core/messages/client/sfccreatecampaign.js';
 import LobbyClient from './lobby/lobbyclient.js';
@@ -37,12 +38,8 @@ function submitNewCampaignRequest(e) {
 function createGameHTML() {
     introVideo.remove();
     spaceBouncer.remove();
-    const canvas = document.createElement('canvas');
-    canvas.id = 'sf-canvas';
-    canvas.width = 1366;
-    canvas.height = 768;
+    canvas.style.visibility = 'visible';
     canvas.oncontextmenu = () => false;
-    document.body.append(canvas);
 }
 function receiveUserInvite() {
     const requestToJoinDiv = document.createElement('div');

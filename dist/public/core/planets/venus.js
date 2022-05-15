@@ -1,4 +1,4 @@
-import vec2 from '../math/vec2.js';
+import vec2 from '../utils/vec2.js';
 import Planet from './planet.js';
 export default class Venus extends Planet {
     constructor(name, parentName, theta, distanceFromParent, orbitalPeriod) {

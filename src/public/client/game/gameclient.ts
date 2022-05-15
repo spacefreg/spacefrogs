@@ -4,7 +4,7 @@ import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
 import Player, { getPlayerByID } from '../../core/player.js';
 
 import GameCanvas from './gamecanvas.js';
-import sfDate, { dateToString } from '../../core/math/sfdate.js';
+import sfDate, { dateToString } from '../../core/utils/sfdate.js';
 
 export default class GameClient {
     private socket: io;

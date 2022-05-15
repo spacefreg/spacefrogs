@@ -1,4 +1,4 @@
-import sfDate, { addOneDay, dateToString } from '../../public/core/math/sfdate.js';
+import sfDate, { addOneDay, dateToString } from '../../public/core/utils/sfdate.js';
 
 export default class GameClock {
     private isPaused: boolean = true;

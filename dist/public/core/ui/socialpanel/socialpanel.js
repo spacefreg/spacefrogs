@@ -1,4 +1,4 @@
-import vec2 from '../../math/vec2.js';
+import vec2 from '../../utils/vec2.js';
 import sfuiPanel from '../sfuipanel.js';
 import FrogPlayer, { getFrogPlayerByID } from './frogplayer.js';
 export default class SocialPanel extends sfuiPanel {

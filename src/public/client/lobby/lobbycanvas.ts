@@ -3,7 +3,7 @@ import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
 
 import Player, { getPlayerByID } from '../../core/player.js';
 
-import vec2 from '../../core/math/vec2.js';
+import vec2 from '../../core/utils/vec2.js';
 
 import GameWindow from '../../core/ui/gamewindow.js';
 

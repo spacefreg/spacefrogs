@@ -1,5 +1,5 @@
 import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
-import vec2 from '../../math/vec2.js';
+import vec2 from '../../utils/vec2.js';
 export default class FrogPlayer {
     private name;
     private id;

@@ -1,5 +1,5 @@
 import * as socketIO from 'socket.io';
-import sfDate, { dateEquals, dateToString, setDate } from '../../public/core/math/sfdate.js';
+import sfDate, { dateEquals, dateToString, setDate } from '../../public/core/utils/sfdate.js';
 
 import sfStartCampaign from '../../public/core/messages/server/sfstartcampaign.js';
 

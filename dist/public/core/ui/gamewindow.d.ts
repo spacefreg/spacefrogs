@@ -1,6 +1,6 @@
-import vec2 from '../math/vec2.js';
+import vec2 from '../utils/vec2.js';
 import sfuiElement from './sfuielement.js';
-import sfDate from '../math/sfdate.js';
+import sfDate from '../utils/sfdate.js';
 export default class GameWindow extends sfuiElement {
     inGame: boolean;
     private sun;
@@ -13,6 +13,7 @@ export default class GameWindow extends sfuiElement {
     private planetHoverElement;
     private currentMousePos;
     private dateElement;
+    private dateText;
     constructor(origin: vec2, size: vec2);
     update(dt: number): void;
     getCenter(): vec2;
@@ -20,5 +21,6 @@ export default class GameWindow extends sfuiElement {
     mouseDown(): string;
     setInGame(): void;
     goTomorrow(date: sfDate): void;
+    private updateHover;
     render(): void;
 }

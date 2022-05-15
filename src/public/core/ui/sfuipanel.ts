@@ -1,4 +1,4 @@
-import vec2 from '../math/vec2.js';
+import vec2 from '../utils/vec2.js';
 import sfuiElement from './sfuielement.js';
 
 export default class sfuiPanel extends sfuiElement {

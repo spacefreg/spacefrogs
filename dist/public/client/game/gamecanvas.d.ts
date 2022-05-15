@@ -1,6 +1,6 @@
 import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
 import Player from '../../core/player.js';
-import sfDate from '../../core/math/sfdate.js';
+import sfDate from '../../core/utils/sfdate.js';
 export default class GameCanvas {
     private canvas;
     private ctx;

@@ -1,14 +1,14 @@
 //@ts-ignore
 import { io } from 'https://cdn.socket.io/4.3.0/socket.io.esm.min.js';
 
-import vec2 from '../../core/math/vec2.js';
+import vec2 from '../../core/utils/vec2.js';
 
 import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import GameWindow from '../../core/ui/gamewindow.js';
 
 import Player, { getPlayerByID } from '../../core/player.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
-import sfDate from '../../core/math/sfdate.js';
+import sfDate from '../../core/utils/sfdate.js';
 
 
 export default class GameCanvas {

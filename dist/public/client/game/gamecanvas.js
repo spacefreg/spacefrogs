@@ -1,4 +1,4 @@
-import vec2 from '../../core/math/vec2.js';
+import vec2 from '../../core/utils/vec2.js';
 import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import GameWindow from '../../core/ui/gamewindow.js';
 import { getPlayerByID } from '../../core/player.js';

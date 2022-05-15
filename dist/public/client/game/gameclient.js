@@ -1,6 +1,6 @@
 import { getPlayerByID } from '../../core/player.js';
 import GameCanvas from './gamecanvas.js';
-import { dateToString } from '../../core/math/sfdate.js';
+import { dateToString } from '../../core/utils/sfdate.js';
 export default class GameClient {
     constructor(socket, campaignName, gamePlayers) {
         this.isRunning = true;
