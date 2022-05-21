@@ -104,7 +104,6 @@ export default class GameClient {
         this.socket.on('sfGoTomorrow', (date: sfDate) => {
             //console.log(`new date: ${dateToString(date)}`);
             const s = dateToString(date);
-            console.log(s);
             this.gCanvas.goTomorrow(date);
         });
     }

@@ -9,10 +9,9 @@ export default class GameWindow extends sfuiElement {
     private mars;
     private venus;
     private mercury;
-    private currentPlanetHover;
-    private planetHoverElement;
+    private planetHoverText;
     private currentMousePos;
-    private dateElement;
+    private currentPlanetHover;
     private dateText;
     constructor(origin: vec2, size: vec2);
     update(dt: number): void;

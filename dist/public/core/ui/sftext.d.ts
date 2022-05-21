@@ -5,7 +5,12 @@ export default class sfText {
     private fontSize;
     private font;
     private size;
+    private backgroundShowing;
     constructor(textContent: string, topLeftPos: vec2, fontSize: number, font: string);
     setText(textContent: string): void;
+    setPosition(topLeftPos: vec2): void;
+    toggleBackground(): void;
+    getTextCenter(): vec2;
+    getHalfSize(): vec2;
     render(): void;
 }

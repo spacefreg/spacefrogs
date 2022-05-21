@@ -10,6 +10,7 @@ import Mercury from '../planets/mercury.js';
 import sfDate, { dateToString } from '../utils/sfdate.js';
 
 import sfText from './sftext.js';
+import Planet from '../planets/planet.js';
 
 export default class GameWindow extends sfuiElement {
 
@@ -22,11 +23,12 @@ export default class GameWindow extends sfuiElement {
     private venus: Venus;
     private mercury: Mercury;
 
-    private currentPlanetHover: string = '';
-    private planetHoverElement: sfuiElement;
+    //private planetHoverElement: sfuiElement;
+    private planetHoverText: sfText;
     private currentMousePos: vec2;
 
-    private dateElement: sfuiElement;
+    private currentPlanetHover: Planet;
+
     private dateText: sfText;
 
 
@@ -45,19 +47,17 @@ export default class GameWindow extends sfuiElement {
         this.mercury = new Mercury('Mercury', 'Sun', 0, 120, 88);
 
         this.currentMousePos = new vec2(0, 0);
-        this.planetHoverElement = new sfuiElement(new vec2(0, 0), 'Planet Hover');
-        this.planetHoverElement.setAsTooltip();
-        this.planetHoverElement.setBackgroundOpacity(1);
-        this.planetHoverElement.setOutline(true);
 
-        this.dateElement = new sfuiElement(new vec2(this.origin.x, this.origin.y), 'January 1st, 2030');
-        this.dateElement.setBackgroundOpacity(.66);
-        this.dateElement.setAsTooltip();
-        this.dateElement.setFontSize(16);
-        this.dateElement.setTitleOrigin(new vec2(this.origin.x + 4, this.origin.y + 19));
-        this.dateElement.setSize(new vec2(138, 25));
+        this.currentPlanetHover = new Planet('', '', 0, 0, 0);
 
-        this.dateText = new sfText('January 1st, 2030', new vec2(this.origin.x + 4, this.origin.y + 19), 16, 'Arial');
+
+        this.planetHoverText = new sfText('', new vec2(0, 0), 16, 'Arial');
+        this.planetHoverText.toggleBackground();
+
+
+
+        this.dateText = new sfText('January 1st, 2030', new vec2(this.origin.x + 4, this.origin.y + 4), 16, 'Arial');
+        this.dateText.toggleBackground();
     }
 
     public update(dt: number): void {
@@ -75,9 +75,6 @@ export default class GameWindow extends sfuiElement {
         this.moon.receiveParentCenter(earthCenter);
         this.moon.update(dt);
 
-        //  let moonCenter: vec2 = new vec2(this.moon.planetElement.getOrigin().x, this.moon.planetElement.getOrigin().y);
-        //  moonCenter.x += this.moon.planetElement.getImageSize().x / 2;
-        //  moonCenter.y += this.moon.planetElement.getImageSize().y / 2;
 
         this.mars.receiveParentCenter(systemOrigin);
         this.mars.update(dt);
@@ -89,6 +86,33 @@ export default class GameWindow extends sfuiElement {
         this.mercury.update(dt);
         
 
+        if (this.isMouseHovering) {
+            if (this.sun.containsPoint(this.currentMousePos)) {
+                this.currentPlanetHover = this.sun;
+            }
+            else if (this.mercury.containsPoint(this.currentMousePos)) {
+                this.currentPlanetHover = this.mercury;
+            }
+            else if (this.venus.containsPoint(this.currentMousePos)) {
+                this.currentPlanetHover = this.venus;
+            }
+            else if (this.earth.containsPoint(this.currentMousePos)) {
+                this.currentPlanetHover = this.earth;
+            }
+            else if (this.moon.containsPoint(this.currentMousePos)) {
+                this.currentPlanetHover = this.moon;
+            }
+            else if (this.mars.containsPoint(this.currentMousePos)) {
+                this.currentPlanetHover = this.mars;
+            }
+            else {
+                this.currentPlanetHover = new Planet('', '', 0, 0, 0);
+            }
+
+            this.planetHoverText.setText(this.currentPlanetHover.name);
+            let hoverCenter: vec2 = new vec2(this.currentMousePos.x - this.planetHoverText.getHalfSize().x, this.currentMousePos.y - (this.planetHoverText.getHalfSize().y * 1.8));
+            this.planetHoverText.setPosition(hoverCenter);
+        }
 
     }
 
@@ -101,45 +125,11 @@ export default class GameWindow extends sfuiElement {
         super.mouseMove(mousePos);
         if (this.isMouseHovering) {
             this.currentMousePos = mousePos;
-
-            //(4/19/22) I hate this entire thing 
-            let hoverCandidate: string = '';
-            this.currentPlanetHover = '';
-
-            hoverCandidate = this.sun.mouseMove(mousePos);
-
-            if (hoverCandidate == '') {
-                hoverCandidate = this.earth.mouseMove(mousePos);
-            }
-
-            if (hoverCandidate == '') {
-                hoverCandidate = this.moon.mouseMove(mousePos);
-            }
-
-            if (hoverCandidate == '') {
-                hoverCandidate = this.mars.mouseMove(mousePos);
-            }
-
-            if (hoverCandidate == '') {
-                hoverCandidate = this.venus.mouseMove(mousePos);
-            }
-
-            if (hoverCandidate == '') {
-                hoverCandidate = this.mercury.mouseMove(mousePos);
-            }
-
-            this.currentPlanetHover = hoverCandidate;
-
-            
-            if (this.currentPlanetHover != '') {
-                this.planetHoverElement.setOrigin(this.currentMousePos);
-                this.planetHoverElement.setText(this.currentPlanetHover);
-            }
         }
     }
 
     public mouseDown(): string {
-        return this.currentPlanetHover;
+        return 'lole mouse down';
     }
 
     
@@ -180,11 +170,8 @@ export default class GameWindow extends sfuiElement {
         this.venus.render();   
         this.mercury.render();
 
-        if (this.currentPlanetHover != '') {
-            this.planetHoverElement.render();
-        }
+        this.planetHoverText.render();
 
-        //this.dateElement.render();
         this.dateText.render();
     }
 }

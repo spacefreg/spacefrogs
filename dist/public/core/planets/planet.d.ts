@@ -11,9 +11,10 @@ export default class Planet {
     protected initialized: boolean;
     constructor(name: string, parentName: string, theta: number, distanceFromParent: number, orbitalPeriod: number);
     update(dt: number): void;
-    render(): void;
     receiveParentCenter(center: vec2): void;
     private initLocation;
     mouseMove(mousePos: vec2): string;
+    containsPoint(point: vec2): boolean;
     orbitTick(): void;
+    render(): void;
 }
