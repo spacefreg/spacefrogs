@@ -9,6 +9,7 @@ export default class Planet {
     orbitalPeriod: number;
     planetElement: sfuiElement;
     protected initialized: boolean;
+    private targetPos;
     constructor(name: string, parentName: string, theta: number, distanceFromParent: number, orbitalPeriod: number);
     update(dt: number): void;
     receiveParentCenter(center: vec2): void;
