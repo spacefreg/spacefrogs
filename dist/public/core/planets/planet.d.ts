@@ -10,6 +10,7 @@ export default class Planet {
     planetElement: sfuiElement;
     protected initialized: boolean;
     private targetPos;
+    private tiles;
     constructor(name: string, parentName: string, theta: number, distanceFromParent: number, orbitalPeriod: number);
     update(dt: number): void;
     receiveParentCenter(center: vec2): void;

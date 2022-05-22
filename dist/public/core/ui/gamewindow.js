@@ -8,7 +8,6 @@ import Venus from '../planets/venus.js';
 import Mercury from '../planets/mercury.js';
 import { dateToString } from '../utils/sfdate.js';
 import sfText from './sftext.js';
-import Planet from '../planets/planet.js';
 export default class GameWindow extends sfuiElement {
     constructor(origin, size) {
         super(origin, 'Game Window');
@@ -24,7 +23,6 @@ export default class GameWindow extends sfuiElement {
         this.venus = new Venus('Venus', 'Sun', 0, 180, 225);
         this.mercury = new Mercury('Mercury', 'Sun', 0, 120, 88);
         this.currentMousePos = new vec2(0, 0);
-        this.currentPlanetHover = new Planet('', '', 0, 0, 0);
         this.planetHoverText = new sfText('', new vec2(0, 0), 16, 'Arial');
         this.planetHoverText.toggleBackground();
         this.dateText = new sfText('January 1st, 2030', new vec2(this.origin.x + 4, this.origin.y + 4), 16, 'Arial');
@@ -48,27 +46,26 @@ export default class GameWindow extends sfuiElement {
         this.mercury.update(dt);
         if (this.isMouseHovering) {
             if (this.sun.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.sun;
+                this.planetHoverText.setText('Sun');
             }
             else if (this.mercury.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.mercury;
+                this.planetHoverText.setText('Mercury');
             }
             else if (this.venus.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.venus;
+                this.planetHoverText.setText('Venus');
             }
             else if (this.earth.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.earth;
+                this.planetHoverText.setText('Earth');
             }
             else if (this.moon.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.moon;
+                this.planetHoverText.setText('Moon');
             }
             else if (this.mars.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.mars;
+                this.planetHoverText.setText('Mars');
             }
             else {
-                this.currentPlanetHover = new Planet('', '', 0, 0, 0);
+                this.planetHoverText.setText('');
             }
-            this.planetHoverText.setText(this.currentPlanetHover.name);
             let hoverCenter = new vec2(this.currentMousePos.x - this.planetHoverText.getHalfSize().x, this.currentMousePos.y - (this.planetHoverText.getHalfSize().y * 1.8));
             this.planetHoverText.setPosition(hoverCenter);
         }

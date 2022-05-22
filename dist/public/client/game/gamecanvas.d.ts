@@ -13,6 +13,7 @@ export default class GameCanvas {
     addPlayer(p: Player, players: Array<Player>): void;
     dropPlayer(player: Player, lobbyPlayers: Array<Player>): void;
     mouseMove(evt: MouseEvent): void;
+    mouseDown(evt: MouseEvent): void;
     keyDown(evt: KeyboardEvent): void;
     goTomorrow(date: sfDate): void;
     update(dt: number): void;

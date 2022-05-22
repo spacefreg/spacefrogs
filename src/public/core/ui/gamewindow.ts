@@ -27,7 +27,6 @@ export default class GameWindow extends sfuiElement {
     private planetHoverText: sfText;
     private currentMousePos: vec2;
 
-    private currentPlanetHover: Planet;
 
     private dateText: sfText;
 
@@ -48,7 +47,6 @@ export default class GameWindow extends sfuiElement {
 
         this.currentMousePos = new vec2(0, 0);
 
-        this.currentPlanetHover = new Planet('', '', 0, 0, 0);
 
 
         this.planetHoverText = new sfText('', new vec2(0, 0), 16, 'Arial');
@@ -88,28 +86,28 @@ export default class GameWindow extends sfuiElement {
 
         if (this.isMouseHovering) {
             if (this.sun.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.sun;
+                this.planetHoverText.setText('Sun');
             }
             else if (this.mercury.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.mercury;
+                this.planetHoverText.setText('Mercury');
             }
             else if (this.venus.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.venus;
+                this.planetHoverText.setText('Venus');
             }
             else if (this.earth.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.earth;
+                this.planetHoverText.setText('Earth');
             }
             else if (this.moon.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.moon;
+                this.planetHoverText.setText('Moon');
             }
             else if (this.mars.containsPoint(this.currentMousePos)) {
-                this.currentPlanetHover = this.mars;
+                this.planetHoverText.setText('Mars');
             }
             else {
-                this.currentPlanetHover = new Planet('', '', 0, 0, 0);
+                this.planetHoverText.setText('');
             }
 
-            this.planetHoverText.setText(this.currentPlanetHover.name);
+
             let hoverCenter: vec2 = new vec2(this.currentMousePos.x - this.planetHoverText.getHalfSize().x, this.currentMousePos.y - (this.planetHoverText.getHalfSize().y * 1.8));
             this.planetHoverText.setPosition(hoverCenter);
         }

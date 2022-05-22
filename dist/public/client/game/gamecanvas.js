@@ -17,7 +17,7 @@ export default class GameCanvas {
         this.socialPanel.setInGame();
         this.frogPanel = new FrogPanel(new vec2(1, 480), selfPlayer.name);
         this.addPlayer(selfPlayer, players);
-        //this.canvas.onmousedown = this.mouseDown.bind(this);
+        this.canvas.onmousedown = this.mouseDown.bind(this);
         this.canvas.onmousemove = this.mouseMove.bind(this);
         document.onkeydown = this.keyDown.bind(this);
     }
@@ -35,6 +35,9 @@ export default class GameCanvas {
         this.frogPanel.mouseMove(pos);
         //this.gamePanel.mouseMove(pos);
         this.gameWindow.mouseMove(pos);
+    }
+    mouseDown(evt) {
+        evt.preventDefault();
     }
     keyDown(evt) {
         switch (evt.code) {

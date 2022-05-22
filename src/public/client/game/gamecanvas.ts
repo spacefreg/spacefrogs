@@ -41,7 +41,7 @@ export default class GameCanvas {
 
         this.addPlayer(selfPlayer, players);
 
-        //this.canvas.onmousedown = this.mouseDown.bind(this);
+        this.canvas.onmousedown = this.mouseDown.bind(this);
         this.canvas.onmousemove = this.mouseMove.bind(this);
 
         document.onkeydown = this.keyDown.bind(this);
@@ -63,6 +63,10 @@ export default class GameCanvas {
         this.frogPanel.mouseMove(pos);
         //this.gamePanel.mouseMove(pos);
         this.gameWindow.mouseMove(pos);
+    }
+
+    public mouseDown(evt: MouseEvent): void {
+        evt.preventDefault();
     }
 
     public keyDown(evt: KeyboardEvent): void {

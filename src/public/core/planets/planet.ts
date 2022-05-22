@@ -2,6 +2,9 @@ import vec2 from '../utils/vec2.js';
 import sfuiElement from '../ui/sfuielement.js';
 import { lerp } from '../utils/lerp.js';
 
+
+import Tile from '../tile/tile.js';
+
 export default class Planet {
     public name: string;
     public parentName: string;
@@ -16,6 +19,8 @@ export default class Planet {
 
     private targetPos: vec2;
 
+    private tiles: Array<Tile>;
+
     
     constructor(name: string, parentName: string, theta: number, distanceFromParent: number, orbitalPeriod: number) {
         this.name = name;
@@ -27,6 +32,10 @@ export default class Planet {
         this.orbitalPeriod = orbitalPeriod;
 
         this.targetPos = new vec2(0, 0);
+
+        this.tiles = new Array<Tile>();
+        this.tiles.push(new Tile(1, 1, this.name));
+
     }
 
     public update(dt: number) {

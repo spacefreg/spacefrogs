@@ -1,6 +1,7 @@
 import vec2 from '../utils/vec2.js';
 import sfuiElement from '../ui/sfuielement.js';
 import { lerp } from '../utils/lerp.js';
+import Tile from '../tile/tile.js';
 export default class Planet {
     constructor(name, parentName, theta, distanceFromParent, orbitalPeriod) {
         this.initialized = false;
@@ -12,6 +13,8 @@ export default class Planet {
         this.parentCenter = new vec2(0, 0);
         this.orbitalPeriod = orbitalPeriod;
         this.targetPos = new vec2(0, 0);
+        this.tiles = new Array();
+        this.tiles.push(new Tile(1, 1, this.name));
     }
     update(dt) {
         //(4/6/22) bootleg init function at the beginning of update
