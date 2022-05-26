@@ -3,7 +3,7 @@ import vec2 from '../../core/utils/vec2.js';
 import GameWindow from '../../core/ui/gamewindow.js';
 import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
-import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
+import LobbyPanel from '../../core/ui/lobbypanel/lobbypanel.js';
 import sfuiElement from '../../core/ui/sfuielement.js';
 export default class LobbyCanvas {
     //(3/27/22) campaignName will eventually have to get swapped out for the save file data
@@ -32,7 +32,7 @@ export default class LobbyCanvas {
         this.gameWindow = new GameWindow(new vec2(230, 10), new vec2(800, 748));
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id, this.socket);
         this.frogPanel = new FrogPanel(new vec2(1, 480), self.name);
-        this.gamePanel = new GamePanel(new vec2(1040, 10), 'right panel');
+        this.gamePanel = new LobbyPanel(new vec2(1040, 10), 'right panel');
         this.addPlayer(self, lobbyPlayers);
         this.canvas.onmousedown = this.mouseDown.bind(this);
         this.canvas.onmousemove = this.mouseMove.bind(this);

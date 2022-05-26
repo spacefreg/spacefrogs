@@ -10,6 +10,8 @@ export default class Sun extends Planet {
 
         this.planetElement.setOrigin(systemOrigin);
         this.planetElement.setImage('../../res/images/planets/sun.png');
+
+        this.initTileMap(1, 0);
     }
 
     

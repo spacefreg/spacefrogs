@@ -8,6 +8,7 @@ export default class GameCanvas {
     private socialPanel;
     private frogPanel;
     private gameWindow;
+    private gamePanel;
     private selfID;
     constructor(campaignName: string, players: Array<Player>, socket: io);
     addPlayer(p: Player, players: Array<Player>): void;

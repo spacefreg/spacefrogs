@@ -8,13 +8,14 @@ export default class Moon extends Planet {
         //moonPos.x -= this.planetElement.getImageSize().x / 2;
         //moonPos.y -= this.planetElement.getImageSize().y / 2;
         this.planetElement.setOrigin(moonPos);
+        this.initTileMap(6, 3);
     }
     update(dt) {
         super.update(dt);
     }
     orbitTick() {
         super.orbitTick();
-        //this.planetElement.setOrigin(new vec2(this.planetElement.getOrigin().x - this.planetElement.getImageSize().x / 2, this.planetElement.getOrigin().y - this.planetElement.getImageSize().y / 2));
+        //this.planetElement.setOrigin(new vec2(this.planetElement.getOrigin().x + this.planetElement.getImageSize().x / 2, this.planetElement.getOrigin().y - this.planetElement.getImageSize().y / 2));
     }
     render() {
         super.render();

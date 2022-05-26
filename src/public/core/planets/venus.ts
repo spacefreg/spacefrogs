@@ -9,7 +9,9 @@ export default class Venus extends Planet {
         let venusPos: vec2 = new vec2(this.parentCenter.x + this.distanceFromParent, this.parentCenter.y);
         venusPos.x -= this.planetElement.getImageSize().x / 2;
         venusPos.y -= this.planetElement.getImageSize().y / 2;
-        this.planetElement.setOrigin(venusPos );
+        this.planetElement.setOrigin(venusPos);
+
+        this.initTileMap(17, 12);
     }
     public update(dt: number) {
         super.update(dt);

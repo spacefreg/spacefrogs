@@ -1,7 +1,7 @@
 import vec2 from '../utils/vec2.js';
 import sfuiElement from '../ui/sfuielement.js';
 import { lerp } from '../utils/lerp.js';
-import Tile from '../tile/tile.js';
+import Tile from '../tiles/tile.js';
 export default class Planet {
     constructor(name, parentName, theta, distanceFromParent, orbitalPeriod) {
         this.initialized = false;
@@ -14,7 +14,27 @@ export default class Planet {
         this.orbitalPeriod = orbitalPeriod;
         this.targetPos = new vec2(0, 0);
         this.tiles = new Array();
-        this.tiles.push(new Tile(1, 1, this.name));
+        this.tileDimensions = new vec2(0, 0);
+        switch (this.name) {
+            case 'Mercury':
+                this.tileAtlasSrc = '../../res/images/planets/tiles/mercury.png';
+                break;
+            case 'Venus':
+                this.tileAtlasSrc = '../../res/images/planets/tiles/venus.png';
+                break;
+            case 'Earth':
+                this.tileAtlasSrc = '../../res/images/planets/tiles/earth.png';
+                break;
+            case 'Moon':
+                this.tileAtlasSrc = '../../res/images/planets/tiles/moon.png';
+                break;
+            case 'Mars':
+                this.tileAtlasSrc = '../../res/images/planets/tiles/mars.png';
+                break;
+            default:
+                this.tileAtlasSrc = '';
+                break;
+        }
     }
     update(dt) {
         //(4/6/22) bootleg init function at the beginning of update
@@ -30,7 +50,6 @@ export default class Planet {
         this.parentCenter = center;
     }
     initLocation() {
-        console.log(`${this.name} CALLING INIT LOCATION`);
         if (this.planetElement.getImageSize().x > 0) {
             if (this.name != 'Sun') {
                 let pos = new vec2(0, 0);
@@ -40,7 +59,6 @@ export default class Planet {
                 this.planetElement.setOrigin(pos);
             }
             else {
-                console.log(`${this.name} SIZE OF IMAGE.X: ${this.planetElement.getImageSize().x}`);
                 this.planetElement.setOrigin(new vec2(this.planetElement.getOrigin().x - this.planetElement.getImageSize().x / 2, this.planetElement.getOrigin().y - this.planetElement.getImageSize().y / 2));
             }
             this.initialized = true;
@@ -72,6 +90,28 @@ export default class Planet {
         this.targetPos = new vec2(this.parentCenter.x + this.distanceFromParent * Math.cos((this.theta * (Math.PI / 180))), this.parentCenter.y + this.distanceFromParent * Math.sin((this.theta * (Math.PI / 180))));
         this.targetPos.x -= this.planetElement.getImageSize().x / 2;
         this.targetPos.y -= this.planetElement.getImageSize().y / 2;
+    }
+    initTileMap(x, y) {
+        this.tileDimensions.x = x;
+        this.tileDimensions.y = y;
+        for (let i = 0; i < x; i++) {
+            for (let j = 0; j < y; j++) {
+                this.createTile(i, j);
+            }
+            if (this.tiles.length > 0) {
+                //this.tiles[0].setTileType(2);
+            }
+        }
+        console.log(`${this.name} tile map: ${x}, ${y}: ${this.tiles.length} tiles`);
+    }
+    createTile(x, y) {
+        this.tiles.push(new Tile(x, y, this.name));
+    }
+    getTileMap() {
+        return this.tiles;
+    }
+    getTileFromCoord(x, y) {
+        return this.tiles[(this.tileDimensions.x * x) + y];
     }
     render() {
         this.planetElement.ctx.beginPath();

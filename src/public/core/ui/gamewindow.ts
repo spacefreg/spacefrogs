@@ -23,12 +23,14 @@ export default class GameWindow extends sfuiElement {
     private venus: Venus;
     private mercury: Mercury;
 
-    //private planetHoverElement: sfuiElement;
     private planetHoverText: sfText;
+    public planetHover: Planet | null;
     private currentMousePos: vec2;
 
 
     private dateText: sfText;
+
+    public gameHovering: boolean = false;
 
 
     constructor(origin: vec2, size: vec2) {
@@ -52,6 +54,8 @@ export default class GameWindow extends sfuiElement {
         this.planetHoverText = new sfText('', new vec2(0, 0), 16, 'Arial');
         this.planetHoverText.toggleBackground();
 
+        this.planetHover = new Planet('', '', 0, 0, 0);
+
 
 
         this.dateText = new sfText('January 1st, 2030', new vec2(this.origin.x + 4, this.origin.y + 4), 16, 'Arial');
@@ -59,6 +63,7 @@ export default class GameWindow extends sfuiElement {
     }
 
     public update(dt: number): void {
+        this.gameHovering = this.isMouseHovering;
         this.sun.update(dt);
         let systemOrigin: vec2 = new vec2(this.origin.x + this.size.x / 2, this.origin.y + this.size.y / 2);
 
@@ -87,23 +92,30 @@ export default class GameWindow extends sfuiElement {
         if (this.isMouseHovering) {
             if (this.sun.containsPoint(this.currentMousePos)) {
                 this.planetHoverText.setText('Sun');
+                this.planetHover = this.sun;
             }
             else if (this.mercury.containsPoint(this.currentMousePos)) {
                 this.planetHoverText.setText('Mercury');
+                this.planetHover = this.mercury;
             }
             else if (this.venus.containsPoint(this.currentMousePos)) {
                 this.planetHoverText.setText('Venus');
+                this.planetHover = this.venus;
             }
             else if (this.earth.containsPoint(this.currentMousePos)) {
                 this.planetHoverText.setText('Earth');
+                this.planetHover = this.earth;
             }
             else if (this.moon.containsPoint(this.currentMousePos)) {
                 this.planetHoverText.setText('Moon');
+                this.planetHover = this.moon;
             }
             else if (this.mars.containsPoint(this.currentMousePos)) {
                 this.planetHoverText.setText('Mars');
+                this.planetHover = this.mars;
             }
             else {
+                this.planetHover = null;
                 this.planetHoverText.setText('');
             }
 
@@ -147,8 +159,8 @@ export default class GameWindow extends sfuiElement {
 
         this.mercury.orbitTick();
         this.venus.orbitTick();
-        this.earth.orbitTick();
         this.moon.orbitTick();
+        this.earth.orbitTick();
         this.mars.orbitTick();
     }
 

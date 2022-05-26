@@ -9,7 +9,7 @@ import GameWindow from '../../core/ui/gamewindow.js';
 
 import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
-import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
+import LobbyPanel from '../../core/ui/lobbypanel/lobbypanel.js';
 import sfuiElement from '../../core/ui/sfuielement.js';
 
 import sfStartCampaign from '../../core/messages/server/sfstartcampaign.js';
@@ -29,7 +29,7 @@ export default class LobbyCanvas {
 
     private socialPanel: SocialPanel;
     private frogPanel: FrogPanel;
-    private gamePanel: GamePanel;
+    private gamePanel: LobbyPanel;
 
     private playerSelections: Map<string, sfuiElement>;
 
@@ -71,7 +71,7 @@ export default class LobbyCanvas {
 
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', self.id, this.socket);
         this.frogPanel = new FrogPanel(new vec2(1, 480), self.name);
-        this.gamePanel = new GamePanel(new vec2(1040, 10), 'right panel');
+        this.gamePanel = new LobbyPanel(new vec2(1040, 10), 'right panel');
 
         this.addPlayer(self, lobbyPlayers);
 

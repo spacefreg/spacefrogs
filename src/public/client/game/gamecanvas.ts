@@ -5,6 +5,8 @@ import vec2 from '../../core/utils/vec2.js';
 
 import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import GameWindow from '../../core/ui/gamewindow.js';
+import PlanetGrid from '../../core/ui/gamepanel/planetgrid.js';
+import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
 
 import Player, { getPlayerByID } from '../../core/player.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
@@ -20,6 +22,7 @@ export default class GameCanvas {
     private socialPanel: SocialPanel;
     private frogPanel: FrogPanel;
     private gameWindow: GameWindow;
+    private gamePanel: GamePanel;
 
     private selfID: string = 'gremlin';
 
@@ -38,6 +41,10 @@ export default class GameCanvas {
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', this.socket.id, this.socket);
         this.socialPanel.setInGame();
         this.frogPanel = new FrogPanel(new vec2(1, 480), selfPlayer.name);
+
+
+        this.gamePanel = new GamePanel(new vec2(1040, 10));
+        
 
         this.addPlayer(selfPlayer, players);
 
@@ -67,6 +74,16 @@ export default class GameCanvas {
 
     public mouseDown(evt: MouseEvent): void {
         evt.preventDefault();
+
+        if (this.gameWindow.gameHovering) {
+            if (this.gameWindow.planetHover != null) {
+                this.gamePanel.targetPlanet(this.gameWindow.planetHover);
+            }
+            else {
+                this.gamePanel.targetPlanet(null);
+            }
+        }
+        
     }
 
     public keyDown(evt: KeyboardEvent): void {
@@ -99,5 +116,6 @@ export default class GameCanvas {
         this.socialPanel.render();
         this.gameWindow.render();
         this.frogPanel.render();
+        this.gamePanel.render();
     }
 }

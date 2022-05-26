@@ -1,45 +1,29 @@
+import Planet from '../../planets/planet.js';
 import vec2 from '../../utils/vec2.js';
-import LobbyCountrySelection from '../lobbycountryselection.js';
+
 import sfuiPanel from '../sfuipanel.js';
+
+import PlanetGrid from './planetgrid.js';
 
 export default class GamePanel extends sfuiPanel {
 
-    private lobbyPrompt: LobbyCountrySelection;
+    private grid: PlanetGrid;
 
-    constructor(origin: vec2, title: string) {
-        super(origin, title);
+    constructor(origin: vec2) {
+        super(origin, 'Game');
         this.setSize(new vec2(315, 748));
         this.setOutline(true);
         this.setBackgroundOpacity(0.13);
 
-        this.lobbyPrompt = new LobbyCountrySelection(new vec2(this.origin.x + 10, this.origin.y + 275), 'Select Country');
+        this.grid = new PlanetGrid();
     }
 
-    public update(dt: number): void {
-        super.update(dt);
+    public targetPlanet(planet: Planet | null): void {
+        this.grid.setPlanet(planet);
+    }
+
+    public render(): void {
+        this.grid.render();
     }
     
-    public render(): void {
-        super.render();
-        this.lobbyPrompt.render();
-    }
-
-    public mouseMove(mousePos: vec2) {
-        super.mouseMove(mousePos);
-        this.lobbyPrompt.mouseMove(mousePos);
-    }
-
-    public mouseDown(mousePos: vec2): string {
-            return this.lobbyPrompt.mouseDown(mousePos);
-    }
-
-    public gameWindowSelection(selection: string): void {
-
-        switch (selection) {
-            case 'Earth':
-                console.log('gamePanel: selected urf');
-                break;
-        
-        }   
-     }
 }

@@ -8,6 +8,7 @@ export default class Mercury extends Planet {
         moonPos.x -= this.planetElement.getImageSize().x / 2;
         moonPos.y -= this.planetElement.getImageSize().y / 2;
         this.planetElement.setOrigin(moonPos);
+        this.initTileMap(8, 5);
     }
     update(dt) {
         super.update(dt);

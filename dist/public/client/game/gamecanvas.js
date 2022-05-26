@@ -1,6 +1,7 @@
 import vec2 from '../../core/utils/vec2.js';
 import SocialPanel from '../../core/ui/socialpanel/socialpanel.js';
 import GameWindow from '../../core/ui/gamewindow.js';
+import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
 import { getPlayerByID } from '../../core/player.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
 export default class GameCanvas {
@@ -16,6 +17,7 @@ export default class GameCanvas {
         this.socialPanel = new SocialPanel(new vec2(10, 10), 'social panel', this.socket.id, this.socket);
         this.socialPanel.setInGame();
         this.frogPanel = new FrogPanel(new vec2(1, 480), selfPlayer.name);
+        this.gamePanel = new GamePanel(new vec2(1040, 10));
         this.addPlayer(selfPlayer, players);
         this.canvas.onmousedown = this.mouseDown.bind(this);
         this.canvas.onmousemove = this.mouseMove.bind(this);
@@ -38,6 +40,14 @@ export default class GameCanvas {
     }
     mouseDown(evt) {
         evt.preventDefault();
+        if (this.gameWindow.gameHovering) {
+            if (this.gameWindow.planetHover != null) {
+                this.gamePanel.targetPlanet(this.gameWindow.planetHover);
+            }
+            else {
+                this.gamePanel.targetPlanet(null);
+            }
+        }
     }
     keyDown(evt) {
         switch (evt.code) {
@@ -63,5 +73,6 @@ export default class GameCanvas {
         this.socialPanel.render();
         this.gameWindow.render();
         this.frogPanel.render();
+        this.gamePanel.render();
     }
 }

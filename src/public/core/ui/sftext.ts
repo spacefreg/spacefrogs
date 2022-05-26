@@ -26,6 +26,10 @@ export default class sfText {
         this.size.x = ctx.measureText(this.textContent).width * (this.fontSize / 12);
     }
 
+    public getText(): string {
+        return this.textContent;
+    }
+
     public setPosition(topLeftPos: vec2): void {
         this.topLeftPos = new vec2(topLeftPos.x, topLeftPos.y);
     }
