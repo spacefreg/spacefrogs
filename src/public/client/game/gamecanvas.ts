@@ -11,6 +11,8 @@ import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
 import Player, { getPlayerByID } from '../../core/player.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
 import sfDate from '../../core/utils/sfdate.js';
+import sfGoTomorrow from '../../core/messages/server/sfgotomorrow.js';
+import GameTileInfo from '../../core/tiles/gametileinfo.js';
 
 
 export default class GameCanvas {
@@ -25,6 +27,8 @@ export default class GameCanvas {
     private gamePanel: GamePanel;
 
     private selfID: string = 'gremlin';
+
+    private gameTileInfo: GameTileInfo;
 
     constructor(campaignName: string, players: Array<Player>, socket: io) {
         this.canvas = <HTMLCanvasElement>document.getElementById('sf-canvas');
@@ -44,6 +48,8 @@ export default class GameCanvas {
 
 
         this.gamePanel = new GamePanel(new vec2(1040, 10));
+
+        this.gameTileInfo = new GameTileInfo();
         
 
         this.addPlayer(selfPlayer, players);
@@ -96,8 +102,11 @@ export default class GameCanvas {
         }
     }
 
-    public goTomorrow(date: sfDate): void {
-        this.gameWindow.goTomorrow(date);
+    public goTomorrow(goTomorrowMsg: sfGoTomorrow): void {
+        this.gameWindow.goTomorrow(goTomorrowMsg);
+
+        //(5/26/22) I don't know if I need to have gameTileInfo in GameCanvas but might as well store it for now
+        this.gameTileInfo = goTomorrowMsg.gameTileInfo;
         
     }
 

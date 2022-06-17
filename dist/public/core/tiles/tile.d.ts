@@ -3,13 +3,13 @@ export default class Tile {
     y: number;
     planet: string;
     owner: TileOwner;
-    private tileType;
+    tileType: string;
     constructor(x: number, y: number, planet: string);
     setTileType(type: number): void;
     setTileOwner(owner: TileOwner): void;
-    getTileType(): string;
     getTileTypeIndex(): number;
 }
+export declare function getTileTypeIndex(tile: Tile): number;
 export declare enum TileOwner {
     Unclaimed = 0,
     US = 1,

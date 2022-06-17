@@ -130,24 +130,10 @@ export default class Planet {
         this.targetPos.y -= this.planetElement.getImageSize().y / 2;
     }
 
-    public initTileMap(x: number, y: number): void {
-        this.tileDimensions.x = x;
-        this.tileDimensions.y = y;
 
-        for (let i = 0; i < x; i++) {
-            for (let j = 0; j < y; j++) {
-                this.createTile(i, j);
-            }
-            if (this.tiles.length > 0) {
-                //this.tiles[0].setTileType(2);
-            }
-        }
-
-        console.log(`${this.name} tile map: ${x}, ${y}: ${this.tiles.length} tiles`);
-    }
-
-    private createTile(x: number, y: number): void {
-        this.tiles.push(new Tile(x, y, this.name));
+    public populateTiles(tiles: Array<Tile>): void {
+        
+        this.tiles = tiles;
     }
 
     public getTileMap(): Array<Tile> {

@@ -5,8 +5,7 @@ export default class Tile {
         this.planet = planet;
         this.owner = TileOwner.Unclaimed;
         this.tileType = '';
-        this.setTileType(2);
-        ;
+        //this.setTileType(2);;
         //console.log(`${this.planet} tile created at ${this.x}, ${this.y}`);
     }
     setTileType(type) {
@@ -21,9 +20,6 @@ export default class Tile {
     }
     setTileOwner(owner) {
         this.owner = owner;
-    }
-    getTileType() {
-        return this.tileType;
     }
     getTileTypeIndex() {
         //console.log(`${this.planet} tile type index for ${this.tileType}`);
@@ -40,6 +36,16 @@ export default class Tile {
             default:
                 return 1;
         }
+    }
+}
+export function getTileTypeIndex(tile) {
+    switch (tile.planet) {
+        case 'Earth':
+            return Object.keys(TileTypeEarth).indexOf(tile.tileType);
+        case 'Mars':
+            return Object.keys(TileTypeMars).indexOf(tile.tileType);
+        default:
+            return 1;
     }
 }
 const TileTypeEarth = {

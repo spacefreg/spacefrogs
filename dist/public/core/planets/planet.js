@@ -1,7 +1,6 @@
 import vec2 from '../utils/vec2.js';
 import sfuiElement from '../ui/sfuielement.js';
 import { lerp } from '../utils/lerp.js';
-import Tile from '../tiles/tile.js';
 export default class Planet {
     constructor(name, parentName, theta, distanceFromParent, orbitalPeriod) {
         this.initialized = false;
@@ -91,21 +90,8 @@ export default class Planet {
         this.targetPos.x -= this.planetElement.getImageSize().x / 2;
         this.targetPos.y -= this.planetElement.getImageSize().y / 2;
     }
-    initTileMap(x, y) {
-        this.tileDimensions.x = x;
-        this.tileDimensions.y = y;
-        for (let i = 0; i < x; i++) {
-            for (let j = 0; j < y; j++) {
-                this.createTile(i, j);
-            }
-            if (this.tiles.length > 0) {
-                //this.tiles[0].setTileType(2);
-            }
-        }
-        console.log(`${this.name} tile map: ${x}, ${y}: ${this.tiles.length} tiles`);
-    }
-    createTile(x, y) {
-        this.tiles.push(new Tile(x, y, this.name));
+    populateTiles(tiles) {
+        this.tiles = tiles;
     }
     getTileMap() {
         return this.tiles;

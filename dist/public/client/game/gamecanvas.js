@@ -4,6 +4,7 @@ import GameWindow from '../../core/ui/gamewindow.js';
 import GamePanel from '../../core/ui/gamepanel/gamepanel.js';
 import { getPlayerByID } from '../../core/player.js';
 import FrogPanel from '../../core/ui/frogpanel/frogpanel.js';
+import GameTileInfo from '../../core/tiles/gametileinfo.js';
 export default class GameCanvas {
     constructor(campaignName, players, socket) {
         this.selfID = 'gremlin';
@@ -18,6 +19,7 @@ export default class GameCanvas {
         this.socialPanel.setInGame();
         this.frogPanel = new FrogPanel(new vec2(1, 480), selfPlayer.name);
         this.gamePanel = new GamePanel(new vec2(1040, 10));
+        this.gameTileInfo = new GameTileInfo();
         this.addPlayer(selfPlayer, players);
         this.canvas.onmousedown = this.mouseDown.bind(this);
         this.canvas.onmousemove = this.mouseMove.bind(this);
@@ -58,8 +60,10 @@ export default class GameCanvas {
                 break;
         }
     }
-    goTomorrow(date) {
-        this.gameWindow.goTomorrow(date);
+    goTomorrow(goTomorrowMsg) {
+        this.gameWindow.goTomorrow(goTomorrowMsg);
+        //(5/26/22) I don't know if I need to have gameTileInfo in GameCanvas but might as well store it for now
+        this.gameTileInfo = goTomorrowMsg.gameTileInfo;
     }
     update(dt) {
         this.gameWindow.update(dt);

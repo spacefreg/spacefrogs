@@ -4,7 +4,8 @@ export default class Sun extends Planet {
         super('Sun', 'root', 0, NaN, NaN);
         this.planetElement.setOrigin(systemOrigin);
         this.planetElement.setImage('../../res/images/planets/sun.png');
-        this.initTileMap(1, 0);
+        this.tileDimensions.x = 1;
+        this.tileDimensions.y = 0;
     }
     update(dt) {
         super.update(dt);

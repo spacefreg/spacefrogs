@@ -3,7 +3,7 @@ export default class Tile {
     public y: number;
     public planet: string;
     public owner: TileOwner;
-    private tileType: string;
+    public tileType: string;
 
 
     constructor(x: number, y: number, planet: string) {
@@ -13,7 +13,7 @@ export default class Tile {
         this.owner = TileOwner.Unclaimed;
 
         this.tileType = '';
-        this.setTileType(2);;
+        //this.setTileType(2);;
         //console.log(`${this.planet} tile created at ${this.x}, ${this.y}`);
     }
 
@@ -33,9 +33,6 @@ export default class Tile {
         this.owner = owner;
     }
 
-    public getTileType(): string {
-        return this.tileType;
-    }
 
     public getTileTypeIndex(): number {
         //console.log(`${this.planet} tile type index for ${this.tileType}`);
@@ -52,6 +49,17 @@ export default class Tile {
             default:
                 return 1;
         }
+    }
+}
+
+export function getTileTypeIndex(tile: Tile): number {
+    switch (tile.planet) {
+        case 'Earth':
+            return Object.keys(TileTypeEarth).indexOf(tile.tileType);
+        case 'Mars':
+            return Object.keys(TileTypeMars).indexOf(tile.tileType);
+        default:
+            return 1;
     }
 }
 

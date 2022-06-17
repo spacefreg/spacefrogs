@@ -97,13 +97,18 @@ export default class GameWindow extends sfuiElement {
     setInGame() {
         this.inGame = true;
     }
-    goTomorrow(date) {
+    goTomorrow(goTomorrowMsg) {
         if (this.isMouseHovering) {
             this.mouseMove(this.currentMousePos);
         }
         // this.dateElement.setText(dateToString(date));
         // this.dateElement.setOrigin(new vec2(300, 40));
-        this.dateText.setText(dateToString(date));
+        this.dateText.setText(dateToString(goTomorrowMsg.gameDate));
+        this.mercury.populateTiles(goTomorrowMsg.gameTileInfo.mercuryTiles);
+        this.venus.populateTiles(goTomorrowMsg.gameTileInfo.venusTiles);
+        this.earth.populateTiles(goTomorrowMsg.gameTileInfo.earthTiles);
+        this.moon.populateTiles(goTomorrowMsg.gameTileInfo.moonTiles);
+        this.mars.populateTiles(goTomorrowMsg.gameTileInfo.marsTiles);
         this.mercury.orbitTick();
         this.venus.orbitTick();
         this.moon.orbitTick();

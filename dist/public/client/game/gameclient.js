@@ -1,6 +1,5 @@
 import { getPlayerByID } from '../../core/player.js';
 import GameCanvas from './gamecanvas.js';
-import { dateToString } from '../../core/utils/sfdate.js';
 export default class GameClient {
     constructor(socket, campaignName, gamePlayers) {
         this.isRunning = true;
@@ -10,6 +9,7 @@ export default class GameClient {
         this.gamePlayers = gamePlayers;
         this.gCanvas = new GameCanvas(this.campaignName, this.gamePlayers, this.socket);
         this.socket.on('sfStartCampaign', () => {
+            console.log('GAMECLIENT: RECV sfStartCampaign');
             // this.isRunning = false;
             // this.lCanvas.isRunning = false;
             // this.lCanvas.ctx.clearRect(0, 0, 1366, 768);
@@ -69,10 +69,12 @@ export default class GameClient {
         }
     }
     goTomorrow() {
-        this.socket.on('sfGoTomorrow', (date) => {
+        this.socket.on('sfGoTomorrow', (goTomorrowMsg) => {
             //console.log(`new date: ${dateToString(date)}`);
-            const s = dateToString(date);
-            this.gCanvas.goTomorrow(date);
+            this.gCanvas.goTomorrow(goTomorrowMsg);
+            //console.log(`client go tomorrow earth tile amount: ${goTomorrowMsg.gameTileInfo.earthTiles.length}`);
+            console.log(`earth[0] tile type: ${goTomorrowMsg.gameTileInfo.earthTiles[0].tileType}`);
+            console.log(`earth[1] tile type: ${goTomorrowMsg.gameTileInfo.earthTiles[1].tileType}`);
         });
     }
 }

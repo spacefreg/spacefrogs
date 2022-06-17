@@ -11,7 +11,8 @@ export default class Earth extends Planet {
         //earthPos.y -= this.planetElement.getImageSize().y / 2;
         this.planetElement.setOrigin(earthPos);
 
-        this.initTileMap(18, 13);
+        this.tileDimensions.x = 18;
+        this.tileDimensions.y = 11;
     }
 
     public update(dt: number) {

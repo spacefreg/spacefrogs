@@ -11,7 +11,8 @@ export default class Moon extends Planet {
         //moonPos.y -= this.planetElement.getImageSize().y / 2;
         this.planetElement.setOrigin(moonPos);
 
-        this.initTileMap(6, 3);
+        this.tileDimensions.x = 6;
+        this.tileDimensions.y = 3;
     }
 
     public update(dt: number) {

@@ -13,7 +13,8 @@ export default class Mars extends Planet {
         this.planetElement.setOrigin(marsPos);
 
 
-        this.initTileMap(10, 7);
+        this.tileDimensions.x = 11;
+        this.tileDimensions.y = 6;
     }
 
     public update(dt: number) {

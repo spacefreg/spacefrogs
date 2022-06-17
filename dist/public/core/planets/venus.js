@@ -8,7 +8,9 @@ export default class Venus extends Planet {
         venusPos.x -= this.planetElement.getImageSize().x / 2;
         venusPos.y -= this.planetElement.getImageSize().y / 2;
         this.planetElement.setOrigin(venusPos);
-        this.initTileMap(17, 12);
+        //this.initTileMap(17, 12);
+        this.tileDimensions.x = 17;
+        this.tileDimensions.y = 12;
     }
     update(dt) {
         super.update(dt);

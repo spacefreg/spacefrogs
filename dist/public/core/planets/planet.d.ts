@@ -21,8 +21,7 @@ export default class Planet {
     mouseMove(mousePos: vec2): string;
     containsPoint(point: vec2): boolean;
     orbitTick(): void;
-    initTileMap(x: number, y: number): void;
-    private createTile;
+    populateTiles(tiles: Array<Tile>): void;
     getTileMap(): Array<Tile>;
     getTileFromCoord(x: number, y: number): Tile;
     render(): void;
