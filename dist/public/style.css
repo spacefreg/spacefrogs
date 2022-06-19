@@ -34,7 +34,7 @@ html, body {
     cursor: url('res/images/ui/cursoractive.png'), default;
 }
 
-#spacebouncer {
+#bouncer {
     position: absolute;
     top: 50%;
     left: 50%;
